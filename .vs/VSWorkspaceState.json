@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\CustomPost2023",
-    "\\CustomPost2023\\Controllers",
-    "\\CustomPost2023\\Controllers\\Home",
-    "\\CustomPost2023\\Controllers\\Staff",
-    "\\CustomPost2023\\Data",
-    "\\CustomPost2023\\Data\\Models",
-    "\\CustomPost2023\\Views",
-    "\\CustomPost2023\\wwwroot",
-    "\\CustomPost2023\\wwwroot\\lib"
+    ""
   ],
-  "SelectedNode": "\\CustomPost2023\\Views\\Admin",
+  "SelectedNode": "\\CustomPost2023.sln",
   "PreviewInSolutionExplorer": false
 }
