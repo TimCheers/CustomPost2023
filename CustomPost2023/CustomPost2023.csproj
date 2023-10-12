@@ -11,11 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Product\" />
-    <Folder Include="Views\User\" />
-    <Folder Include="Views\VehicleType\" />
-    <Folder Include="Views\CustomPost\" />
-    <Folder Include="Views\ProductType\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="ViewModels\" />

@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "kC+ZXhYSDclDzF2Y8PD5PhK3DMsSEGt/aOBrg8WnDYhQdxaj/oSaTdBzXlqJU54Xd8KrwxgfZbS/TNSOMyEIOQ==",
+  "success": true,
+  "projectFilePath": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
+  "expectedPackageFiles": [
+    "D:\\Users\\TimCheers\\.nuget\\packages\\microsoft.aspnetcore.authentication.negotiate\\6.0.21\\microsoft.aspnetcore.authentication.negotiate.6.0.21.nupkg.sha512",
+    "D:\\Users\\TimCheers\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\6.0.21\\microsoft.aspnetcore.connections.abstractions.6.0.21.nupkg.sha512",
+    "D:\\Users\\TimCheers\\.nuget\\packages\\microsoft.extensions.features\\6.0.21\\microsoft.extensions.features.6.0.21.nupkg.sha512",
+    "D:\\Users\\TimCheers\\.nuget\\packages\\system.directoryservices.protocols\\6.0.2\\system.directoryservices.protocols.6.0.2.nupkg.sha512",
+    "D:\\Users\\TimCheers\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
