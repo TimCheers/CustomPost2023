@@ -6,9 +6,9 @@ namespace CustomPost2023.Controllers.Home
     public class HomeController : Controller
     {
         // GET: HomeController
-        public ActionResult Index()
+        public string Index()
         {
-            return View();
+            return "Hello world";
         }
 
         // GET: HomeController/Details/5
