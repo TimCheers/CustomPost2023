@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\css\\StyleSheet.css",
+      "PackagePath": "staticwebassets\\css\\StyleSheet.css"
+    },
+    {
+      "Id": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\js\\JavaScript.js",
+      "PackagePath": "staticwebassets\\js\\JavaScript.js"
+    },
+    {
       "Id": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },

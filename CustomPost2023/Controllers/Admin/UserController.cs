@@ -1,14 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CustomPost2023.Data.Repository;
+using CustomPost2023.Data.Models;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class UserController : Controller
     {
+
         // GET: UserController
         public ActionResult Index()
         {
-            return View();
+            ApplicationContext ApplicationContext = new ApplicationContext();
+            var model = ApplicationContext.users;
+            return View(model);
         }
 
         // GET: UserController/Details/5

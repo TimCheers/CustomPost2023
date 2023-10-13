@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tRW0F6Hn3ohC8yq2Ol+edCQoxUFfey94xPdrF+umIZo=",
+  "Hash": "Wqe8He3SBHsqH4c1OFiQM2w+k2m2kRk10Ct+F4o8bck=",
   "Source": "CustomPost2023",
   "BasePath": "_content/CustomPost2023",
   "Mode": "Default",
@@ -16,6 +16,40 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\css\\StyleSheet.css",
+      "SourceId": "CustomPost2023",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\",
+      "BasePath": "_content/CustomPost2023",
+      "RelativePath": "css/StyleSheet.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\StyleSheet.css"
+    },
+    {
+      "Identity": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\js\\JavaScript.js",
+      "SourceId": "CustomPost2023",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\",
+      "BasePath": "_content/CustomPost2023",
+      "RelativePath": "js/JavaScript.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\JavaScript.js"
+    },
     {
       "Identity": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "CustomPost2023",

@@ -37,3 +37,17 @@ D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\obj\Debug\net6.0\r
 D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\obj\Debug\net6.0\CustomPost2023.pdb
 D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\obj\Debug\net6.0\CustomPost2023.genruntimeconfig.cache
 D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\obj\Debug\net6.0\ref\CustomPost2023.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Npgsql.dll
+D:\Users\TimCheers\source\repos\CustomPost2023\CustomPost2023\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

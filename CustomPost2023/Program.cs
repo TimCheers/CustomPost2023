@@ -1,4 +1,20 @@
+using CustomPost2023.Data;
+using CustomPost2023.Data.Repository;
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using CustomPost2023.Data;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +31,16 @@ builder.Services.AddAuthorization(options =>
 });
 builder.Services.AddRazorPages();
 
+
+// получаем строку подключения из файла конфигурации
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// добавляем контекст ApplicationContext в качестве сервиса в приложение
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection));
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -25,16 +50,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Index}/{id?}");
 
 app.Run();
