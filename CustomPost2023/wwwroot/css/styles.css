@@ -1,0 +1,42 @@
+﻿.body_class {
+    background-color: rgb(25, 25, 25);
+}
+
+
+.input_data {
+    position: absolute;
+    color: rgb(190, 190, 190);
+    top: 10%;
+    left: 35%;
+    text-align: border-color: rgb(190,190,190);
+    border-style: solid;
+    margin: 10px;
+    padding: 20px;
+    width: 30%;
+}
+
+
+.input_text_importer {
+    background-color: rgb(55, 55, 55);
+    width: 98%;
+    height: 50px;
+    font-size: 16px;
+    margin: 10px;
+    color: rgb(220, 220, 220);
+}
+
+.header2 {
+    color: rgb(190, 190, 190);
+    margin: 10px;
+}
+
+.btn {
+    height: 50px;
+    width: 98%;
+    border-radius: 7px;
+    border-color: black;
+    margin: 10px;
+    background: rgb(54, 217, 178);
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
