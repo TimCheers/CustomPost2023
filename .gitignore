@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/CustomPost2023/obj/Debug/net6.0/CustomPost2023.csproj.AssemblyReference.cache
+/CustomPost2023/obj/Debug/net6.0/CustomPost2023.GeneratedMSBuildEditorConfig.editorconfig
