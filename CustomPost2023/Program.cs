@@ -1,5 +1,4 @@
 using CustomPost2023.Data;
-using CustomPost2023.Data.Repository;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using CustomPost2023.Data;
 using Microsoft.AspNetCore.Builder;
