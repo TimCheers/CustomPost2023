@@ -4,8 +4,10 @@
 
 </head>
 <body>
+    <p><a asp-action="Create">Добавить пользователя</a></p>
     <table>
         <tbody>
+            <tr><th>User ID</th><th>User name</th><th>User login</th><th>User passwor</th><th></th><th></th></tr>
             @{
                 foreach (var p in Model)
                 {
@@ -14,6 +16,13 @@
                         <td>@p.user_name</td>
                         <td>@p.login</td>
                         <td>@p.password</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="User" asp-route-id="@p.user_id">Изменить</a>
+                        </td>
+                        <td>
+                            <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@p.user_id">
+                                <input type="submit" value="Удалить" />
+                            </form>
                     </tr>
                 }
             }

@@ -1,0 +1,31 @@
+﻿@model CustomPost2023.Data.Models.user
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <h2>Добавление пользователя</h2>
+    <form asp-action="Edit" asp-controller="User">
+        <div asp-validation-summary="All">
+            <p>
+                <label asp-for="user_name">Name </label><br />
+                <input type="text" asp-for="user_name" />
+            </p>
+            <p>
+                <label asp-for="login">Login </label><br />
+                <input type="text" asp-for="login" />
+            </p>
+            <p>
+                <label asp-for="password">Password </label><br />
+                <input type="text" asp-for="password" />
+            </p>
+            <p>
+                <input type="submit" value="Sand" />
+            </p>
+            <input type="hidden" asp-for="user_id" />
+        </div>
+    </form>
+</body>
+</html>

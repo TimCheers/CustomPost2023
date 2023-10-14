@@ -936,11 +936,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
+      "projectUniqueName": "D:\\Users\\TimCheers\\Desktop\\lol\\CustomPost2023\\CustomPost2023.csproj",
       "projectName": "CustomPost2023",
-      "projectPath": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
+      "projectPath": "D:\\Users\\TimCheers\\Desktop\\lol\\CustomPost2023\\CustomPost2023.csproj",
       "packagesPath": "D:\\Users\\TimCheers\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\TimCheers\\source\\repos\\CustomPost2023\\CustomPost2023\\obj\\",
+      "outputPath": "D:\\Users\\TimCheers\\Desktop\\lol\\CustomPost2023\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

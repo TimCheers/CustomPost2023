@@ -3,87 +3,63 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CustomPost2023.Data.Repository;
 using CustomPost2023.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class UserController : Controller
     {
-
-        // GET: UserController
+        ApplicationContext db;
+        public UserController(ApplicationContext context)
+        {
+            db = context;
+        }
         public ActionResult Index()
         {
-            ApplicationContext ApplicationContext = new ApplicationContext();
-            var model = ApplicationContext.users;
+            var model = db.users;
             return View(model);
         }
-
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(user us)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.users.Add(us);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                user? user = await db.users.FirstOrDefaultAsync(p => p.user_id == id);
+                if (user != null)
+                {
+                    db.users.Remove(user);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                user? us = await db.users.FirstOrDefaultAsync(p => p.user_id == id);
+                if (us != null) return View(us);
+            }
+            return NotFound();
         }
-
-        // POST: UserController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(user us)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.users.Update(us);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
