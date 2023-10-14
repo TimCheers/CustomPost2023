@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CustomPost2023.Data.Models;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
-    public class UserController : Controller
+    public class HistoryController : Controller
     {
         ApplicationContext db;
-        public UserController(ApplicationContext context)
+        public HistoryController(ApplicationContext context)
         {
             db = context;
         }
         public ActionResult Index()
         {
-            var model = db.users;
+            var model = db.historys;
             return View(model);
         }
         public IActionResult Create()
@@ -21,9 +21,9 @@ namespace CustomPost2023.Controllers.Admin
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(user us)
+        public async Task<IActionResult> Create(history hi)
         {
-            db.users.Add(us);
+            db.historys.Add(hi);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -32,10 +32,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                user? us = await db.users.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null)
+                history? hi = await db.historys.FirstOrDefaultAsync(p => p.history_id == id);
+                if (hi != null)
                 {
-                    db.users.Remove(us);
+                    db.historys.Remove(hi);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -46,15 +46,15 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                user? us = await db.users.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null) return View(us);
+                history? hi = await db.historys.FirstOrDefaultAsync(p => p.history_id == id);
+                if (hi != null) return View(hi);
             }
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(user us)
+        public async Task<IActionResult> Edit(history hi)
         {
-            db.users.Update(us);
+            db.historys.Update(hi);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

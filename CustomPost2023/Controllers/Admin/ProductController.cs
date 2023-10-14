@@ -1,83 +1,63 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class ProductController : Controller
     {
-        // GET: ProductController
+        ApplicationContext db;
+        public ProductController(ApplicationContext context)
+        {
+            db = context;
+        }
         public ActionResult Index()
         {
-            return View();
+            var model = db.products;
+            return View(model);
         }
-
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: ProductController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(product pr)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.products.Add(pr);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                product? pr = await db.products.FirstOrDefaultAsync(p => p.product_id == id);
+                if (pr != null)
+                {
+                    db.products.Remove(pr);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                product? pr = await db.products.FirstOrDefaultAsync(p => p.product_id == id);
+                if (pr != null) return View(pr);
+            }
+            return NotFound();
         }
-
-        // POST: ProductController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(product pr)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.products.Update(pr);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

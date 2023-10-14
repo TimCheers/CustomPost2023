@@ -1,19 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CustomPost2023.Data.Models;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
-    public class UserController : Controller
+    public class StatusController : Controller
     {
         ApplicationContext db;
-        public UserController(ApplicationContext context)
+        public StatusController(ApplicationContext context)
         {
             db = context;
         }
         public ActionResult Index()
         {
-            var model = db.users;
+            var model = db.statuss;
             return View(model);
         }
         public IActionResult Create()
@@ -21,9 +22,9 @@ namespace CustomPost2023.Controllers.Admin
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(user us)
+        public async Task<IActionResult> Create(status st)
         {
-            db.users.Add(us);
+            db.statuss.Add(st);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -32,10 +33,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                user? us = await db.users.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null)
+                status? st = await db.statuss.FirstOrDefaultAsync(p => p.status_id == id);
+                if (st != null)
                 {
-                    db.users.Remove(us);
+                    db.statuss.Remove(st);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -46,15 +47,15 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                user? us = await db.users.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null) return View(us);
+                status? st = await db.statuss.FirstOrDefaultAsync(p => p.status_id == id);
+                if (st != null) return View(st);
             }
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(user us)
+        public async Task<IActionResult> Edit(status st)
         {
-            db.users.Update(us);
+            db.statuss.Update(st);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

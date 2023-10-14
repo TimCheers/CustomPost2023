@@ -1,83 +1,63 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class CustomPostController : Controller
     {
-        // GET: CustomsPostsController
+        ApplicationContext db;
+        public CustomPostController(ApplicationContext context)
+        {
+            db = context;
+        }
         public ActionResult Index()
         {
-            return View();
+            var model = db.custom_posts;
+            return View(model);
         }
-
-        // GET: CustomsPostsController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: CustomsPostsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CustomsPostsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(custom_post cp)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.custom_posts.Add(cp);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: CustomsPostsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CustomsPostsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                custom_post? cp = await db.custom_posts.FirstOrDefaultAsync(p => p.customs_post_id == id);
+                if (cp != null)
+                {
+                    db.custom_posts.Remove(cp);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: CustomsPostsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                custom_post? cp = await db.custom_posts.FirstOrDefaultAsync(p => p.customs_post_id == id);
+                if (cp != null) return View(cp);
+            }
+            return NotFound();
         }
-
-        // POST: CustomsPostsController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(custom_post cp)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.custom_posts.Update(cp);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
