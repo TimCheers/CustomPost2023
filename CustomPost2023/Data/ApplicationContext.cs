@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 public class ApplicationContext : DbContext
 {
-    public DbSet<user> users { get; set; } = null!;
+    public DbSet<user> user { get; set; } = null!;
     public DbSet<custom_post> custom_posts { get; set; } = null!;
     public DbSet<product> products { get; set; } = null!;
     public DbSet<product_type> product_types { get; set; } = null!;

@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="6.0.21" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.6.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\User\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>

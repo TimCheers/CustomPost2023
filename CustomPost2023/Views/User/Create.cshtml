@@ -1,0 +1,20 @@
+﻿@model CustomPost2023.Data.Models.user
+
+<h2>Добавление пользователя</h2>
+<form asp-action="Create" asp-controller="User">
+    <p>
+        <label asp-for="user_name">Имя</label><br />
+        <input type="text" asp-for="user_name" />
+    </p>
+    <p>
+        <label asp-for="login">Login</label><br />
+        <input type="number" asp-for="login" />
+    </p>
+    <p>
+        <label asp-for="password">Password</label><br />
+        <input type="number" asp-for="password" />
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+</form>

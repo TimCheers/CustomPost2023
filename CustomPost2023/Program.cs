@@ -12,10 +12,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-
+using Serilog;
+using Serilog.Events;
+using Serilog.Filters;
+using Microsoft.Azure.Amqp.Framing;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+            .WriteTo.PostgreSQL("Host=localhost;Port=5432;Database=CustomDB2;Username=postgres;Password=123321", "Logs")
+            .CreateLogger();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.AddSerilog();
+    logging.SetMinimumLevel(LogLevel.Information);
+})
+.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

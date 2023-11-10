@@ -53,9 +53,9 @@ namespace CustomPost2023.Controllers.Admin
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(user us)
+        public async Task<IActionResult> Edit(vehicle_type vt)
         {
-            db.users.Update(us);
+            db.vehicle_types.Update(vt);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
