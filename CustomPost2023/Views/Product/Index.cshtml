@@ -1,5 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using CustomPost2023.Data.Models
+@model IEnumerable<CustomPost2023.Data.Models.product>
+<div class="content">
+    <h2>Список пользователей</h2>
+    <p><a asp-action="Create">Добавить пользователя</a></p>
+    <table class="table">
+        <tr><th>ID</th><th>Имя</th><th>Login</th><th>Password</th><th></th><th></th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.product_id</td>
+                <td>@item.product_title</td>
+                <td>@item.fk_vehicle_id</td>
+                <td>@item.fk_type_product_id</td>
+                <td>@item.fk_export_country_id</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="User" asp-route-id="@item.user_id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@item.user_id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

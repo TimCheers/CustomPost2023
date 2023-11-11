@@ -4,11 +4,17 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/css/importer_table_styles.css" media="screen">
+    <link rel="stylesheet" href="~/css/StyleSheet.css" media="screen">
     <link rel="stylesheet" href="~/css/styles.css" media="screen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
+    <div class="sidebar">
+        <a asp-controller="Admin" asp-action="Loggs">Логги</a>
+        <h5>Таблицы</h5>
+        <a asp-controller="User" asp-action="Index">Пользователи</a>
+        <a asp-controller="Product" asp-action="Index">Пользователи</a>
+    </div>
     <div>
         @RenderBody()
     </div>

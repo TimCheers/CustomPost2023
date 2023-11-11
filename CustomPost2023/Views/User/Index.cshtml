@@ -1,24 +1,26 @@
 ﻿@using CustomPost2023.Data.Models
 @model IEnumerable<CustomPost2023.Data.Models.user>
-<h2>Список пользователей</h2>
-<p><a asp-action="Create">Добавить пользователя</a></p>
-<table class="table">
-    <tr><th>ID</th><th>Имя</th><<th>Login</th><<th>Password</th><th></th><th></th></tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.user_id</td>
-            <td>@item.user_name</td>
-            <td>@item.login</td>
-            <td>@item.password</td>
-            <td>
-                <a asp-action="Edit" asp-controller="User" asp-route-id="@item.user_id">Изменить</a>
-            </td>
-            <td>
-                <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@item.user_id">
-                    <input type="submit" value="Удалить" />
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+<div class="content">
+    <h2>Список пользователей</h2>
+    <p><a asp-action="Create">Добавить пользователя</a></p>
+    <table class="table">
+        <tr><th>ID</th><th>Имя</th><th>Login</th><th>Password</th><th></th><th></th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.user_id</td>
+                <td>@item.user_name</td>
+                <td>@item.login</td>
+                <td>@item.password</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="User" asp-route-id="@item.user_id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@item.user_id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

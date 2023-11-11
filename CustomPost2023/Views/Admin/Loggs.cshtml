@@ -1,0 +1,21 @@
+﻿@using CustomPost2023.Data.Models
+@model IEnumerable<CustomPost2023.Data.Models.loggs>
+<div class="content">
+    <h2>Loggs</h2>
+    <table class="table">
+        <tr><th>ID</th><th>Дата</th><th>ID пользователя</th><th>Действие</th><th>Таблица</th><th>Атрибут</th><th>Значение до</th><th>Значение после</th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.datetime</td>
+                <td>@item.user_id</td>
+                <td>@item.action</td>
+                <td>@item.table</td>
+                <td>@item.attribute</td>
+                <td>@item.meaning_before</td>
+                <td>@item.meaning_now</td>
+            </tr>
+        }
+    </table>
+</div>

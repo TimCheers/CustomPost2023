@@ -10,15 +10,13 @@ namespace CustomPost2023.Controllers.Admin
     public class UserController : Controller
     {
         ApplicationContext db;
-
+        private loggs logg = new loggs();
         public UserController(ApplicationContext context)
         {
             db = context;
         }
         public async Task<IActionResult> Index()
         {
-            List<user> model = db.user.ToList();
-            Log.Information("@@@ Выполнен запрос на вывод всех пользователей. Колличество пользователей: " + model.Count);
             return View(await db.user.ToListAsync());
         }
         public IActionResult Create()
@@ -29,8 +27,8 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(user us)
         {
             db.user.Add(us);
+            logg.SendLogg(db, 1, "user", "whole record", "NULL", $"{us.user_name}|{us.login}|{us.password}");
             await db.SaveChangesAsync();
-            Log.Information("@@@ Выполненено добавление пользователя: " + us.user_id + ' ' + us.user_name + ' ' + us.login);
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -41,8 +39,8 @@ namespace CustomPost2023.Controllers.Admin
                 user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
                 if (us != null)
                 {
+                    logg.SendLogg(db, 2, "user", "whole record", $"{us.user_id}|{us.user_name}|{us.login}|{us.password}", "NULL");
                     db.user.Remove(us);
-                    Log.Information("@@@ Выполненено удаление пользователя: " + us.user_id + ' ' + us.user_name + ' ' + us.login);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -63,7 +61,6 @@ namespace CustomPost2023.Controllers.Admin
         {
             db.user.Update(us);
             await db.SaveChangesAsync();
-            Log.Information("@@@ Выполненено изменение пользователя: " + us.user_id + ' ' + us.user_name + ' ' + us.login + ' ' + us.password );
             return RedirectToAction("Index");
         }
     }

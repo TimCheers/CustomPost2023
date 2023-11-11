@@ -8,6 +8,7 @@ namespace CustomPost2023.Controllers.Admin
     public class ProductController : Controller
     {
         ApplicationContext db;
+        private loggs logg = new loggs();
         public ProductController(ApplicationContext context)
         {
             db = context;

@@ -10,6 +10,7 @@ public class ApplicationContext : DbContext
     public DbSet<status> statuss { get; set; } = null!;
     public DbSet<history> historys { get; set; } = null!;
     public DbSet<export_countries> export_countriess { get; set; } = null!;
+    public DbSet<loggs> loggs { get; set; } = null!;
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
