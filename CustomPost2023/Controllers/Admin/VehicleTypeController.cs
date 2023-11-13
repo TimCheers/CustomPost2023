@@ -14,7 +14,7 @@ namespace CustomPost2023.Controllers.Admin
         }
         public ActionResult Index()
         {
-            var model = db.vehicle_types;
+            var model = db.vehicle_type;
             return View(model);
         }
         public IActionResult Create()
@@ -24,7 +24,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(vehicle_type vt)
         {
-            db.vehicle_types.Add(vt);
+            db.vehicle_type.Add(vt);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -33,10 +33,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                vehicle_type? vt = await db.vehicle_types.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
+                vehicle_type? vt = await db.vehicle_type.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
                 if (vt != null)
                 {
-                    db.vehicle_types.Remove(vt);
+                    db.vehicle_type.Remove(vt);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -47,7 +47,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                vehicle_type? vt = await db.vehicle_types.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
+                vehicle_type? vt = await db.vehicle_type.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
                 if (vt != null) return View(vt);
             }
             return NotFound();
@@ -55,7 +55,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Edit(vehicle_type vt)
         {
-            db.vehicle_types.Update(vt);
+            db.vehicle_type.Update(vt);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

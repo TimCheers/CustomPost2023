@@ -14,7 +14,7 @@ namespace CustomPost2023.Controllers.Admin
         }
         public ActionResult Index()
         {
-            var model = db.product_types;
+            var model = db.product_type;
             return View(model);
         }
         public IActionResult Create()
@@ -24,7 +24,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(product_type pt)
         {
-            db.product_types.Add(pt);
+            db.product_type.Add(pt);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -33,10 +33,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                product_type? pt = await db.product_types.FirstOrDefaultAsync(p => p.type_product_id == id);
+                product_type? pt = await db.product_type.FirstOrDefaultAsync(p => p.type_product_id == id);
                 if (pt != null)
                 {
-                    db.product_types.Remove(pt);
+                    db.product_type.Remove(pt);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -47,7 +47,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                product_type? pt = await db.product_types.FirstOrDefaultAsync(p => p.type_product_id == id);
+                product_type? pt = await db.product_type.FirstOrDefaultAsync(p => p.type_product_id == id);
                 if (pt != null) return View(pt);
             }
             return NotFound();
@@ -55,7 +55,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Edit(product_type pt)
         {
-            db.product_types.Update(pt);
+            db.product_type.Update(pt);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

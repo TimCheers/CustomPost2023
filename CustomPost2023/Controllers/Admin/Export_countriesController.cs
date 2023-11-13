@@ -14,7 +14,7 @@ namespace CustomPost2023.Controllers.Admin
         }
         public ActionResult Index()
         {
-            var model = db.export_countriess;
+            var model = db.export_countries;
             return View(model);
         }
         public IActionResult Create()
@@ -24,7 +24,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(export_countries ec)
         {
-            db.export_countriess.Add(ec);
+            db.export_countries.Add(ec);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -33,10 +33,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                export_countries? ec = await db.export_countriess.FirstOrDefaultAsync(p => p.country_id == id);
+                export_countries? ec = await db.export_countries.FirstOrDefaultAsync(p => p.country_id == id);
                 if (ec != null)
                 {
-                    db.export_countriess.Remove(ec);
+                    db.export_countries.Remove(ec);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -47,7 +47,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                export_countries? ec = await db.export_countriess.FirstOrDefaultAsync(p => p.country_id == id);
+                export_countries? ec = await db.export_countries.FirstOrDefaultAsync(p => p.country_id == id);
                 if (ec != null) return View(ec);
             }
             return NotFound();
@@ -55,7 +55,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Edit(export_countries ec)
         {
-            db.export_countriess.Update(ec);
+            db.export_countries.Update(ec);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

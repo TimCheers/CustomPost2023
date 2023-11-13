@@ -11,6 +11,7 @@ namespace CustomPost2023.Controllers.Admin
     {
         ApplicationContext db;
         private loggs logg = new loggs();
+        public static string meanBef;
         public UserController(ApplicationContext context)
         {
             db = context;
@@ -52,7 +53,11 @@ namespace CustomPost2023.Controllers.Admin
             if (id != null)
             {
                 user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null) return View(us);
+                if (us != null)
+                {
+                    meanBef = $"{us.user_id}|{us.user_name}|{us.login}|{us.password}";
+                    return View(us);
+                }
             }
             return NotFound();
         }
@@ -60,6 +65,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(user us)
         {
             db.user.Update(us);
+            logg.SendLogg(db, 3, "user", "whole record", meanBef, $"{us.user_id}|{us.user_name}|{us.login}|{us.password}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

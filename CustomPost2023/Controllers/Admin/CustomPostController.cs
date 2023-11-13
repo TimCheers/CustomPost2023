@@ -14,7 +14,7 @@ namespace CustomPost2023.Controllers.Admin
         }
         public ActionResult Index()
         {
-            var model = db.custom_posts;
+            var model = db.custom_post;
             return View(model);
         }
         public IActionResult Create()
@@ -24,7 +24,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(custom_post cp)
         {
-            db.custom_posts.Add(cp);
+            db.custom_post.Add(cp);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -33,10 +33,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                custom_post? cp = await db.custom_posts.FirstOrDefaultAsync(p => p.customs_post_id == id);
+                custom_post? cp = await db.custom_post.FirstOrDefaultAsync(p => p.customs_post_id == id);
                 if (cp != null)
                 {
-                    db.custom_posts.Remove(cp);
+                    db.custom_post.Remove(cp);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -47,7 +47,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                custom_post? cp = await db.custom_posts.FirstOrDefaultAsync(p => p.customs_post_id == id);
+                custom_post? cp = await db.custom_post.FirstOrDefaultAsync(p => p.customs_post_id == id);
                 if (cp != null) return View(cp);
             }
             return NotFound();
@@ -55,7 +55,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Edit(custom_post cp)
         {
-            db.custom_posts.Update(cp);
+            db.custom_post.Update(cp);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

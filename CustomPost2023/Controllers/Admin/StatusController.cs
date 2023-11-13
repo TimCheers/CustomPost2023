@@ -14,7 +14,7 @@ namespace CustomPost2023.Controllers.Admin
         }
         public ActionResult Index()
         {
-            var model = db.statuss;
+            var model = db.status;
             return View(model);
         }
         public IActionResult Create()
@@ -24,7 +24,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(status st)
         {
-            db.statuss.Add(st);
+            db.status.Add(st);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -33,10 +33,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                status? st = await db.statuss.FirstOrDefaultAsync(p => p.status_id == id);
+                status? st = await db.status.FirstOrDefaultAsync(p => p.status_id == id);
                 if (st != null)
                 {
-                    db.statuss.Remove(st);
+                    db.status.Remove(st);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -47,7 +47,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                status? st = await db.statuss.FirstOrDefaultAsync(p => p.status_id == id);
+                status? st = await db.status.FirstOrDefaultAsync(p => p.status_id == id);
                 if (st != null) return View(st);
             }
             return NotFound();
@@ -55,7 +55,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Edit(status st)
         {
-            db.statuss.Update(st);
+            db.status.Update(st);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

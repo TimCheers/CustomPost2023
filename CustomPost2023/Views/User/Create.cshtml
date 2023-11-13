@@ -1,4 +1,8 @@
 ﻿@model CustomPost2023.Data.Models.user
+@{
+    ViewBag.Title = "About";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
 <div class="content">
     <h2>Добавление пользователя</h2>
     <form asp-action="Create" asp-controller="User">

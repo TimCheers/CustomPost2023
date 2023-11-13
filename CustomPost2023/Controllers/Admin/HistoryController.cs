@@ -13,7 +13,7 @@ namespace CustomPost2023.Controllers.Admin
         }
         public ActionResult Index()
         {
-            var model = db.historys;
+            var model = db.history;
             return View(model);
         }
         public IActionResult Create()
@@ -23,7 +23,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(history hi)
         {
-            db.historys.Add(hi);
+            db.history.Add(hi);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -32,10 +32,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                history? hi = await db.historys.FirstOrDefaultAsync(p => p.history_id == id);
+                history? hi = await db.history.FirstOrDefaultAsync(p => p.history_id == id);
                 if (hi != null)
                 {
-                    db.historys.Remove(hi);
+                    db.history.Remove(hi);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -46,7 +46,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                history? hi = await db.historys.FirstOrDefaultAsync(p => p.history_id == id);
+                history? hi = await db.history.FirstOrDefaultAsync(p => p.history_id == id);
                 if (hi != null) return View(hi);
             }
             return NotFound();
@@ -54,7 +54,7 @@ namespace CustomPost2023.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Edit(history hi)
         {
-            db.historys.Update(hi);
+            db.history.Update(hi);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -1,23 +1,26 @@
 ﻿@using CustomPost2023.Data.Models
 @model IEnumerable<CustomPost2023.Data.Models.product>
+@{
+    ViewBag.Title = "Список товаров";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
 <div class="content">
-    <h2>Список пользователей</h2>
-    <p><a asp-action="Create">Добавить пользователя</a></p>
+    <h2>Список товаров</h2>
+    <p><a asp-action="Create">Добавить товар</a></p>
     <table class="table">
-        <tr><th>ID</th><th>Имя</th><th>Login</th><th>Password</th><th></th><th></th></tr>
+        <tr><th>ID</th><th>Название</th><th>Масса</th><th>ID типа</th><th></th><th></th></tr>
         @foreach (var item in Model)
         {
             <tr>
                 <td>@item.product_id</td>
                 <td>@item.product_title</td>
-                <td>@item.fk_vehicle_id</td>
+                <td>@item.mass</td>
                 <td>@item.fk_type_product_id</td>
-                <td>@item.fk_export_country_id</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="User" asp-route-id="@item.user_id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.product_id">Изменить</a>
                 </td>
                 <td>
-                    <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@item.user_id">
+                    <form asp-controller="Product" asp-action="Delete" method="post" asp-route-id="@item.product_id">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>

@@ -20,6 +20,7 @@ namespace CustomPost2023.Data.Models
             {
                 [1] = "Adding an entry",
                 [2] = "Deleting an entry",
+                [3] = "Editing an entry"
             };
             this.action = actionDic[actionType];
             datetime = DateTime.Now.ToUniversalTime();

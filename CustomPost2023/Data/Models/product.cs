@@ -12,10 +12,6 @@ namespace CustomPost2023.Data.Models
         [Display(Name = "Название продукта")]
         public string product_title { get; set; }
         public int mass { get; set; }
-        public int fk_user_id { get; set; }
         public int fk_type_product_id { get; set; }
-        public int fk_vehicle_id { get; set; }
-        public int fk_export_country_id { get; set; }
-        public int status_id { get; set; }
     }
 }

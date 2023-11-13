@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 public class ApplicationContext : DbContext
 {
     public DbSet<user> user { get; set; } = null!;
-    public DbSet<custom_post> custom_posts { get; set; } = null!;
-    public DbSet<product> products { get; set; } = null!;
-    public DbSet<product_type> product_types { get; set; } = null!;
-    public DbSet<vehicle_type> vehicle_types { get; set; } = null!;
-    public DbSet<status> statuss { get; set; } = null!;
-    public DbSet<history> historys { get; set; } = null!;
-    public DbSet<export_countries> export_countriess { get; set; } = null!;
+    public DbSet<custom_post> custom_post { get; set; } = null!;
+    public DbSet<product> product { get; set; } = null!;
+    public DbSet<product_type> product_type { get; set; } = null!;
+    public DbSet<vehicle_type> vehicle_type { get; set; } = null!;
+    public DbSet<status> status { get; set; } = null!;
+    public DbSet<history> history { get; set; } = null!;
+    public DbSet<export_countries> export_countries { get; set; } = null!;
     public DbSet<loggs> loggs { get; set; } = null!;
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
