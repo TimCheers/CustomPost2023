@@ -9,7 +9,7 @@ namespace CustomPost2023.Data.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int history_id { get; set; }
         public int product_id { get; set; }
-        public int status_id { get; set; }
+        public int id { get; set; }
         public DateOnly customDate { get; set; }
     }
 }

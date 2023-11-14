@@ -19,6 +19,6 @@ namespace CustomPost2023.Data.Models
         [Required]
         public int user_id { get; set; }
         [Required]
-        public int export_country_id { get; set; }
+        public int export_id { get; set; }
     }
 }

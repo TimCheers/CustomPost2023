@@ -7,28 +7,28 @@ using Serilog.Events;
 
 namespace CustomPost2023.Controllers.Admin
 {
-    public class UserController : Controller
+    public class StaffController : Controller
     {
         ApplicationContext db;
         private loggs logg = new loggs();
         public static string meanBefForLogg;
-        public UserController(ApplicationContext context)
+        public StaffController(ApplicationContext context)
         {
             db = context;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await db.user.ToListAsync());
+            return View(await db.staff.ToListAsync());
         }
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(user us)
+        public async Task<IActionResult> Create(staff sf)
         {
-            db.user.Add(us);
-            logg.SendLogg(db, 1, "user", "whole record", "NULL", $"{us.user_name}|{us.login}|{us.password}");
+            db.staff.Add(sf);
+            logg.SendLogg(db, 1, "staff", "whole record", "NULL", $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -37,11 +37,11 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null)
+                staff? sf = await db.staff.FirstOrDefaultAsync(p => p.id == id);
+                if (sf != null)
                 {
-                    logg.SendLogg(db, 2, "user", "whole record", $"{us.user_id}|{us.user_name}|{us.login}|{us.password}", "NULL");
-                    db.user.Remove(us);
+                    logg.SendLogg(db, 2, "user", "whole record", $"{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}", "NULL");
+                    db.staff.Remove(sf);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -52,20 +52,20 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
-                if (us != null)
+                staff? sf = await db.staff.FirstOrDefaultAsync(p => p.id == id);
+                if (sf != null)
                 {
-                    meanBefForLogg = $"{us.user_id}|{us.user_name}|{us.login}|{us.password}";
-                    return View(us);
+                    meanBefForLogg = $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.phone_number}";
+                    return View(sf);
                 }
             }
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(user us)
+        public async Task<IActionResult> Edit(staff sf)
         {
-            db.user.Update(us);
-            logg.SendLogg(db, 3, "user", "whole record", meanBefForLogg, $"{us.user_id}|{us.user_name}|{us.login}|{us.password}");
+            db.staff.Update(sf);
+            logg.SendLogg(db, 3, "user", "whole record", meanBefForLogg, $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.phone_number}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace CustomPost2023.Controllers.Admin
 {
-    public class Export_countriesController : Controller
+    public class Export_countryController : Controller
     {
         ApplicationContext db;
-        public Export_countriesController(ApplicationContext context)
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
+        public Export_countryController(ApplicationContext context)
         {
             db = context;
         }
@@ -25,6 +28,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(export_countries ec)
         {
             db.export_countries.Add(ec);
+            logg.SendLogg(db, 1, "export_countries", "whole record", "NULL", $"{ec.country_title}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -33,9 +37,10 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                export_countries? ec = await db.export_countries.FirstOrDefaultAsync(p => p.country_id == id);
+                export_countries? ec = await db.export_countries.FirstOrDefaultAsync(p => p.id == id);
                 if (ec != null)
                 {
+                    logg.SendLogg(db, 2, "export_countries", "whole record", $"{ec.id}|{ec.country_title}", "NULL");
                     db.export_countries.Remove(ec);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -47,8 +52,12 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                export_countries? ec = await db.export_countries.FirstOrDefaultAsync(p => p.country_id == id);
-                if (ec != null) return View(ec);
+                export_countries? ec = await db.export_countries.FirstOrDefaultAsync(p => p.id == id);
+                if (ec != null) 
+                {
+                    meanBefForLogg = $"{ec.id}|{ec.country_title}";
+                    return View(ec); 
+                }
             }
             return NotFound();
         }
@@ -56,6 +65,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(export_countries ec)
         {
             db.export_countries.Update(ec);
+            logg.SendLogg(db, 3, "export_countries", "whole record", meanBefForLogg, $"{ec.id}|{ec.country_title}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

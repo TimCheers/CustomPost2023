@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CustomPost2023.Controllers.Staff
 {
-    public class StaffController : Controller
+    public class StaffNativeController : Controller
     {
         // GET: StaffController
         public ActionResult Index()

@@ -1,0 +1,37 @@
+﻿@model CustomPost2023.Data.Models.staff
+@{
+    ViewBag.Title = "Создание пользователя";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Добавление пользователя</h2>
+    <form asp-action="Create" asp-controller="Staff">
+        <p>
+            <label asp-for="name">Имя</label><br />
+            <input type="text" asp-for="name" />
+        </p>
+        <p>
+            <label asp-for="age">Возраст</label><br />
+            <input type="text" asp-for="age" />
+        </p>
+        <p>
+            <label asp-for="work_experience">Стаж работы</label><br />
+            <input type="text" asp-for="work_experience" />
+        </p>
+        <p>
+            <label asp-for="custom_post_id">ID ТП</label><br />
+            <input type="text" asp-for="custom_post_id" />
+        </p>
+        <p>
+            <label asp-for="job_title">Должность</label><br />
+            <input type="text" asp-for="job_title" />
+        </p>
+        <p>
+            <label asp-for="phone_number">Номер телефона</label><br />
+            <input type="number" asp-for="phone_number" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    </form>
+</div>

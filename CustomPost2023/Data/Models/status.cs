@@ -7,7 +7,7 @@ namespace CustomPost2023.Data.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int status_id { get; set; }
+        public int id { get; set; }
         public string status_title { get; set; }
     }
 }

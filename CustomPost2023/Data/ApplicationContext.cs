@@ -11,6 +11,7 @@ public class ApplicationContext : DbContext
     public DbSet<history> history { get; set; } = null!;
     public DbSet<export_countries> export_countries { get; set; } = null!;
     public DbSet<loggs> loggs { get; set; } = null!;
+    public DbSet<staff> staff { get; set; } = null!;
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {

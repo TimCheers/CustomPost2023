@@ -7,7 +7,7 @@ namespace CustomPost2023.Data.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int country_id { get; set; }
+        public int id { get; set; }
         public string country_title { get; set; }
     }
 }
