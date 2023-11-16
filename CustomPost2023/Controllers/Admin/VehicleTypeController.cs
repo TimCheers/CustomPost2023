@@ -8,6 +8,8 @@ namespace CustomPost2023.Controllers.Admin
     public class VehicleTypeController : Controller
     {
         ApplicationContext db;
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
         public VehicleTypeController(ApplicationContext context)
         {
             db = context;
@@ -25,6 +27,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(vehicle_type vt)
         {
             db.vehicle_type.Add(vt);
+            logg.SendLogg(db, 1, "vehicle_type", "whole record", "NULL", $"{vt.vehicle_type_id}|{vt.vehicle_type_title}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -37,6 +40,7 @@ namespace CustomPost2023.Controllers.Admin
                 if (vt != null)
                 {
                     db.vehicle_type.Remove(vt);
+                    logg.SendLogg(db, 2, "vehicle_type", "whole record", $"{vt.vehicle_type_id}|{vt.vehicle_type_title}", "NULL");
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -48,7 +52,11 @@ namespace CustomPost2023.Controllers.Admin
             if (id != null)
             {
                 vehicle_type? vt = await db.vehicle_type.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
-                if (vt != null) return View(vt);
+                if (vt != null)
+                {
+                    meanBefForLogg = $"{vt.vehicle_type_id}|{vt.vehicle_type_title}";
+                    return View(vt);
+                }
             }
             return NotFound();
         }
@@ -56,6 +64,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(vehicle_type vt)
         {
             db.vehicle_type.Update(vt);
+            logg.SendLogg(db, 3, "vehicle_type", "whole record", meanBefForLogg, $"{vt.vehicle_type_id}|{vt.vehicle_type_title}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -1,4 +1,5 @@
-﻿@using CustomPost2023.Data.Models
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using CustomPost2023.Data.Models
 @model IEnumerable<CustomPost2023.Data.Models.loggs>
 @{
     ViewBag.Title = "About";
@@ -7,7 +8,7 @@
 <div class="content">
     <h2>Loggs</h2>
     <table class="table">
-        <tr><th>ID</th><th>Дата</th><th>ID пользователя</th><th>Действие</th><th>Таблица</th><th>Атрибут</th><th>Значение до</th><th>Значение после</th></tr>
+        <tr><th><a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">ID</a></th><th>Дата</th><th>ID пользователя</th><th>Действие</th><th>Таблица</th><th>Атрибут</th><th>Значение до</th><th>Значение после</th></tr>
         @foreach (var item in Model)
         {
             <tr>

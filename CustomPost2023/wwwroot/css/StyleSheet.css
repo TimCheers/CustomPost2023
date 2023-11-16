@@ -13,7 +13,7 @@
     .sidebar a {
         display: block;
         color: black;
-        padding: 16px;
+        padding: 5px;
         text-decoration: none;
     }
 
@@ -64,3 +64,4 @@ div.content {
 .backTe {
     margin: 0 0 0 10px;
 }
+

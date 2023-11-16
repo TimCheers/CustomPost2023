@@ -1,0 +1,32 @@
+﻿@model CustomPost2023.Data.Models.custom_post
+@{
+    ViewBag.Title = "Редактирование таможенного пункта";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Редактирование таможенного пункта</h2>
+    <form asp-action="Edit" asp-controller="CustomPost">
+        <div asp-validation-summary="All">
+            <p>
+                <label asp-for="customs_post_title">Название</label><br />
+                <input type="text" asp-for="customs_post_title" />
+            </p>
+            <p>
+                <label asp-for="location">Локация</label><br />
+                <input type="text" asp-for="location" />
+            </p>
+            <p>
+                <label asp-for="throughput">Пропускная способность</label><br />
+                <input type="text" asp-for="throughput" />
+            </p>
+            <p>
+                <label asp-for="fk_vehicle_id">ID транспорта доставки</label><br />
+                <input type="text" asp-for="fk_vehicle_id" />
+            </p>
+            <p>
+                <input type="submit" value="Отправить" />
+            </p>
+            <input type="hidden" asp-for="customs_post_id" />
+        </div>
+    </form>
+</div>

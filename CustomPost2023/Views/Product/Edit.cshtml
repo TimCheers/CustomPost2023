@@ -1,28 +1,28 @@
-﻿@model CustomPost2023.Data.Models.user
+﻿@model CustomPost2023.Data.Models.product
 @{
-    ViewBag.Title = "Изменение товара";
+    ViewBag.Title = "Редактирование продукта";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="content">
-    <h2>Редактирование пользователя</h2>
-    <form asp-action="Edit" asp-controller="User">
+    <h2>Редактирование продукта</h2>
+    <form asp-action="Edit" asp-controller="Product">
         <div asp-validation-summary="All">
             <p>
-                <label asp-for="user_name">Имя</label><br />
-                <input type="text" asp-for="user_name" />
+                <label asp-for="product_title">Название</label><br />
+                <input type="text" asp-for="product_title" />
             </p>
             <p>
-                <label asp-for="login">Login</label><br />
-                <input type="text" asp-for="login" />
+                <label asp-for="mass">Масса</label><br />
+                <input type="number" asp-for="mass" />
             </p>
             <p>
-                <label asp-for="password">Password</label><br />
-                <input type="text" asp-for="password" />
+                <label asp-for="fk_type_product_id">ID типа</label><br />
+                <input type="text" asp-for="fk_type_product_id" />
             </p>
             <p>
-                <input type="submit" value="Сохранить" />
+                <input type="submit" value="Отправить" />
             </p>
-            <input type="hidden" asp-for="user_id" />
+            <input type="hidden" asp-for="product_id" />
         </div>
     </form>
 </div>

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using CustomPost2023.Controllers.Home;
 using Serilog;
 using Serilog.Events;
+using CustomPost2023.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CustomPost2023.Controllers.Admin
 {
@@ -12,13 +14,37 @@ namespace CustomPost2023.Controllers.Admin
         ApplicationContext db;
         private loggs logg = new loggs();
         public static string meanBefForLogg;
+        public enum SortState
+        {
+            IdAsc,
+            IdDesc,
+            NameAsc,
+            NameDesc,
+            AgeAsc,
+            AgeDesc,
+            CompanyAsc,
+            CompanyDesc
+        }
         public StaffController(ApplicationContext context)
         {
             db = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState sortOrder = SortState.IdAsc)
         {
-            return View(await db.staff.ToListAsync());
+            var n = from st in db.Set<staff>()
+                    join cp in db.Set<custom_post>() on st.custom_post_id equals cp.customs_post_id
+                    select new { st, cp };
+            ViewData["IdSort"] = sortOrder == SortState.IdAsc ? SortState.IdDesc : SortState.IdAsc;
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            switch (sortOrder)
+            {
+                case SortState.IdAsc: return View(await n.OrderBy(p => p.st.id).ToListAsync());
+                case SortState.IdDesc: return View(await n.OrderByDescending(p => p.st.id).ToListAsync());
+                case SortState.NameAsc: return View(await n.OrderBy(p => p.st.name).ToListAsync());
+                case SortState.NameDesc: return View(await n.OrderByDescending(p => p.st.name).ToListAsync());
+            }
+
+            return View(await n.ToListAsync());
         }
         public IActionResult Create()
         {

@@ -1,5 +1,6 @@
-﻿@using CustomPost2023.Data.Models
-@model IEnumerable<CustomPost2023.Data.Models.staff>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using CustomPost2023.Data.Models
+@* @model IEnumerable<CustomPost2023.Data.Models.staff> *@
 @{
     ViewBag.Title = "Список персонала";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
@@ -8,22 +9,40 @@
     <h2>Список персонала</h2>
     <p><a asp-action="Create">Добавить пользователя</a></p>
     <table class="table">
-        <tr><th>ID</th><th>Имя</th><th>Возраст</th><th>Опыт работы</th><th>ID ТП</th><th>Должность</th><th>Номер телефона</th><th></th><th></th></tr>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">
+                    ID
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">
+                    ФИО
+                </a>
+            </th>
+            <th>Возраст</th>
+            <th>Опыт работы</th>
+            <th>ID ТП</th>
+            <th>Должность</th>
+            <th>Номер телефона</th>
+            <th></th>
+            <th></th>
+        </tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.id</td>
-                <td>@item.name</td>
-                <td>@item.age</td>
-                <td>@item.work_experience</td>
-                <td>@item.custom_post_id</td>
-                <td>@item.job_title</td>
-                <td>@item.phone_number</td>
+                <td>@item.st.id</td>
+                <td>@item.st.name</td>
+                <td>@item.st.age</td>
+                <td>@item.st.work_experience</td>
+                <td>@item.cp.customs_post_title</td>
+                <td>@item.st.job_title</td>
+                <td>@item.st.phone_number</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Staff" asp-route-id="@item.id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Staff" asp-route-id="@item.st.id">Изменить</a>
                 </td>
                 <td>
-                    <form asp-controller="Staff" asp-action="Delete" method="post" asp-route-id="@item.id">
+                    <form asp-controller="Staff" asp-action="Delete" method="post" asp-route-id="@item.st.id">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>
