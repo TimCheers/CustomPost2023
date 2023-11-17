@@ -22,8 +22,14 @@ namespace CustomPost2023.Controllers.Admin
             NameDesc,
             AgeAsc,
             AgeDesc,
-            CompanyAsc,
-            CompanyDesc
+            work_experienceAsc,
+            work_experienceDesc,
+            customs_post_titleAsc,
+            customs_post_titleDesc,
+            job_titleAsc,
+            job_titleDesc,
+            phone_numberAsc,
+            phone_numberDesc
         }
         public StaffController(ApplicationContext context)
         {
@@ -36,12 +42,27 @@ namespace CustomPost2023.Controllers.Admin
                     select new { st, cp };
             ViewData["IdSort"] = sortOrder == SortState.IdAsc ? SortState.IdDesc : SortState.IdAsc;
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewData["AgeSort"] = sortOrder == SortState.AgeAsc ? SortState.AgeDesc : SortState.AgeAsc;
+            ViewData["work_experienceSort"] = sortOrder == SortState.work_experienceAsc ? SortState.work_experienceDesc : SortState.work_experienceAsc;
+            ViewData["customs_post_titleSort"] = sortOrder == SortState.customs_post_titleAsc ? SortState.customs_post_titleDesc : SortState.customs_post_titleAsc;
+            ViewData["job_titleSort"] = sortOrder == SortState.job_titleAsc ? SortState.job_titleDesc : SortState.job_titleAsc;
+            ViewData["phone_numberSort"] = sortOrder == SortState.phone_numberAsc ? SortState.phone_numberDesc : SortState.phone_numberAsc;
             switch (sortOrder)
             {
                 case SortState.IdAsc: return View(await n.OrderBy(p => p.st.id).ToListAsync());
                 case SortState.IdDesc: return View(await n.OrderByDescending(p => p.st.id).ToListAsync());
                 case SortState.NameAsc: return View(await n.OrderBy(p => p.st.name).ToListAsync());
                 case SortState.NameDesc: return View(await n.OrderByDescending(p => p.st.name).ToListAsync());
+                case SortState.AgeAsc: return View(await n.OrderBy(p => p.st.age).ToListAsync());
+                case SortState.AgeDesc: return View(await n.OrderByDescending(p => p.st.age).ToListAsync());
+                case SortState.work_experienceAsc: return View(await n.OrderBy(p => p.st.work_experience).ToListAsync());
+                case SortState.work_experienceDesc: return View(await n.OrderByDescending(p => p.st.work_experience).ToListAsync());
+                case SortState.customs_post_titleAsc: return View(await n.OrderBy(p => p.cp.customs_post_title).ToListAsync());
+                case SortState.customs_post_titleDesc: return View(await n.OrderByDescending(p => p.cp.customs_post_title).ToListAsync());
+                case SortState.job_titleAsc: return View(await n.OrderBy(p => p.st.id).ToListAsync());
+                case SortState.job_titleDesc: return View(await n.OrderByDescending(p => p.st.id).ToListAsync());
+                case SortState.phone_numberAsc: return View(await n.OrderBy(p => p.st.phone_number).ToListAsync());
+                case SortState.phone_numberDesc: return View(await n.OrderByDescending(p => p.st.phone_number).ToListAsync());
             }
 
             return View(await n.ToListAsync());
@@ -54,7 +75,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(staff sf)
         {
             db.staff.Add(sf);
-            logg.SendLogg(db, 1, "staff", "whole record", "NULL", $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}");
+            logg.SendLogg(db, 1, "staff", "whole record", "NULL", $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -66,7 +87,7 @@ namespace CustomPost2023.Controllers.Admin
                 staff? sf = await db.staff.FirstOrDefaultAsync(p => p.id == id);
                 if (sf != null)
                 {
-                    logg.SendLogg(db, 2, "user", "whole record", $"{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}", "NULL");
+                    logg.SendLogg(db, 2, "staff", "whole record", $"{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}", "NULL");
                     db.staff.Remove(sf);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -81,7 +102,7 @@ namespace CustomPost2023.Controllers.Admin
                 staff? sf = await db.staff.FirstOrDefaultAsync(p => p.id == id);
                 if (sf != null)
                 {
-                    meanBefForLogg = $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.phone_number}";
+                    meanBefForLogg = $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.phone_number}";
                     return View(sf);
                 }
             }
@@ -91,7 +112,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(staff sf)
         {
             db.staff.Update(sf);
-            logg.SendLogg(db, 3, "user", "whole record", meanBefForLogg, $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.custom_post_id}|{sf.phone_number}");
+            logg.SendLogg(db, 3, "staff", "whole record", meanBefForLogg, $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.phone_number}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
