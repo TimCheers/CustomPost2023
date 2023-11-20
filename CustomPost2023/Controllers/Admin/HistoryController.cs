@@ -11,10 +11,12 @@ namespace CustomPost2023.Controllers.Admin
         {
             db = context;
         }
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = db.history;
-            return View(model);
+            var n = from hi in db.Set<history>()
+                    join ap in db.Set<application>() on hi.application_id equals ap.id
+                    select new { hi, ap };
+            return View(await n.ToListAsync());
         }
         public IActionResult Create()
         {
@@ -32,7 +34,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                history? hi = await db.history.FirstOrDefaultAsync(p => p.history_id == id);
+                history? hi = await db.history.FirstOrDefaultAsync(p => p.id == id);
                 if (hi != null)
                 {
                     db.history.Remove(hi);
@@ -46,7 +48,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             if (id != null)
             {
-                history? hi = await db.history.FirstOrDefaultAsync(p => p.history_id == id);
+                history? hi = await db.history.FirstOrDefaultAsync(p => p.id == id);
                 if (hi != null) return View(hi);
             }
             return NotFound();

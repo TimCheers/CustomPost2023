@@ -6,6 +6,7 @@ using Serilog;
 using Serilog.Events;
 using CustomPost2023.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Xml.Linq;
 
 namespace CustomPost2023.Controllers.Admin
 {
@@ -35,7 +36,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             db = context;
         }
-        public async Task<IActionResult> Index(SortState sortOrder = SortState.IdAsc)
+        public async Task<IActionResult> Index(string name, string custom_post, SortState sortOrder = SortState.IdAsc)
         {
             var n = from st in db.Set<staff>()
                     join cp in db.Set<custom_post>() on st.custom_post_id equals cp.customs_post_id
@@ -47,6 +48,14 @@ namespace CustomPost2023.Controllers.Admin
             ViewData["customs_post_titleSort"] = sortOrder == SortState.customs_post_titleAsc ? SortState.customs_post_titleDesc : SortState.customs_post_titleAsc;
             ViewData["job_titleSort"] = sortOrder == SortState.job_titleAsc ? SortState.job_titleDesc : SortState.job_titleAsc;
             ViewData["phone_numberSort"] = sortOrder == SortState.phone_numberAsc ? SortState.phone_numberDesc : SortState.phone_numberAsc;
+            if (!string.IsNullOrEmpty(name))
+            {
+                n = n.Where(p => p.st.name.Contains(name));
+            }
+            if (!string.IsNullOrEmpty(custom_post))
+            {
+                n = n.Where(p => p.cp.customs_post_title.Contains(custom_post));
+            }
             switch (sortOrder)
             {
                 case SortState.IdAsc: return View(await n.OrderBy(p => p.st.id).ToListAsync());
@@ -64,7 +73,6 @@ namespace CustomPost2023.Controllers.Admin
                 case SortState.phone_numberAsc: return View(await n.OrderBy(p => p.st.phone_number).ToListAsync());
                 case SortState.phone_numberDesc: return View(await n.OrderByDescending(p => p.st.phone_number).ToListAsync());
             }
-
             return View(await n.ToListAsync());
         }
         public IActionResult Create()

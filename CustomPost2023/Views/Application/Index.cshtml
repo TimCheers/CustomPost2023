@@ -2,21 +2,12 @@
 @using CustomPost2023.Data.Models
 @* @model IEnumerable<CustomPost2023.Data.Models.staff> *@
 @{
-    ViewBag.Title = "Список персонала";
+    ViewBag.Title = "Список заявок";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="content">
-    <h2>Список персонала</h2>
-    <p><a asp-action="Create">Добавить пользователя</a></p>
-    <form method="get">
-        <div>
-            <label>Имя: </label>
-            <input type="text" placeholder="Введите имя" name="name">
-            <label>Название ТП: </label>
-            <input type="text" placeholder="Введите название таможенного пункта" name="custom_post">
-            <input type="submit" value="Фильтр" />
-        </div>
-    </form>
+    <h2>Список заявок</h2>
+    <p><a asp-action="Create">Добавить заявку</a></p>
     <table class="table">
         <tr>
             <th>
@@ -25,33 +16,33 @@
                 </a>
             </th>
             <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">
+                    Продукт
+                </a>
+            </th>
+            <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">
-                    ФИО
+                    Таможенный пункт
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.AgeSort">
-                    Возраст
+                    Сотрудник ТП
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.work_experienceSort">
-                    Опыт работы
+                    Статус
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.customs_post_titleSort">
-                    Название таможенного пункта
+                    Импортер
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.job_titleSort">
-                    Должность
-                </a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewBag.phone_numberSort">
-                    Номер телефона
+                    Страна экспорта
                 </a>
             </th>
             <th></th>
@@ -60,13 +51,13 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.st.id</td>
-                <td>@item.st.name</td>
-                <td>@item.st.age</td>
-                <td>@item.st.work_experience</td>
+                <td>@item.ap.id</td>
+                <td>@item.pr.product_title</td>
                 <td>@item.cp.customs_post_title</td>
-                <td>@item.st.job_title</td>
-                <td>@item.st.phone_number</td>
+                <td>@item.st.name</td>
+                <td>@item.ss.status_title</td>
+                <td>@item.us.user_name</td>
+                <td>@item.co.country_title</td>
                 <td>
                     <a asp-action="Edit" asp-controller="Staff" asp-route-id="@item.st.id">Изменить</a>
                 </td>

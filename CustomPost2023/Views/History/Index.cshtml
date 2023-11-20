@@ -1,0 +1,47 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using CustomPost2023.Data.Models
+@* @model IEnumerable<CustomPost2023.Data.Models.staff> *@
+@{
+    ViewBag.Title = "История";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>История</h2>
+    <table class="table">
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">
+                    ID
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">
+                    Дата таможенного осмотра
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.AgeSort">
+                    ID заявки
+                </a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.hi.id</td>
+                <td>@item.hi.custom_date</td>
+                <td>@item.hi.application_id</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="History" asp-route-id="@item.hi.id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-controller="History" asp-action="Delete" method="post" asp-route-id="@item.hi.id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
