@@ -1,83 +1,85 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Models;
+using CustomPost2023.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Staff
 {
     public class StaffNativeController : Controller
     {
-        // GET: StaffController
-        public ActionResult Index()
+        ApplicationContext db;
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
+        public StaffNativeController(ApplicationContext context)
         {
-            return View();
+            db = context;
         }
-
-        // GET: StaffController/Details/5
-        public ActionResult Details(int id)
+        private StaffViewModel DetectStaff(int id)
         {
-            return View();
-        }
+            var n = db.staff.Where(p => p.id.Equals(id)).FirstOrDefault();
+            StaffViewModel model = new StaffViewModel();
+            model.staff = n;
+            model.custom_post = db.custom_post.Where(p => p.customs_post_id.Equals(n.custom_post_id)).FirstOrDefault();
+            model.applications = new List<ApplicationViewModel>();
+            List<application> curApp = db.application.Where(p => p.staff_id.Equals(n.id)).ToList();
 
-        // GET: StaffController/Create
-        public ActionResult Create()
+            foreach (application item in curApp)
+            {
+                ApplicationViewModel tmp = new ApplicationViewModel();
+                tmp.app_app = db.application.FirstOrDefault(p => p.id.Equals(item.id));
+                tmp.app_staff = db.staff.FirstOrDefault(p => p.id.Equals(item.staff_id));
+                tmp.app_status = db.status.FirstOrDefault(p => p.id.Equals(item.status_id));
+                tmp.app_product = db.product.FirstOrDefault(p => p.product_id.Equals(item.product_id));
+                tmp.app_custom_post = db.custom_post.FirstOrDefault(p => p.customs_post_id.Equals(item.custom_post_id));
+                tmp.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(item.user_id));
+                tmp.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(item.staff_id));
+                tmp.app_history = db.history.FirstOrDefault(p => p.application_id.Equals(item.id));
+                tmp.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(tmp.app_product.fk_type_product_id));
+                model.applications.Add(tmp);
+            }
+            return model;
+        }
+        public IActionResult Index(int id)
         {
-            return View();
+            return View(DetectStaff(id));
         }
-
-        // POST: StaffController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> EditPassword(staff us)
         {
-            try
+            if (us != null)
             {
-                return RedirectToAction(nameof(Index));
+                //logg.SendLogg(db, 2, "user", "whole record", $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}", "NULL");
+                db.staff.Update(us);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
+        //[HttpPost]
+        //public IActionResult ViewTask(int id)
+        //{
 
-        // GET: StaffController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: StaffController/Edit/5
+        //    return View(DetectStaff(id));
+        //}
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult ViewTask(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            ApplicationViewModel model = new ApplicationViewModel();
+            model.app_app = db.application.FirstOrDefault(p => p.id.Equals(id));
 
-        // GET: StaffController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return View(model);
         }
-
-        // POST: StaffController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult ViewAllTasks(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(DetectStaff(id));
         }
+        //public IActionResult ViewTask(StaffViewModel model)
+        //{
+
+        //    return View(model);
+        //}
     }
+
 }

@@ -59,10 +59,10 @@
                 <td>@item.us.user_name</td>
                 <td>@item.co.country_title</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Staff" asp-route-id="@item.st.id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Application" asp-route-id="@item.ap.id">Изменить</a>
                 </td>
                 <td>
-                    <form asp-controller="Staff" asp-action="Delete" method="post" asp-route-id="@item.st.id">
+                    <form asp-controller="Application" asp-action="Delete" method="post" asp-route-id="@item.ap.id">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>

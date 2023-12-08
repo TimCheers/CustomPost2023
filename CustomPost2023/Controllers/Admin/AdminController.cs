@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Xml.Linq;
 
 namespace CustomPost2023.Controllers.Admin
 {
@@ -30,7 +31,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             db = context;
         }
-        public async Task<IActionResult> Loggs(SortState sortOrder = SortState.IdAsc)
+        public async Task<IActionResult> Loggs(string actionStr, string tableStr, DateTime datetimeStr, SortState sortOrder = SortState.IdAsc)
         {
             IQueryable<loggs>? myLogg = db.loggs;
             var n = from st in db.Set<loggs>()
@@ -41,21 +42,42 @@ namespace CustomPost2023.Controllers.Admin
             ViewData["attributeSort"] = sortOrder == SortState.attributeAsc ? SortState.attributeDesc : SortState.attributeAsc;
             ViewData["actionSort"] = sortOrder == SortState.actionAsc ? SortState.actionDesc : SortState.actionAsc;
             ViewData["tableSort"] = sortOrder == SortState.tableAsc ? SortState.tableDesc : SortState.tableAsc;
-            switch (sortOrder)
+            if (!string.IsNullOrEmpty(actionStr))
             {
-                case SortState.IdAsc: return View(await n.OrderBy(s => s.st.id).ToListAsync());
-                case SortState.IdDesc: return View(await n.OrderByDescending(s => s.st.id).ToListAsync());
-                case SortState.datetimeAsc: return View(await n.OrderBy(s => s.st.datetime).ToListAsync());
-                case SortState.datetimeDesc: return View(await n.OrderByDescending(s => s.st.datetime).ToListAsync());
-                case SortState.user_idAsc: return View(await n.OrderBy(s => s.st.user_id).ToListAsync());
-                case SortState.user_idDesc: return View(await n.OrderByDescending(s => s.st.user_id).ToListAsync());
-                case SortState.attributeAsc: return View(await n.OrderBy(s => s.st.attribute).ToListAsync());
-                case SortState.attributeDesc: return View(await n.OrderByDescending(s => s.st.attribute).ToListAsync());
-                case SortState.actionAsc: return View(await n.OrderBy(s => s.st.action).ToListAsync());
-                case SortState.actionDesc: return View(await n.OrderByDescending(s => s.st.action).ToListAsync());
-                case SortState.tableAsc: return View(await n.OrderBy(s => s.st.table).ToListAsync());
-                case SortState.tableDesc: return View(await n.OrderByDescending(s => s.st.table).ToListAsync());
+                n = n.Where(p => p.st.action.Contains(actionStr));
             }
+            if (!string.IsNullOrEmpty(tableStr))
+            {
+                n = n.Where(p => p.st.table.Contains(tableStr));
+            }
+            //if (datetimeStr != DateTime.MinValue.Date)
+            //{
+            //    n = n.Where(p => p.st.datetime.Date.Equals(datetimeStr.Date));
+            //}
+            Console.WriteLine($"Передача: {datetimeStr}\n Текущая: {n}");
+            try
+            {
+                switch (sortOrder)
+                {
+                    case SortState.IdAsc: return View(await n.OrderBy(s => s.st.id).ToListAsync());
+                    case SortState.IdDesc: return View(await n.OrderByDescending(s => s.st.id).ToListAsync());
+                    case SortState.datetimeAsc: return View(await n.OrderBy(s => s.st.datetime).ToListAsync());
+                    case SortState.datetimeDesc: return View(await n.OrderByDescending(s => s.st.datetime).ToListAsync());
+                    case SortState.user_idAsc: return View(await n.OrderBy(s => s.st.user_id).ToListAsync());
+                    case SortState.user_idDesc: return View(await n.OrderByDescending(s => s.st.user_id).ToListAsync());
+                    case SortState.attributeAsc: return View(await n.OrderBy(s => s.st.attribute).ToListAsync());
+                    case SortState.attributeDesc: return View(await n.OrderByDescending(s => s.st.attribute).ToListAsync());
+                    case SortState.actionAsc: return View(await n.OrderBy(s => s.st.action).ToListAsync());
+                    case SortState.actionDesc: return View(await n.OrderByDescending(s => s.st.action).ToListAsync());
+                    case SortState.tableAsc: return View(await n.OrderBy(s => s.st.table).ToListAsync());
+                    case SortState.tableDesc: return View(await n.OrderByDescending(s => s.st.table).ToListAsync());
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             return View(await n.ToListAsync());
         }
         [HttpPost]

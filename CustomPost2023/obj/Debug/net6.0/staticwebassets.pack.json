@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\css\\StyleSheet.css"
     },
     {
+      "Id": "C:\\Users\\TimCheers\\Desktop\\OneMore\\CustomPost2023\\wwwroot\\css\\StyleStaff.css",
+      "PackagePath": "staticwebassets\\css\\StyleStaff.css"
+    },
+    {
+      "Id": "C:\\Users\\TimCheers\\Desktop\\OneMore\\CustomPost2023\\wwwroot\\img\\2.jpg",
+      "PackagePath": "staticwebassets\\img\\2.jpg"
+    },
+    {
       "Id": "C:\\Users\\TimCheers\\Desktop\\OneMore\\CustomPost2023\\wwwroot\\js\\JavaScript.js",
       "PackagePath": "staticwebassets\\js\\JavaScript.js"
     },

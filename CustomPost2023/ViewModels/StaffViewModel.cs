@@ -7,5 +7,6 @@ namespace CustomPost2023.ViewModels
     {
         public staff staff {  get; set; }
         public custom_post custom_post { get; set; }
+        public List<ApplicationViewModel> applications { get; set; }
     }
 }

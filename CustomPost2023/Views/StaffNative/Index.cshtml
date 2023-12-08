@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Личный кабинет работника таможни";
+    Layout = "/Views/Shared/_StaffLayout.cshtml";
+}
+@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.StaffViewModel
+@{
+    var now = DateTime.Now;
+    var year = now.Year;
+    var month = now.Month;
+    var firstDayOfMonth = new DateTime(year, month, 1);
+    var lastDayOfMonth = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+    var daysInMonth = lastDayOfMonth.Day;
+    var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek;
+    bool task = false;
+    var dayCount = 1;
+}
+<body>
+    <h2 class="text-center mb-4">Личный кабинет работника таможни</h2>
+    <div class="container">
+        <div class="row">
+            <!-- Profile Container on the left -->
+            <div class="col-md-6">
+                <div class="profile-container">
+                    <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+                    <button type="button" class="btn btn-block btn-change-photo" onclick="changeProfilePhoto()">Изменить фото профиля</button>
+                    <input type="file" id="photoInput" style="display: none">
+
+                    <!-- Личный кабинет работника таможни -->
+
+                    <div class="form-group">
+                        <label for="employeeName">Имя работника:</label>
+                        <input type="text" class="form-control" id="employeeName" value="@Model.staff.name" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeePosition">Должность:</label>
+                        <input type="text" class="form-control" id="employeePosition" value="@Model.staff.job_title" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeEmail">Email:</label>
+                        <input type="email" class="form-control" id="employeeEmail" value="@Model.staff.email" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeePassword">Текущий пароль:</label>
+                        <input type="password" class="form-control" id="employeePassword" value="@Model.staff.password" disabled>
+                    </div>
+                    <div class="mt-3 btn-group d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary">Настройки</button>
+                        <form asp-controller="StaffNative" asp-action="ViewAllTasks" asp-route-id="@Model.staff.id">
+                            <input class="btn btn-secondary" type="submit" value="Просмотреть заявки" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Calendar Container on the right -->
+            <div class="col-md-6">
+                <div>
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th>Сб</th>
+                            <th>Вс</th>
+                        </tr>
+
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            <tr>
+                                @for (int j = 0; j < 7; j++)
+                                {
+                                    if (i == 0 && j < firstDayOfWeek)
+                                    {
+                                        <td></td>
+                                    }
+                                    else if (dayCount > daysInMonth)
+                                    {
+                                        <td></td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @dayCount
+                                            <div class="task-list" id="tasks-@dayCount" >
+                                                @foreach(ApplicationViewModel item in Model.applications)
+                                                {
+                                                    if (item.app_history.custom_date.Day == dayCount)
+                                                    {
+                                                        task = true;
+                                                        <a asp-action="ViewTask" asp-controller="StaffNative" asp-route-id="@item.app_app.id">@item.app_product.product_title</a>
+                                                    }  
+                                                }
+                                                @if(!task)
+                                                {
+                                                    <a href="1.html">Нет задач</a>
+                                                    
+                                                }
+                                                @{task = false;}
+                                            </div>
+                                        </td>
+                                        dayCount++;
+                                    }
+                                }
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

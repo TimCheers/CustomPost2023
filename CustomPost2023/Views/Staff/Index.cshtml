@@ -56,6 +56,7 @@
             </th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         @foreach (var item in Model)
         {
@@ -67,12 +68,19 @@
                 <td>@item.cp.customs_post_title</td>
                 <td>@item.st.job_title</td>
                 <td>@item.st.phone_number</td>
+                <td>@item.st.email</td>
+                <td>@item.st.password</td>
                 <td>
                     <a asp-action="Edit" asp-controller="Staff" asp-route-id="@item.st.id">Изменить</a>
                 </td>
                 <td>
                     <form asp-controller="Staff" asp-action="Delete" method="post" asp-route-id="@item.st.id">
                         <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@item.st.id">
+                        <input type="submit" value="Просмотр" />
                     </form>
                 </td>
             </tr>

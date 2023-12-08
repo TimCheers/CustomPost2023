@@ -228,3 +228,10 @@ C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\obj\Debug\net6.0\scopedcss\bun
 C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\obj\Debug\net6.0\CustomPost2023.csproj.CopyComplete
 C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\obj\Debug\net6.0\CustomPost2023.genruntimeconfig.cache
 C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\obj\Debug\net6.0\ref\CustomPost2023.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\TimCheers\Desktop\OneMore\CustomPost2023\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

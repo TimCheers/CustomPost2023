@@ -21,5 +21,7 @@ namespace CustomPost2023.Data.Models
         public string job_title { get; set; }
         [Required] 
         public int phone_number { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
     }
 }

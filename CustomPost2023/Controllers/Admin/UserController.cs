@@ -28,7 +28,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(user us)
         {
             db.user.Add(us);
-            logg.SendLogg(db, 1, "user", "whole record", "NULL", $"{us.user_name}|{us.login}|{us.password}");
+            logg.SendLogg(db, 1, "user", "whole record", "NULL", $"{us.user_name}|{us.login}|{us.password}|{us.role}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -40,7 +40,7 @@ namespace CustomPost2023.Controllers.Admin
                 user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
                 if (us != null)
                 {
-                    logg.SendLogg(db, 2, "user", "whole record", $"{us.user_id}|{us.user_name}|{us.login}|{us.password}", "NULL");
+                    logg.SendLogg(db, 2, "user", "whole record", $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}", "NULL");
                     db.user.Remove(us);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -55,7 +55,7 @@ namespace CustomPost2023.Controllers.Admin
                 user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
                 if (us != null)
                 {
-                    meanBefForLogg = $"{us.user_id}|{us.user_name}|{us.login}|{us.password}";
+                    meanBefForLogg = $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}";
                     return View(us);
                 }
             }
@@ -65,7 +65,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(user us)
         {
             db.user.Update(us);
-            logg.SendLogg(db, 3, "user", "whole record", meanBefForLogg, $"{us.user_id}|{us.user_name}|{us.login}|{us.password}");
+            logg.SendLogg(db, 3, "user", "whole record", meanBefForLogg, $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

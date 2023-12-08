@@ -7,6 +7,17 @@
 }
 <div class="content">
     <h2>Loggs</h2>
+    <form method="get">
+        <div>
+            <label>Action: </label>
+            <input type="text" placeholder="Введите action" name="actionStr">
+            <label>Table: </label>
+            <input type="text" placeholder="Введите table" name="tableStr">
+            <label>Date: </label>
+            <input type="date" placeholder="Введите date" name="datetimeStr">
+            <input type="submit" value="Фильтр" />
+        </div>
+    </form>
     <table class="table">
         <tr>
             <th>
@@ -41,11 +52,9 @@
             </th>
             <th>
                     Значение до
-                </a>
             </th>
             <th>
                     Значение после
-                </a>
             </th>
         </tr>
         @foreach (var item in Model)

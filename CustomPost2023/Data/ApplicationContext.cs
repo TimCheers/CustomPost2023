@@ -1,5 +1,6 @@
 ﻿using CustomPost2023.Data.Models;
 using Microsoft.EntityFrameworkCore;
+
 public class ApplicationContext : DbContext
 {
     public DbSet<user> user { get; set; } = null!;
@@ -33,5 +34,10 @@ public class ApplicationContext : DbContext
         //        new User { Id = 2, Name = "Bob", Age = 41 },
         //        new User { Id = 3, Name = "Sam", Age = 24 }
         //);
+    }
+
+    public static implicit operator ApplicationContext(HttpContext v)
+    {
+        throw new NotImplementedException();
     }
 }

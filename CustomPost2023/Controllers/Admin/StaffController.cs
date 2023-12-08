@@ -83,7 +83,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(staff sf)
         {
             db.staff.Add(sf);
-            logg.SendLogg(db, 1, "staff", "whole record", "NULL", $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}");
+            logg.SendLogg(db, 1, "staff", "whole record", "NULL", $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}|{sf.email}|{sf.password}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -95,7 +95,7 @@ namespace CustomPost2023.Controllers.Admin
                 staff? sf = await db.staff.FirstOrDefaultAsync(p => p.id == id);
                 if (sf != null)
                 {
-                    logg.SendLogg(db, 2, "staff", "whole record", $"{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}", "NULL");
+                    logg.SendLogg(db, 2, "staff", "whole record", $"{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.custom_post_id}|{sf.phone_number}|{sf.email}|{sf.password}", "NULL");
                     db.staff.Remove(sf);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -110,7 +110,7 @@ namespace CustomPost2023.Controllers.Admin
                 staff? sf = await db.staff.FirstOrDefaultAsync(p => p.id == id);
                 if (sf != null)
                 {
-                    meanBefForLogg = $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.phone_number}";
+                    meanBefForLogg = $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.phone_number}|{sf.email}|{sf.password}";
                     return View(sf);
                 }
             }
@@ -120,7 +120,7 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(staff sf)
         {
             db.staff.Update(sf);
-            logg.SendLogg(db, 3, "staff", "whole record", meanBefForLogg, $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.phone_number}");
+            logg.SendLogg(db, 3, "staff", "whole record", meanBefForLogg, $"{sf.id}|{sf.name}|{sf.age}|{sf.work_experience}|{sf.job_title}|{sf.custom_post_id}|{sf.phone_number}|{sf.email}|{sf.password}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
