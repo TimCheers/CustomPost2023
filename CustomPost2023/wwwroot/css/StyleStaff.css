@@ -51,9 +51,10 @@ a.appl_link { /* Стили для ссылок */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color:fuchsia; /* Цвет текста ссылок */
+    color: fuchsia; /* Цвет текста ссылок */
     text-decoration: none; /* Убираем подчеркивание ссылок */
 }
+
 .task-list {
     display: none;
     position: absolute;
@@ -65,4 +66,16 @@ a.appl_link { /* Стили для ссылок */
 
 td:hover .task-list {
     display: block;
+}
+
+.submitLink {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    color: blue;
+    cursor: pointer;
+}
+
+submitLink:focus {
+    outline: none;
 }

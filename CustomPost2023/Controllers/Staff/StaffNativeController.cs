@@ -56,18 +56,11 @@ namespace CustomPost2023.Controllers.Staff
             }
             return NotFound();
         }
-        //[HttpPost]
-        //public IActionResult ViewTask(int id)
-        //{
-
-        //    return View(DetectStaff(id));
-        //}
         [HttpPost]
         public IActionResult ViewTask(int id)
         {
             ApplicationViewModel model = new ApplicationViewModel();
             model.app_app = db.application.FirstOrDefault(p => p.id.Equals(id));
-
             return View(model);
         }
         [HttpPost]
@@ -75,11 +68,5 @@ namespace CustomPost2023.Controllers.Staff
         {
             return View(DetectStaff(id));
         }
-        //public IActionResult ViewTask(StaffViewModel model)
-        //{
-
-        //    return View(model);
-        //}
     }
-
 }

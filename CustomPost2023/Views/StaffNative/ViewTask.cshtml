@@ -1,0 +1,44 @@
+﻿@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.ApplicationViewModel
+@{
+    ViewBag.Title = "Заявка " + Model.app_app.id;
+    Layout = "/Views/Shared/_StaffLayout.cshtml";
+}
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 form-container">
+                <!-- Используем класс col-md-12 для занимания 100% ширины на устройствах среднего размера и более -->
+                <!-- Форма для проверки товара -->
+                <h2 class="text-center mb-4">Таможенная проверка товара</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="productName">Наименование товара:</label>
+                        <input type="text" class="form-control" id="productName" placeholder="Введите наименование товара" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Описание товара:</label>
+                        <textarea class="form-control" id="productDescription" rows="3" placeholder="Введите описание товара" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productValue">Стоимость товара:</label>
+                        <input type="text" class="form-control" id="productValue" placeholder="Введите стоимость товара" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customsDate">Дата проверки:</label>
+                        <input type="date" class="form-control" id="customsDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signature">Подпись после распечатки:</label>
+                        <input type="text" class="form-control" id="signature" placeholder="Введите вашу подпись" style="color: #000;" required>
+                    </div>
+                    <button type="button" class="btn btn-block btn-check" onclick="checkCustoms()">Проверить</button>
+                </form>
+                <p class="text-center mt-3" id="checkResult"></p>
+            </div>
+        </div>
+    </div>
+
+
+</body>

@@ -18,7 +18,6 @@
 <body>
     <div class="container">
         <h2 class="mt-4">Список заявок</h2>
-
         <table class="table table-bordered table-striped mt-3">
             <thead>
                 <tr>
@@ -31,60 +30,38 @@
                 </tr>
             </thead>
             <tbody>
-
                 @{
-                    List<DateOnly> applicationDates = new List<DateOnly>();
+                    //int applCount = Model.applications.Count(p => p.app_history.custom_date == default);
+                    List<DateOnly> unDates = new List<DateOnly>();
                     foreach (ApplicationViewModel item in Model.applications)
                     {
-                        if (!applicationDates.Contains(item.app_history.custom_date))
+                        if (!unDates.Contains(item.app_history.custom_date))
                         {
-                            applicationDates.Add(item.app_history.custom_date);
-                            <p>qwertyuio</p>
+                            unDates.Add(item.app_history.custom_date);
                         }
                     }
-                    List<StaffViewModel> stlist = new List<StaffViewModel>();
-                    for (int i = 0; i < applicationDates.Count; i++)
+                    for (int i = 0; i < unDates.Count; i++)
                     {
-                        int datesCount = Model.applications.Where(p => p.app_history.custom_date == applicationDates[i]).Count();
-
-                        @if (datesCount > 1)
+                        bool is_reapite = false;
+                        List<ApplicationViewModel> models = Model.applications.Where(p => p.app_history.custom_date.Equals(unDates[i])).ToList();
+                        @foreach (ApplicationViewModel item in models)
                         {
-                        <td rowspan="@datesCount">@applicationDates[i]</td>
-                            @foreach (ApplicationViewModel item in Model.applications)
-                            {
                             <tr>
-                                if (item.app_history.custom_date == applicationDates[i])
+                                @if (!is_reapite)
                                 {
-                                <td>@item.app_prod_type.type_product_title</td>
-                                <td>@item.app_product.product_title</td>
-                                <td>@item.app_product.mass</td>
-                                <td>@item.app_status.status_title</td>
-                                <td><button class="btn btn-success" onclick="completeRequest(this)">Выполнить</button></td>
+                                    <td rowspan="@Model.applications.Count(p=>p.app_history.custom_date.Equals(unDates[i]))">@unDates[i]</td>
+                                    is_reapite = true;
                                 }
+                                <th>@item.app_prod_type.type_product_title</th>
+                                <th>@item.app_product.product_title</th>
+                                <th>@item.app_product.mass</th>
+                                <th>@item.app_status.status_title</th>
+                                <th>тут будет кнопка</th>
                             </tr>
-                            }
                         }
-
-
+                        is_reapite = false;
                     }
                 }
-
-            <tr>
-                <td>Паллеты</td>
-                <td>300 кг</td>
-                <td>Грузовой склад №2</td>
-                <td>Выполнено</td>
-                <td><button class="btn btn-success" disabled>Выполнить</button></td>
-            </tr>
-            <tr>
-                <td>2023-01-05</td>
-                <td>Ящики</td>
-                <td>200 кг</td>
-                <td>Грузовой склад №3</td>
-                <td>В обработке</td>
-                <td><button class="btn btn-success" onclick="completeRequest(this)">Выполнить</button></td>
-            </tr>
-            <!-- Добавьте дополнительные строки, если необходимо -->
             </tbody>
         </table>
     </div>

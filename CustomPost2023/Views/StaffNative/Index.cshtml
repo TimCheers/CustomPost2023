@@ -83,21 +83,26 @@
                                     {
                                         <td>
                                             @dayCount
-                                            <div class="task-list" id="tasks-@dayCount" >
-                                                @foreach(ApplicationViewModel item in Model.applications)
+
+                                            <div class="task-list" id="tasks-@dayCount">
+                                                @foreach (ApplicationViewModel item in Model.applications)
                                                 {
                                                     if (item.app_history.custom_date.Day == dayCount)
                                                     {
                                                         task = true;
-                                                        <a asp-action="ViewTask" asp-controller="StaffNative" asp-route-id="@item.app_app.id">@item.app_product.product_title</a>
-                                                    }  
+                                                        <form asp-controller="StaffNative" asp-action="ViewTask" asp-route-id="@item.app_app.id" class="submitLink">
+                                                            <input class="submitLink" type="submit" value="@item.app_product.product_id @item.app_product.product_title" />
+                                                        </form>
+                                                    }
                                                 }
-                                                @if(!task)
+                                                @if (!task)
                                                 {
                                                     <a href="1.html">Нет задач</a>
-                                                    
+
                                                 }
-                                                @{task = false;}
+                                                @{
+                                                    task = false;
+                                                }
                                             </div>
                                         </td>
                                         dayCount++;
