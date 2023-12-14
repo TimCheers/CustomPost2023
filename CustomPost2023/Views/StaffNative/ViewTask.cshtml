@@ -2,43 +2,248 @@
 @model CustomPost2023.ViewModels.ApplicationViewModel
 @{
     ViewBag.Title = "Заявка " + Model.app_app.id;
-    Layout = "/Views/Shared/_StaffLayout.cshtml";
+    // Layout = "/Views/Shared/_TaskLayout.cshtml";
 }
-<body>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            text-align: center;
+        }
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 form-container">
-                <!-- Используем класс col-md-12 для занимания 100% ширины на устройствах среднего размера и более -->
-                <!-- Форма для проверки товара -->
-                <h2 class="text-center mb-4">Таможенная проверка товара</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="productName">Наименование товара:</label>
-                        <input type="text" class="form-control" id="productName" placeholder="Введите наименование товара" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productDescription">Описание товара:</label>
-                        <textarea class="form-control" id="productDescription" rows="3" placeholder="Введите описание товара" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="productValue">Стоимость товара:</label>
-                        <input type="text" class="form-control" id="productValue" placeholder="Введите стоимость товара" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customsDate">Дата проверки:</label>
-                        <input type="date" class="form-control" id="customsDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signature">Подпись после распечатки:</label>
-                        <input type="text" class="form-control" id="signature" placeholder="Введите вашу подпись" style="color: #000;" required>
-                    </div>
-                    <button type="button" class="btn btn-block btn-check" onclick="checkCustoms()">Проверить</button>
-                </form>
-                <p class="text-center mt-3" id="checkResult"></p>
+        .form-container {
+            display: flex;
+            max-width: 90%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-block, .right-block {
+            width: 48%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: left;
+            display: block;
+        }
+
+        .right-block {
+            margin-left: 2%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px;
+            width: 48%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .approve {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .reject {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-weight: normal; /* Уменьшаем жирность шрифта */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .navbar {
+            background-color: #3498db; /* Цвет фона навбара */
+            color: #fff; /* Цвет текста навбара */
+            padding: 15px; /* Внутренний отступ */
+            border-radius: 5px; /* Скругление углов */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+        }
+
+        /* Стиль для бренда (левая часть навбара) */
+        .navbar-brand {
+            font-size: 24px; /* Размер шрифта бренда */
+            font-weight: bold; /* Жирный шрифт */
+        }
+
+        /* Стиль для навигационных элементов */
+        .navbar-nav .nav-item {
+            margin-right: 15px; /* Отступ между элементами навбара */
+        }
+
+        /* Стиль для кнопок */
+        .nav-button {
+            background-color: #2ecc71; /* Цвет фона кнопок */
+            color: #fff; /* Цвет текста кнопок */
+            padding: 8px 15px; /* Внутренний отступ кнопок */
+            border: none; /* Убираем границу кнопок */
+            border-radius: 3px; /* Скругление углов кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопки */
+        }
+
+            /* Стиль для кнопок при наведении */
+            .nav-button:hover {
+                background-color: #27ae60; /* Измененный цвет фона при наведении */
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Главная</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="ViewAllTasks" method="post" asp-route-id="@Model.app_staff.id">
+                        <input type="submit" value="Все заявки" class="nav-button" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Выход</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h2 class="mainh2">Составление акта досмотра</h2>
+    <div class="form-container">
+        <div class="left-block">
+            <h2>Информация о товаре</h2>
+            <!-- Блок информации о товаре -->
+            <label for="productCode">Код товара: <p style="color:blue">@Model.app_product.product_id</p></label>
+
+            <label for="productName">Наименование товара: <p style="color:blue">@Model.app_product.product_title</p></label>
+
+            <label for="productDescription">Описание товара: <p style="color:blue">(ДОБАВИТЬ В БД)</p></label>
+
+            <label for="exporter">Экспортер: <p style="color:blue">@Model.app_user.user_name</p></label>
+
+            <label for="exportCountry">Страна экспорта: <p style="color:blue">@Model.app_export_country.country_title</p></label>
+
+            <label for="transportType">Вид транспорта доставки: <p style="color:blue">(ДОБАВИТЬ ВО ВЬЮШКУ)</p></label>
+
+            <label for="customsPoint">Таможенный пункт проверки: <p style="color:blue">@Model.app_custom_post.customs_post_title</p></label>
+
+            <div>
+                <label for="declaredWeight">Заявленная масса товара: <p style="color:blue">@Model.app_product.mass кг</p></label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="1NumberCheck" id="DeclarationNumberCheckYes" value="yes">
+                    <label class="form-check-label" for="DeclarationNumberCheckYes">Соответствует</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="1NumberCheck" id="DeclarationNumberCheckNo" value="no">
+                    <label class="form-check-label" for="DeclarationNumberCheckNo">Не соответствует</label>
+                </div>
+            </div>
+
+            <div>
+                <label for="declaredWeight">Характиристики товара товара: <p style="color:blue">(ДОБАВИТЬ ВО ВЬЮШКУ)</p></label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="2NumberCheck" id="DeclarationNumberCheckYes" value="yes">
+                    <label class="form-check-label" for="DeclarationNumberCheckYes">Соответствует</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="2NumberCheck" id="DeclarationNumberCheckNo" value="no">
+                    <label class="form-check-label" for="DeclarationNumberCheckNo">Не соответствует</label>
+                </div>
+            </div>
+
+            <div>
+                <label for="declaredWeight">Заявленное количество товара: <p style="color:blue">@Model.app_product.mass</p></label>
+                @* <input type="text" id="declaredWeight" name="declaredWeight"> *@
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="3NumberCheck" id="DeclarationNumberCheckYes" value="yes">
+                    <label class="form-check-label" for="DeclarationNumberCheckYes">Соответствует</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="3NumberCheck" id="DeclarationNumberCheckNo" value="no">
+                    <label class="form-check-label" for="DeclarationNumberCheckNo">Не соответствует</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-block">
+            <h2>Лист осмотра</h2>
+            <!-- Блок проверки -->
+            <label for="customsInspectionVolume">Объем таможенного просмотра:</label>
+            <select id="customsInspectionVolume" name="customsInspectionVolume">
+                <option value="10%">10%</option>
+                <option value="50%">50%</option>
+                <option value="100%">100%</option>
+            </select>
+
+            <label for="customsInspectionDegree">Степень таможенного осмотра:</label>
+            <select id="customsInspectionDegree" name="customsInspectionDegree">
+                <option value="weighing">полное</option>
+                <option value="recalculation">выборочное</option>
+            </select>
+            <label for="customsInspectionDegree">Пересчет грузовых мест:</label>
+            <select id="customsInspectionDegree" name="customsInspectionDegree">
+                <option value="weighing">Выборочное вкрытие</option>
+                <option value="recalculation">Полное вскрытие</option>
+            </select>
+            <label for="customsInspectionDegree">Пересчет количества предметов в грузовых местах:</label>
+            <select id="customsInspectionDegree" name="customsInspectionDegree">
+                <option value="weighing">Выборочно</option>
+                <option value="recalculation">Во всех</option>
+            </select>
+            <label for="customsInspectionDegree">Измерение и определение характиристик товара:</label>
+            <select id="customsInspectionDegree" name="customsInspectionDegree">
+                <option value="weighing">Полное</option>
+                <option value="recalculation">Частичное</option>
+            </select>
+            <label for="inspectionResult">Итог досмотра:</label>
+            <textarea id="inspectionResult" name="inspectionResult"></textarea>
+            <div class="btn-container">
+                <button class="btn approve">Одобрить</button>
+                <button class="btn reject">Отклонить</button>
             </div>
         </div>
     </div>
-
-
 </body>
+<footer class="mt-5">
+    <div class="container text-center">
+        <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
+        <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+    </div>
+</footer>

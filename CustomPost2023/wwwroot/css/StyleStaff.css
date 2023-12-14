@@ -79,3 +79,68 @@ td:hover .task-list {
 submitLink:focus {
     outline: none;
 }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-block, .right-block {
+    width: 48%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.right-block {
+    margin-left: 2%;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 10px;
+    width: 48%;
+    border: none;
+    cursor: pointer;
+}
+
+.approve {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.reject {
+    background-color: #f44336;
+    color: #fff;
+}
