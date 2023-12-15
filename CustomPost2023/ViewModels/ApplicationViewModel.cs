@@ -13,5 +13,6 @@ namespace CustomPost2023.ViewModels
         public export_countries app_export_country {  get; set; }
         public history app_history { get; set; }
         public product_type app_prod_type { get; set; }
+        public vehicle_type app_vehicle_type {  get; set; }
     }
 }

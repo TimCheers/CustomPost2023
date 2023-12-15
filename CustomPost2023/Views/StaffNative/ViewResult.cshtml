@@ -1,5 +1,9 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.ApplicationViewModel
+@{
+    ViewBag.Title = "Заявка " + Model.app_app.id + " " + Model.app_product.product_title;
+    // Layout = "/Views/Shared/_TaskLayout.cshtml";
+}
 <head>
     <style>
         body {
@@ -145,12 +149,28 @@
             </ul>
         </div>
     </nav>
-    @RenderBody()
-    <footer class="mt-5">
-        <div class="container text-center">
-            <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
-            <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+    <h2 class="mainh2">Подтверждение акта досмотра</h2>
+    <div class="form-container">
+        <div class="left-block">
+            <label for="productCode">Код товара: <p style="color:blue">@Model.app_product.product_id</p></label>
+            <label for="productName">Тип товара: <p style="color:blue">@Model.app_prod_type.type_product_title</p></label>
+            <label for="exporter">Экспортер: <p style="color:blue">@Model.app_user.user_name</p></label>
+            <label for="transportType">Вид транспорта доставки: <p style="color:blue">@Model.app_vehicle_type.vehicle_type_title</p></label>
+            <label for="declaredWeight">Характиристики товара товара: <p style="color:blue">(ДОБАВИТЬ ВО ВЬЮШКУ)</p></label>
+            <label for="declaredWeight">Заявленное количество товара: <p style="color:blue">@Model.app_product.mass</p></label>
         </div>
-    </footer>
+        <div class="right-block">
+            <label for="productName">Наименование товара: <p style="color:blue">@Model.app_product.product_title</p></label>
+            <label for="productDescription">Описание товара: <p style="color:blue">(ДОБАВИТЬ В БД)</p></label>
+            <label for="exportCountry">Страна экспорта: <p style="color:blue">@Model.app_export_country.country_title</p></label>
+            <label for="customsPoint">Таможенный пункт проверки: <p style="color:blue">@Model.app_custom_post.customs_post_title</p></label>
+            <label for="declaredWeight">Заявленная масса товара: <p style="color:blue">@Model.app_product.mass кг</p></label>
+        </div>
+    </div>
 </body>
-</html>
+<footer class="mt-5">
+    <div class="container text-center">
+        <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
+        <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+    </div>
+</footer>

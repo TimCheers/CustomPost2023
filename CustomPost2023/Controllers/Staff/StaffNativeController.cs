@@ -69,6 +69,23 @@ namespace CustomPost2023.Controllers.Staff
             model.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(curApp.user_id));
             model.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(curApp.export_country_id));
             model.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(model.app_product.fk_type_product_id));
+            model.app_vehicle_type = db.vehicle_type.FirstOrDefault(p => p.vehicle_type_id.Equals(model.app_custom_post.fk_vehicle_id));
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ViewResult(int id)
+        {
+            ApplicationViewModel model = new ApplicationViewModel();
+            application curApp = db.application.FirstOrDefault(p => p.id.Equals(id));
+            model.app_app = curApp;
+            model.app_status = db.status.FirstOrDefault(p => p.id.Equals(curApp.status_id));
+            model.app_product = db.product.FirstOrDefault(p => p.product_id.Equals(curApp.product_id));
+            model.app_custom_post = db.custom_post.FirstOrDefault(p => p.customs_post_id.Equals(curApp.custom_post_id));
+            model.app_staff = db.staff.FirstOrDefault(p => p.id.Equals(curApp.staff_id));
+            model.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(curApp.user_id));
+            model.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(curApp.export_country_id));
+            model.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(model.app_product.fk_type_product_id));
+            model.app_vehicle_type = db.vehicle_type.FirstOrDefault(p => p.vehicle_type_id.Equals(model.app_custom_post.fk_vehicle_id));
             return View(model);
         }
         [HttpPost]

@@ -15,214 +15,219 @@
     bool task = false;
     var dayCount = 1;
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        .profile-container {
-            margin-top: 20px;
-            text-align: left;
-        }
 
-        .profile-photo {
-            max-width: 80px;
-            height: auto;
-            border-radius: 50%;
-        }
+<style>
+    .profile-container {
+        margin-top: 20px;
+        text-align: left;
+    }
 
-        .btn-change-photo {
-            font-size: 12px;
-            padding: 5px 10px;
-            margin-top: 10px;
-        }
+    .profile-photo {
+        max-width: 80px;
+        height: auto;
+        border-radius: 50%;
+    }
 
-        table {
-            width: 120%; /* Пример: увеличьте или уменьшите значение по вашему усмотрению */
-            table-layout: fixed;
-            border-collapse: collapse;
-        }
+    .btn-change-photo {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin-top: 10px;
+    }
 
-        thead {
-            background-color: #00a0df; /* Голубой цвет шапки */
-            color: #fff;
-        }
+    table {
+        width: 120%; /* Пример: увеличьте или уменьшите значение по вашему усмотрению */
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
 
-        th {
-            padding: 10px;
-            text-align: center;
-        }
+    thead {
+        background-color: #00a0df; /* Голубой цвет шапки */
+        color: #fff;
+    }
 
-        th, td {
-            width: 14.28%; /* Равномерное распределение по 7 дням в неделе */
-            border: 1px solid #ddd;
-            padding: 10px;
-            word-wrap: break-word;
-        }
+    th {
+        padding: 10px;
+        text-align: center;
+    }
 
-        .day {
-            margin-bottom: 5px;
-        }
+    th, td {
+        width: 14.28%; /* Равномерное распределение по 7 дням в неделе */
+        border: 1px solid #ddd;
+        padding: 10px;
+        word-wrap: break-word;
+    }
 
-        .appl_btn, /* Стили для кнопок */
-        a.appl_link { /* Стили для ссылок */
-            font-size: small;
+    .day {
+        margin-bottom: 5px;
+    }
+
+    .appl_btn, /* Стили для кнопок */
+    a.appl_link { /* Стили для ссылок */
+        font-size: small;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: fuchsia; /* Цвет текста ссылок */
+        text-decoration: none; /* Убираем подчеркивание ссылок */
+    }
+
+    .task-list {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px;
+        z-index: 1;
+        width: 200px; /* Set a fixed width for the dropdown */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .task-list a {
             display: block;
-            width: 100%;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: fuchsia; /* Цвет текста ссылок */
-            text-decoration: none; /* Убираем подчеркивание ссылок */
-        }
-
-        .task-list {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 5px;
-            z-index: 1;
-            width: 200px; /* Set a fixed width for the dropdown */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-            .task-list a {
-                display: block;
-                padding: 8px;
-                text-decoration: none;
-                color: #333;
-                transition: background-color 0.3s ease;
-            }
-
-                .task-list a:hover {
-                    background-color: #f0f0f0;
-                }
-
-                .task-list a.no-task {
-                    color: #999;
-                }
-
-        td:hover .task-list {
-            display: block;
-        }
-
-        .submitLink {
-            background-color: transparent;
-            text-decoration: underline;
-            border: none;
-            color: blue;
-            cursor: pointer;
-        }
-
-        submitLink:focus {
-            outline: none;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-            text-align: center;
-        }
-
-        .form-container {
-            display: flex;
-            max-width: 90%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .left-block, .right-block {
-            width: 48%;
-            padding: 10px;
-            box-sizing: border-box;
-            text-align: left;
-        }
-
-        .right-block {
-            margin-left: 2%;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-        input, select, textarea {
-            width: 100%;
             padding: 8px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s ease;
         }
 
-        textarea {
-            height: 100px;
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .btn {
-            padding: 10px;
-            width: 48%;
-            border: none;
-            cursor: pointer;
-        }
-
-
-        .approve {
-            background-color: #4caf50;
-            color: #fff;
-        }
-
-        .reject {
-            background-color: #f44336;
-            color: #fff;
-        }
-
-        .navbar {
-            background-color: #3498db; /* Цвет фона навбара */
-            color: #fff; /* Цвет текста навбара */
-            padding: 15px; /* Внутренний отступ */
-            border-radius: 5px; /* Скругление углов */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
-        }
-
-        /* Стиль для бренда (левая часть навбара) */
-        .navbar-brand {
-            font-size: 24px; /* Размер шрифта бренда */
-            font-weight: bold; /* Жирный шрифт */
-        }
-
-        /* Стиль для навигационных элементов */
-        .navbar-nav .nav-item {
-            margin-right: 15px; /* Отступ между элементами навбара */
-        }
-
-        /* Стиль для кнопок */
-        .nav-button {
-            background-color: #2ecc71; /* Цвет фона кнопок */
-            color: #fff; /* Цвет текста кнопок */
-            padding: 8px 15px; /* Внутренний отступ кнопок */
-            border: none; /* Убираем границу кнопок */
-            border-radius: 3px; /* Скругление углов кнопок */
-            cursor: pointer; /* Курсор при наведении на кнопки */
-        }
-
-            /* Стиль для кнопок при наведении */
-            .nav-button:hover {
-                background-color: #27ae60; /* Измененный цвет фона при наведении */
+            .task-list a:hover {
+                background-color: #f0f0f0;
             }
-    </style>
-</head>
+
+            .task-list a.no-task {
+                color: #999;
+            }
+
+    td:hover .task-list {
+        display: block;
+    }
+
+    .submitLink {
+        background-color: transparent;
+        text-decoration: underline;
+        border: none;
+        color: blue;
+        cursor: pointer;
+    }
+
+    submitLink:focus {
+        outline: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 20px;
+        text-align: center;
+    }
+
+    .form-container {
+        display: flex;
+        max-width: 90%;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-block, .right-block {
+        width: 48%;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    .right-block {
+        margin-left: 2%;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        height: 100px;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn {
+        padding: 10px;
+        width: 48%;
+        border: none;
+        cursor: pointer;
+    }
+
+
+    .approve {
+        background-color: #4caf50;
+        color: #fff;
+    }
+
+    .reject {
+        background-color: #f44336;
+        color: #fff;
+    }
+
+    .navbar {
+        background-color: #3498db; /* Цвет фона навбара */
+        color: #fff; /* Цвет текста навбара */
+        padding: 15px; /* Внутренний отступ */
+        border-radius: 5px; /* Скругление углов */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+        margin-bottom: 5%;
+    }
+
+    /* Стиль для бренда (левая часть навбара) */
+    .navbar-brand {
+        font-size: 24px; /* Размер шрифта бренда */
+        font-weight: bold; /* Жирный шрифт */
+    }
+
+    /* Стиль для навигационных элементов */
+    .navbar-nav .nav-item {
+        margin-right: 15px; /* Отступ между элементами навбара */
+    }
+
+    /* Стиль для кнопок */
+    .nav-button-cur {
+        background-color:blueviolet;
+        color: #fff; /* Цвет текста кнопок */
+        padding: 8px 15px; /* Внутренний отступ кнопок */
+        border: none; /* Убираем границу кнопок */
+        border-radius: 3px; /* Скругление углов кнопок */
+        cursor: pointer; /* Курсор при наведении на кнопки */
+    }
+
+    .nav-button {
+        background-color: #2ecc71; /* Цвет фона кнопок */
+        color: #fff; /* Цвет текста кнопок */
+        padding: 8px 15px; /* Внутренний отступ кнопок */
+        border: none; /* Убираем границу кнопок */
+        border-radius: 3px; /* Скругление углов кнопок */
+        cursor: pointer; /* Курсор при наведении на кнопки */
+    }
+
+        /* Стиль для кнопок при наведении */
+        .nav-button:hover {
+            background-color: #27ae60; /* Измененный цвет фона при наведении */
+        }
+</style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Главная</a>
@@ -234,10 +239,14 @@
                     </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Личный кабинет</a>
+                    <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@Model.staff.id">
+                        <input type="submit" value="Личный кабинет" class="nav-button-cur" />
+                    </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выход</a>
+                    <form asp-controller="Home" asp-action="Index" method="post" asp-route-id="@Model.staff.id">
+                        <input type="submit" value="Выход" class="nav-button" />
+                    </form>
                 </li>
             </ul>
         </div>
@@ -331,5 +340,10 @@
             </div>
         </div>
     </div>
+    <footer class="mt-5">
+        <div class="container text-center">
+            <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
+            <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+        </div>
+    </footer>
 </body>
-</html>

@@ -1,7 +1,7 @@
 ﻿@using CustomPost2023.ViewModels
 @model CustomPost2023.ViewModels.ApplicationViewModel
 @{
-    ViewBag.Title = "Заявка " + Model.app_app.id;
+    ViewBag.Title = "Заявка " + Model.app_app.id + " " + Model.app_product.product_title;
     // Layout = "/Views/Shared/_TaskLayout.cshtml";
 }
 <head>
@@ -137,10 +137,14 @@
                     </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Личный кабинет</a>
+                    <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@Model.app_staff.id">
+                        <input type="submit" value="Личный кабинет" class="nav-button" />
+                    </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выход</a>
+                    <form asp-controller="Home" asp-action="Index" method="post" asp-route-id="@Model.app_staff.id">
+                        <input type="submit" value="Выход" class="nav-button" />
+                    </form>
                 </li>
             </ul>
         </div>
@@ -154,13 +158,15 @@
 
             <label for="productName">Наименование товара: <p style="color:blue">@Model.app_product.product_title</p></label>
 
+            <label for="productName">Тип товара: <p style="color:blue">@Model.app_prod_type.type_product_title</p></label>
+
             <label for="productDescription">Описание товара: <p style="color:blue">(ДОБАВИТЬ В БД)</p></label>
 
             <label for="exporter">Экспортер: <p style="color:blue">@Model.app_user.user_name</p></label>
 
             <label for="exportCountry">Страна экспорта: <p style="color:blue">@Model.app_export_country.country_title</p></label>
 
-            <label for="transportType">Вид транспорта доставки: <p style="color:blue">(ДОБАВИТЬ ВО ВЬЮШКУ)</p></label>
+            <label for="transportType">Вид транспорта доставки: <p style="color:blue">@Model.app_vehicle_type.vehicle_type_title</p></label>
 
             <label for="customsPoint">Таможенный пункт проверки: <p style="color:blue">@Model.app_custom_post.customs_post_title</p></label>
 
@@ -235,8 +241,12 @@
             <label for="inspectionResult">Итог досмотра:</label>
             <textarea id="inspectionResult" name="inspectionResult"></textarea>
             <div class="btn-container">
-                <button class="btn approve">Одобрить</button>
-                <button class="btn reject">Отклонить</button>
+                <form asp-controller="StaffNative" asp-action="ViewResult" method="post" asp-route-id="@Model.app_app.id">
+                    <input type="submit" value="Одобрить" class="btn approve" style="min-width: 100%;"/>
+                </form>
+                <form asp-controller="StaffNative" asp-action="ViewResult" method="post" asp-route-id="@Model.app_app.id">
+                    <input type="submit" value="Отклонить" class="btn reject" style="min-width: 100%;" />
+                </form>
             </div>
         </div>
     </div>
