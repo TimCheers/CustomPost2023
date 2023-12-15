@@ -13,6 +13,7 @@
     var daysInMonth = lastDayOfMonth.Day;
     var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek;
     bool task = false;
+    string taskForDate = "";
     var dayCount = 1;
 }
 
@@ -24,7 +25,7 @@
 
     .profile-photo {
         max-width: 80px;
-        height: auto;
+        max-height: 60px;
         border-radius: 50%;
     }
 
@@ -107,14 +108,13 @@
 
     .submitLink {
         background-color: transparent;
-        text-decoration: underline;
         border: none;
-        color: blue;
+        color: blueviolet;
         cursor: pointer;
     }
 
     submitLink:focus {
-        outline: none;
+        color: cornflowerblue;
     }
 
     body {
@@ -132,6 +132,8 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
     .left-block, .right-block {
@@ -190,13 +192,14 @@
         padding: 15px; /* Внутренний отступ */
         border-radius: 5px; /* Скругление углов */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
-        margin-bottom: 5%;
+        margin-bottom: 3%;
     }
 
     /* Стиль для бренда (левая часть навбара) */
     .navbar-brand {
         font-size: 24px; /* Размер шрифта бренда */
         font-weight: bold; /* Жирный шрифт */
+        padding-left: 25px;
     }
 
     /* Стиль для навигационных элементов */
@@ -206,7 +209,7 @@
 
     /* Стиль для кнопок */
     .nav-button-cur {
-        background-color:blueviolet;
+        background-color: blueviolet;
         color: #fff; /* Цвет текста кнопок */
         padding: 8px 15px; /* Внутренний отступ кнопок */
         border: none; /* Убираем границу кнопок */
@@ -227,10 +230,42 @@
         .nav-button:hover {
             background-color: #27ae60; /* Измененный цвет фона при наведении */
         }
+
+    footer {
+        background-color: #f8f9fa;
+        padding: 20px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .form-container {
+        display: flex;
+        max-width: 99%;
+        min-height: 250px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-block, .right-block {
+        width: 44%;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: left;
+        display: block;
+    }
+
+    .right-block {
+        margin-left: 2%;
+    }
 </style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Главная</a>
+        <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+        <a class="navbar-brand" href="#">@Model.staff.name</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -252,37 +287,32 @@
         </div>
     </nav>
     <div class="container">
-        <div class="row">
-            <!-- Profile Container on the left -->
-            <div class="col-md-6">
-                <div class="profile-container">
-                    <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
-
-                    <!-- Личный кабинет работника таможни -->
-
+        <div class="row" style="padding-bottom:10px;">
+            <div class="form-container">
+                <div class="left-block">
                     <div class="form-group">
-                        <label for="employeeName">Имя работника:</label>
-                        <input type="text" class="form-control" id="employeeName" value="@Model.staff.name" disabled>
+                        <label for="employeeName"><b>Имя работника:</b> @Model.staff.name</label>
                     </div>
                     <div class="form-group">
-                        <label for="employeePosition">Должность:</label>
-                        <input type="text" class="form-control" id="employeePosition" value="@Model.staff.job_title" disabled>
+                        <label for="employeePosition"><b>Должность:</b> @Model.staff.job_title</label>
                     </div>
                     <div class="form-group">
-                        <label for="employeeEmail">Email:</label>
-                        <input type="email" class="form-control" id="employeeEmail" value="@Model.staff.email" disabled>
+                        <label for="employeeEmail"><b>Email:</b> @Model.staff.email</label>
                     </div>
                     <div class="form-group">
-                        <label for="employeePassword">Текущий пароль:</label>
-                        <input type="password" class="form-control" id="employeePassword" value="@Model.staff.password" disabled>
+                        <label for="employeePassword"><b>Таможенный пункт:</b></label>
+                        <label for="employeePassword">@Model.custom_post.customs_post_title</label>
+                        <label for="employeePassword"><b>Адрес:</b> @Model.custom_post.location</label>
+                    </div>
+                    <div class="form-group">
+                        <form asp-controller="StaffNative" asp-action="ViewAllTasks" method="post" asp-route-id="@Model.staff.id">
+                            <input type="submit" value="Настройки аккаунта" class="nav-button" style="max-width:50%; background-color: lightblue;" />
+                        </form>
                     </div>
                 </div>
-            </div>
-            <!-- Calendar Container on the right -->
-            <div class="col-md-6">
-                <div>
+                <div class="right-block">
                     <table>
-                        <tr>
+                        <tr style="background-color: lightblue; color:aliceblue;">
                             <th>Пн</th>
                             <th>Вт</th>
                             <th>Ср</th>
@@ -307,13 +337,19 @@
                                     }
                                     else
                                     {
-                                        <td>
+                                        @foreach (ApplicationViewModel item in Model.applications)
+                                        {
+                                            if (item.app_history.custom_date.Day == dayCount)
+                                            {
+                                                taskForDate = "background-color: lightblue; color: #fff;";
+                                            }
+                                        }
+                                        <td style="@taskForDate">
                                             @dayCount
-
                                             <div class="task-list" id="tasks-@dayCount">
                                                 @foreach (ApplicationViewModel item in Model.applications)
                                                 {
-                                                    if (item.app_history.custom_date.Day == dayCount)
+                                                    if (item.app_history.custom_date.Day == dayCount && item.app_status.id != 5 && item.app_status.id != 4)
                                                     {
                                                         task = true;
                                                         <form asp-controller="StaffNative" asp-action="ViewTask" asp-route-id="@item.app_app.id" class="submitLink">
@@ -327,6 +363,7 @@
                                                 }
                                                 @{
                                                     task = false;
+                                                    taskForDate = "";
                                                 }
                                             </div>
                                         </td>
@@ -339,11 +376,70 @@
                 </div>
             </div>
         </div>
-    </div>
-    <footer class="mt-5">
-        <div class="container text-center">
-            <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
-            <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+        <div class="form-container">
+            <h3>История заявок</h3>
+            <table>
+                <thead style="background-color: lightblue; color:aliceblue;">
+                    <tr>
+                        <th>Дата</th>
+                        <th>Вид груза</th>
+                        <th>Наименование груза</th>
+                        <th>Масса груза</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        List<DateOnly> unDates = new List<DateOnly>();
+                        foreach (ApplicationViewModel item in Model.applications)
+                        {
+                            if (!unDates.Contains(item.app_history.custom_date))
+                            {
+                                unDates.Add(item.app_history.custom_date);
+                            }
+                        }
+                        for (int i = 0; i < unDates.Count; i++)
+                        {
+                            bool is_reapite = false;
+                            List<ApplicationViewModel> models = Model.applications.Where(p => p.app_history.custom_date.Equals(unDates[i])).ToList();
+                            @foreach (ApplicationViewModel item in models)
+                            {
+                                if (item.app_status.id != 3)
+                                {
+                                    <tr>
+                                        @if (!is_reapite)
+                                        {
+                                            <td rowspan="@Model.applications.Count(p=>p.app_history.custom_date.Equals(unDates[i]) && p.app_status.id!=3)">@unDates[i]</td>
+                                            is_reapite = true;
+                                        }
+                                        @{
+                                            string style = "";
+                                            if (item.app_status.id == 5)
+                                            {
+                                                style = "background-color: #2ecc71; color:#fff ";
+                                            }
+                                            if (item.app_status.id == 4)
+                                            {
+                                                style = "background-color:palevioletred; color:#fff";
+                                            }
+                                        }
+                                        <th>@item.app_product.product_id</th>
+                                        <th>@item.app_product.product_title</th>
+                                        <th>@item.app_history.conclusion</th>
+                                        <th style="@style">@item.app_status.status_title</th>
+                                        <th>
+                                            <form asp-controller="StaffNative" asp-action="ViewTask" asp-route-id="@item.app_app.id">
+                                                <input type="submit" value="Просмотр" class="btn approve" style="min-width: 60%; padding-top:5px; align-content:flex-end; background-color: #2ecc71; color: #fff;" />
+                                            </form>
+                                        </th>
+                                    </tr>
+                                }
+                            }
+                            is_reapite = false;
+                        }
+                    }
+                </tbody>
         </div>
-    </footer>
+    </div>
 </body>

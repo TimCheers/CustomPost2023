@@ -8,13 +8,17 @@
     <h2>Список товаров</h2>
     <p><a asp-action="Create">Добавить товар</a></p>
     <table class="table">
-        <tr><th>ID</th><th>Название</th><th>Масса</th><th>ID типа</th><th></th><th></th></tr>
+        <tr><th>ID</th><th>Название</th><th>Масса</th><th>Количество</th><th>Описание</th><th>Характеристики</th><th>Цена</th><th>ID типа</th><th></th><th></th></tr>
         @foreach (var item in Model)
         {
             <tr>
                 <td>@item.product_id</td>
                 <td>@item.product_title</td>
                 <td>@item.mass</td>
+                <td>@item.quantity</td>
+                <td>@item.description</td>
+                <td>@item.characteristics</td>
+                <td>@item.price</td>
                 <td>@item.fk_type_product_id</td>
                 <td>
                     <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.product_id">Изменить</a>

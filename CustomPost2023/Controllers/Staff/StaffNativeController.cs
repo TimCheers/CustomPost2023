@@ -1,8 +1,11 @@
-﻿using CustomPost2023.Data.Models;
+﻿using CustomPost2023.Data.Calculations;
+using CustomPost2023.Data.Models;
+using CustomPost2023.Data.Calculations;
 using CustomPost2023.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
 
 namespace CustomPost2023.Controllers.Staff
 {
@@ -35,9 +38,26 @@ namespace CustomPost2023.Controllers.Staff
                 tmp.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(item.user_id));
                 tmp.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(item.staff_id));
                 tmp.app_history = db.history.FirstOrDefault(p => p.application_id.Equals(item.id));
+                tmp.app_vehicle_type = db.vehicle_type.FirstOrDefault(p => p.vehicle_type_id.Equals(tmp.app_custom_post.fk_vehicle_id));
                 tmp.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(tmp.app_product.fk_type_product_id));
                 model.applications.Add(tmp);
             }
+            return model;
+        }
+        private ApplicationViewModel DetectApplication(int id)
+        {
+            ApplicationViewModel model = new ApplicationViewModel();
+            application curApp = db.application.FirstOrDefault(p => p.id.Equals(id));
+            model.app_app = curApp;
+            model.app_status = db.status.FirstOrDefault(p => p.id.Equals(curApp.status_id));
+            model.app_product = db.product.FirstOrDefault(p => p.product_id.Equals(curApp.product_id));
+            model.app_custom_post = db.custom_post.FirstOrDefault(p => p.customs_post_id.Equals(curApp.custom_post_id));
+            model.app_staff = db.staff.FirstOrDefault(p => p.id.Equals(curApp.staff_id));
+            model.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(curApp.user_id));
+            model.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(curApp.export_country_id));
+            model.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(model.app_product.fk_type_product_id));
+            model.app_history = db.history.FirstOrDefault(p => p.application_id.Equals(curApp.id));
+            model.app_vehicle_type = db.vehicle_type.FirstOrDefault(p => p.vehicle_type_id.Equals(model.app_custom_post.fk_vehicle_id));
             return model;
         }
         public IActionResult Index(int id)
@@ -59,34 +79,54 @@ namespace CustomPost2023.Controllers.Staff
         [HttpPost]
         public IActionResult ViewTask(int id)
         {
-            ApplicationViewModel model = new ApplicationViewModel();
-            application curApp = db.application.FirstOrDefault(p => p.id.Equals(id));
-            model.app_app = curApp;
-            model.app_status = db.status.FirstOrDefault(p => p.id.Equals(curApp.status_id));
-            model.app_product = db.product.FirstOrDefault(p => p.product_id.Equals(curApp.product_id));
-            model.app_custom_post = db.custom_post.FirstOrDefault(p => p.customs_post_id.Equals(curApp.custom_post_id));
-            model.app_staff = db.staff.FirstOrDefault(p => p.id.Equals(curApp.staff_id));
-            model.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(curApp.user_id));
-            model.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(curApp.export_country_id));
-            model.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(model.app_product.fk_type_product_id));
-            model.app_vehicle_type = db.vehicle_type.FirstOrDefault(p => p.vehicle_type_id.Equals(model.app_custom_post.fk_vehicle_id));
-            return View(model);
+
+            return View(DetectApplication(id));
         }
         [HttpPost]
-        public IActionResult ViewResult(int id)
+        public IActionResult ViewResult(int id, string oto, string STO, string PGM, string PKPvGM, string IOHT, string conclusion)
         {
-            ApplicationViewModel model = new ApplicationViewModel();
-            application curApp = db.application.FirstOrDefault(p => p.id.Equals(id));
-            model.app_app = curApp;
-            model.app_status = db.status.FirstOrDefault(p => p.id.Equals(curApp.status_id));
-            model.app_product = db.product.FirstOrDefault(p => p.product_id.Equals(curApp.product_id));
-            model.app_custom_post = db.custom_post.FirstOrDefault(p => p.customs_post_id.Equals(curApp.custom_post_id));
-            model.app_staff = db.staff.FirstOrDefault(p => p.id.Equals(curApp.staff_id));
-            model.app_user = db.user.FirstOrDefault(p => p.user_id.Equals(curApp.user_id));
-            model.app_export_country = db.export_countries.FirstOrDefault(p => p.id.Equals(curApp.export_country_id));
-            model.app_prod_type = db.product_type.FirstOrDefault(p => p.type_product_id.Equals(model.app_product.fk_type_product_id));
-            model.app_vehicle_type = db.vehicle_type.FirstOrDefault(p => p.vehicle_type_id.Equals(model.app_custom_post.fk_vehicle_id));
-            return View(model);
+
+            ApplicationViewModel model = DetectApplication(id);
+
+            AppPar temp = new AppPar();
+            temp.getHours(oto, STO, PGM, PKPvGM, IOHT, model.app_product.mass, model.app_product.price);
+
+            ResultViewModel resultViewModel = new ResultViewModel();
+            resultViewModel.applicationViewModel = model;
+            resultViewModel.appPar = temp;
+            resultViewModel.conclusion = conclusion;
+
+            return View(resultViewModel);
+        }
+        [HttpPost]
+        public IActionResult DoneResult(int id, string conclusion, double cusTime, double cusPrise, string radioGroup)
+        {
+
+            ApplicationViewModel appModel = DetectApplication(id);
+
+            history newHi = appModel.app_history;
+            newHi.conclusion = conclusion;
+            newHi.customs_clearance_time = cusTime;
+            newHi.customs_clearance_cost = cusPrise;
+
+            db.history.Update(newHi);
+            db.SaveChanges();
+            application newApp = appModel.app_app;
+
+            if (int.Parse(radioGroup)==1)
+            {           
+                newApp.status_id = 5;
+            }
+            else
+            {
+                newApp.status_id = 4;
+            }
+
+            db.application.Update(newApp);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult ViewAllTasks(int id)

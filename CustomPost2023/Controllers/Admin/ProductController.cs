@@ -27,7 +27,8 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Create(product pr)
         {
             db.product.Add(pr);
-            logg.SendLogg(db, 1, "product", "whole record", "NULL", $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}");
+            logg.SendLogg(db, 1, "product", "whole record", "NULL", $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}" +
+                $"|{pr.price}|{pr.quantity}|{pr.description}|{pr.characteristics}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -40,7 +41,8 @@ namespace CustomPost2023.Controllers.Admin
                 if (pr != null)
                 {
                     db.product.Remove(pr);
-                    logg.SendLogg(db, 2, "product", "whole record", $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}", "NULL");
+                    logg.SendLogg(db, 2, "product", "whole record", $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}" +
+                        $"|{pr.price}|{pr.quantity}|{pr.description}|{pr.characteristics}", "NULL");
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -54,7 +56,7 @@ namespace CustomPost2023.Controllers.Admin
                 product? pr = await db.product.FirstOrDefaultAsync(p => p.product_id == id);
                 if (pr != null)
                 {
-                    meanBefForLogg = $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}";
+                    meanBefForLogg = $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}|{pr.price}|{pr.quantity}|{pr.description}|{pr.characteristics}";
                     return View(pr);
                 }
             }
@@ -64,7 +66,8 @@ namespace CustomPost2023.Controllers.Admin
         public async Task<IActionResult> Edit(product pr)
         {
             db.product.Update(pr);
-            logg.SendLogg(db, 3, "product", "whole record", meanBefForLogg, $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}");
+            logg.SendLogg(db, 3, "product", "whole record", meanBefForLogg, $"{pr.product_id}|{pr.product_title}|{pr.mass}|{pr.fk_type_product_id}" +
+                $"|{pr.price}|{pr.quantity}|{pr.description}|{pr.characteristics}");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

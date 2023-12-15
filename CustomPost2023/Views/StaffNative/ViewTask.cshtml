@@ -5,6 +5,7 @@
     // Layout = "/Views/Shared/_TaskLayout.cshtml";
 }
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -97,12 +98,14 @@
             padding: 15px; /* Внутренний отступ */
             border-radius: 5px; /* Скругление углов */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+            margin-bottom: 3%;
         }
 
         /* Стиль для бренда (левая часть навбара) */
         .navbar-brand {
             font-size: 24px; /* Размер шрифта бренда */
             font-weight: bold; /* Жирный шрифт */
+            padding-left: 25px;
         }
 
         /* Стиль для навигационных элементов */
@@ -111,6 +114,15 @@
         }
 
         /* Стиль для кнопок */
+        .nav-button-cur {
+            background-color: blueviolet;
+            color: #fff; /* Цвет текста кнопок */
+            padding: 8px 15px; /* Внутренний отступ кнопок */
+            border: none; /* Убираем границу кнопок */
+            border-radius: 3px; /* Скругление углов кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопки */
+        }
+
         .nav-button {
             background-color: #2ecc71; /* Цвет фона кнопок */
             color: #fff; /* Цвет текста кнопок */
@@ -124,11 +136,22 @@
             .nav-button:hover {
                 background-color: #27ae60; /* Измененный цвет фона при наведении */
             }
+
+        .myP {
+            color: blue;
+        }
+
+        .profile-photo {
+            max-width: 80px;
+            max-height: 60px;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Главная</a>
+        <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+        <a class="navbar-brand" href="#">@Model.app_staff.name</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -153,101 +176,63 @@
     <div class="form-container">
         <div class="left-block">
             <h2>Информация о товаре</h2>
-            <!-- Блок информации о товаре -->
-            <label for="productCode">Код товара: <p style="color:blue">@Model.app_product.product_id</p></label>
-
-            <label for="productName">Наименование товара: <p style="color:blue">@Model.app_product.product_title</p></label>
-
-            <label for="productName">Тип товара: <p style="color:blue">@Model.app_prod_type.type_product_title</p></label>
-
-            <label for="productDescription">Описание товара: <p style="color:blue">(ДОБАВИТЬ В БД)</p></label>
-
-            <label for="exporter">Экспортер: <p style="color:blue">@Model.app_user.user_name</p></label>
-
-            <label for="exportCountry">Страна экспорта: <p style="color:blue">@Model.app_export_country.country_title</p></label>
-
-            <label for="transportType">Вид транспорта доставки: <p style="color:blue">@Model.app_vehicle_type.vehicle_type_title</p></label>
-
-            <label for="customsPoint">Таможенный пункт проверки: <p style="color:blue">@Model.app_custom_post.customs_post_title</p></label>
-
-            <div>
-                <label for="declaredWeight">Заявленная масса товара: <p style="color:blue">@Model.app_product.mass кг</p></label>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="1NumberCheck" id="DeclarationNumberCheckYes" value="yes">
-                    <label class="form-check-label" for="DeclarationNumberCheckYes">Соответствует</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="1NumberCheck" id="DeclarationNumberCheckNo" value="no">
-                    <label class="form-check-label" for="DeclarationNumberCheckNo">Не соответствует</label>
-                </div>
-            </div>
-
-            <div>
-                <label for="declaredWeight">Характиристики товара товара: <p style="color:blue">(ДОБАВИТЬ ВО ВЬЮШКУ)</p></label>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="2NumberCheck" id="DeclarationNumberCheckYes" value="yes">
-                    <label class="form-check-label" for="DeclarationNumberCheckYes">Соответствует</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="2NumberCheck" id="DeclarationNumberCheckNo" value="no">
-                    <label class="form-check-label" for="DeclarationNumberCheckNo">Не соответствует</label>
-                </div>
-            </div>
-
-            <div>
-                <label for="declaredWeight">Заявленное количество товара: <p style="color:blue">@Model.app_product.mass</p></label>
-                @* <input type="text" id="declaredWeight" name="declaredWeight"> *@
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="3NumberCheck" id="DeclarationNumberCheckYes" value="yes">
-                    <label class="form-check-label" for="DeclarationNumberCheckYes">Соответствует</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="3NumberCheck" id="DeclarationNumberCheckNo" value="no">
-                    <label class="form-check-label" for="DeclarationNumberCheckNo">Не соответствует</label>
-                </div>
-            </div>
+            <label>Код товара: </label> <p class="myP">@Model.app_product.product_id</p>
+            <label>Наименование товара: </label><p class="myP">@Model.app_product.product_title</p>
+            <label>Тип товара: </label><p class="myP">@Model.app_prod_type.type_product_title</p>
+            <label>Описание товара: </label><p class="myP">@Model.app_product.description</p>
+            <label>Экспортер: </label><p class="myP">@Model.app_user.user_name</p>
+            <label>Страна экспорта: </label><p class="myP">@Model.app_export_country.country_title</p>
+            <label>Вид транспорта доставки: </label><p class="myP">@Model.app_vehicle_type.vehicle_type_title</p>
+            <label>Таможенный пункт проверки: </label><p class="myP">@Model.app_custom_post.customs_post_title</p>
+            <label>Заявленная масса товара: </label><p class="myP">@Model.app_product.mass кг</p>
+            <label>Цена: </label><p class="myP">@Model.app_product.price ₽</p>
+            <label>Характиристики товара товара: </label><p class="myP">@Model.app_product.characteristics</p>
+            <label>Заявленное количество товара: </label><p class="myP">@Model.app_product.quantity</p>
         </div>
-
         <div class="right-block">
             <h2>Лист осмотра</h2>
-            <!-- Блок проверки -->
-            <label for="customsInspectionVolume">Объем таможенного просмотра:</label>
-            <select id="customsInspectionVolume" name="customsInspectionVolume">
-                <option value="10%">10%</option>
-                <option value="50%">50%</option>
-                <option value="100%">100%</option>
-            </select>
-
-            <label for="customsInspectionDegree">Степень таможенного осмотра:</label>
-            <select id="customsInspectionDegree" name="customsInspectionDegree">
-                <option value="weighing">полное</option>
-                <option value="recalculation">выборочное</option>
-            </select>
-            <label for="customsInspectionDegree">Пересчет грузовых мест:</label>
-            <select id="customsInspectionDegree" name="customsInspectionDegree">
-                <option value="weighing">Выборочное вкрытие</option>
-                <option value="recalculation">Полное вскрытие</option>
-            </select>
-            <label for="customsInspectionDegree">Пересчет количества предметов в грузовых местах:</label>
-            <select id="customsInspectionDegree" name="customsInspectionDegree">
-                <option value="weighing">Выборочно</option>
-                <option value="recalculation">Во всех</option>
-            </select>
-            <label for="customsInspectionDegree">Измерение и определение характиристик товара:</label>
-            <select id="customsInspectionDegree" name="customsInspectionDegree">
-                <option value="weighing">Полное</option>
-                <option value="recalculation">Частичное</option>
-            </select>
-            <label for="inspectionResult">Итог досмотра:</label>
-            <textarea id="inspectionResult" name="inspectionResult"></textarea>
-            <div class="btn-container">
-                <form asp-controller="StaffNative" asp-action="ViewResult" method="post" asp-route-id="@Model.app_app.id">
-                    <input type="submit" value="Одобрить" class="btn approve" style="min-width: 100%;"/>
-                </form>
-                <form asp-controller="StaffNative" asp-action="ViewResult" method="post" asp-route-id="@Model.app_app.id">
-                    <input type="submit" value="Отклонить" class="btn reject" style="min-width: 100%;" />
-                </form>
-            </div>
+            <form asp-controller="StaffNative" asp-action="ViewResult" method="post" asp-route-id="@Model.app_app.id">
+                <label>Объем таможенного просмотра:</label>
+                <select name="oto">
+                    <option value="10%">10%</option>
+                    <option value="50%">50%</option>
+                    <option value="100%">100%</option>
+                </select>
+                <label>Степень таможенного осмотра:</label>
+                <select name="STO">
+                    <option value="weighing">полное</option>
+                    <option value="recalculation">выборочное</option>
+                </select>
+                <label>Пересчет грузовых мест:</label>
+                <select name="PGM">
+                    <option value="weighing">Выборочное вкрытие</option>
+                    <option value="recalculation">Полное вскрытие</option>
+                </select>
+                <label>Пересчет количества предметов в грузовых местах:</label>
+                <select name="PKPvGM">
+                    <option value="weighing">Выборочно</option>
+                    <option value="recalculation">Во всех</option>
+                </select>
+                <label>Измерение и определение характиристик товара:</label>
+                <select name="IOHT">
+                    <option value="weighing">Полное</option>
+                    <option value="recalculation">Частичное</option>
+                </select>
+                @{
+                    if (Model.app_status.id == 3)
+                    {
+                        <label>Заключение:</label>
+                        <textarea name="conclusion" id="myTextarea" oninput="checkTextarea()"></textarea>
+                        <div class="btn-container">
+                            <input type="submit" value="Далее" class="btn approve" style="min-width: 10%;" id="myButton" disabled />
+                        </div>
+                    }
+                    else
+                    {
+                        <h2 style="color:brown;">Заявка закрыта</h2>
+                    }
+                }
+            </form>
         </div>
     </div>
 </body>
@@ -257,3 +242,15 @@
         <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
     </div>
 </footer>
+<script>
+    function checkTextarea() {
+        var textareaValue = $('#myTextarea').val();
+        var button = $('#myButton');
+
+        if (textareaValue.trim() !== '') {
+            button.prop('disabled', false);
+        } else {
+            button.prop('disabled', true);
+        }
+    }
+</script>

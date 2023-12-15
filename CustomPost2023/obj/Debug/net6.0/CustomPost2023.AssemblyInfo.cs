@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CustomPost2023")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fcecde1553d8079a4ad5a08efc474b087c6e419")]
 [assembly: System.Reflection.AssemblyProductAttribute("CustomPost2023")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CustomPost2023")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
