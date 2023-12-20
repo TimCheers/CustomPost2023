@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj": {}
+    "D:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj": {
+    "D:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
+        "projectUniqueName": "D:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
         "projectName": "CustomPost2023",
-        "projectPath": "C:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
-        "packagesPath": "C:\\Users\\TimCheers\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\obj\\",
+        "projectPath": "D:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\CustomPost2023.csproj",
+        "packagesPath": "D:\\Users\\TimCheers\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\TimCheers\\RiderProjects\\CustomPost2023\\CustomPost2023\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\TimCheers\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "D:\\Users\\TimCheers\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -96,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
 
 using Aspose.Pdf;
 using Aspose.Pdf.Text;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace CustomPost2023.Controllers.Staff
 {
@@ -104,58 +105,169 @@ namespace CustomPost2023.Controllers.Staff
 
         public void CreatePDF(ApplicationViewModel app)
         {
-            // Инициализация документа
+
             Document pdfDocument = new Document();
-
-            // Добавление страницы к документу
             Page page = pdfDocument.Pages.Add();
-
-            // // Создание таблицы
-            // Table table = new Table();
-            // table.Border = new BorderInfo(BorderSide.All, 1f); // Задаем границы таблицы
-            // page.Paragraphs.Add(table);
-            //
-            // // Добавление строк и ячеек в таблицу
-            // Row row = table.Rows.Add();
-            // Cell cell = row.Cells.Add("Ячейка 1");
-            // cell.ColSpan = 2; // объединение ячеек
-            // cell.Border = new BorderInfo(BorderSide.All, 1f); // Задаем границы ячейки
-            // row.Cells.Add("Ячейка 2").Border = new BorderInfo(BorderSide.All, 1f);
-
-            // Добавление текстовых фрагментов
             
             
             // Оглавление
-            TextFragment text = new TextFragment($"Акт досмотра {app.app_app.id}");
-            text.Position = new Position(250, 800);
+            TextFragment text = new TextFragment($"Акт досмотра №{app.app_app.id}");
+            text.Position = new Position(225, 800);
             text.TextState.FontSize = 18;
             text.TextState.FontStyle = FontStyles.Bold;
+            text.TextState.Underline = true;
             page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            page.Paragraphs.Add(new TextFragment("      "));
+            page.Paragraphs.Add(new TextFragment("      "));
+            page.Paragraphs.Add(new TextFragment("      "));
+            page.Paragraphs.Add(new TextFragment("      "));
             
+            TextSegment text1 = new TextSegment();
+            TextSegment text2 = new TextSegment();
+
+            text.TextState.FormattingOptions = new TextFormattingOptions()
+            {
+                SubsequentLinesIndent = 40
+            };
             
-            // ID
-            TextFragment text1 = new TextFragment($"ID товара:");
-            text1.Position = new Position(70, 750);
+            //id
+            text = new TextFragment();
+            text2 = new TextSegment("Код товара: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.product_id}");
             text1.TextState.FontSize = 14;
-            text1.TextState.FontStyle = FontStyles.Bold;
-            page.Paragraphs.Add(text1);
-            TextFragment text11 = new TextFragment($"{app.app_product.product_id}");
-            text11.Position = new Position(170, 750);
-            text11.TextState.FontSize = 14;
-            page.Paragraphs.Add(text11);
+            text1.TextState.Underline = true;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //title
+            text = new TextFragment();
+            text2 = new TextSegment("Наименование товара: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.product_title}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //typeprod
+            text = new TextFragment();
+            text2 = new TextSegment("Тип товара: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_prod_type.type_product_title}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            
+            //typevehicle
+            text = new TextFragment();
+            text2 = new TextSegment("Вид транспорта доставки: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_vehicle_type.vehicle_type_title}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //user
+            text = new TextFragment();
+            text2 = new TextSegment("Экспортер: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_user.user_name}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            
+            
+            //country
+            text = new TextFragment();
+            text2 = new TextSegment("Страна экспорта: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_export_country.country_title}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //charact
+            text = new TextFragment();
+            text2 = new TextSegment("Характиристики товара товара: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.characteristics}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            
+            //quan
+            text = new TextFragment();
+            text2 = new TextSegment("Заявленное количество товара: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.quantity}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //mass
+            text = new TextFragment();
+            text2 = new TextSegment("Заявленная масса товара: ");
+            text2.TextState.FontSize = 16;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.mass}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 14;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
 
-            TextFragment text2 = new TextFragment($"Наименование товара: {app.app_product.product_title}");
-            text2.Position = new Position(250, 750);
-            text2.TextState.FontSize = 14;
-            page.Paragraphs.Add(text2);
-
-            // Добавление места для подписи
-            TextFragment signature = new TextFragment("Подпись: ____________________");
-            signature.Position = new Position(100, 100); // расположение подписи
-            page.Paragraphs.Add(signature);
+            // // Добавление места для подписи
+            // TextFragment signature = new TextFragment("Подпись: ____________________");
+            // signature.Position = new Position(100, 100); // расположение подписи
+            // page.Paragraphs.Add(signature);
 
             // Сохранение документа в файл
-            pdfDocument.Save("C:\\Users\\TimCheers\\Desktop\\2023\\Пример2.pdf");
+            pdfDocument.Save($"D:\\Акт №{app.app_app.id}.pdf");
 
             Console.WriteLine("PDF-документ успешно создан.");
         }
