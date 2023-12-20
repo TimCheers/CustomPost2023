@@ -113,12 +113,21 @@ namespace CustomPost2023.Controllers.Staff
             // Оглавление
             TextFragment text = new TextFragment($"Акт досмотра №{app.app_app.id}");
             text.Position = new Position(225, 800);
-            text.TextState.FontSize = 18;
+            text.TextState.FontSize = 16;
             text.TextState.FontStyle = FontStyles.Bold;
             text.TextState.Underline = true;
             page.Paragraphs.Add(text);
             page.Paragraphs.Add(new TextFragment("      "));
-            page.Paragraphs.Add(new TextFragment("      "));
+            
+            TextFragment post = new TextFragment($"{app.app_custom_post.customs_post_title}");
+            post.Position = new Position(400, 770);
+            post.TextState.FontSize = 12;
+            page.Paragraphs.Add(post);
+            post = new TextFragment($"{app.app_history.custom_date}");
+            post.Position = new Position(400, 730);
+            post.TextState.FontSize = 11;
+            page.Paragraphs.Add(post);
+            
             page.Paragraphs.Add(new TextFragment("      "));
             page.Paragraphs.Add(new TextFragment("      "));
             page.Paragraphs.Add(new TextFragment("      "));
@@ -134,128 +143,116 @@ namespace CustomPost2023.Controllers.Staff
             //id
             text = new TextFragment();
             text2 = new TextSegment("Код товара: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_product.product_id}");
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text1.TextState.Underline = true;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
             
             //title
             text = new TextFragment();
             text2 = new TextSegment("Наименование товара: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_product.product_title}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
             
             //typeprod
             text = new TextFragment();
             text2 = new TextSegment("Тип товара: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_prod_type.type_product_title}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
-            
             
             //typevehicle
             text = new TextFragment();
             text2 = new TextSegment("Вид транспорта доставки: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_vehicle_type.vehicle_type_title}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
             
             //user
             text = new TextFragment();
             text2 = new TextSegment("Экспортер: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_user.user_name}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
-            
-            
             
             //country
             text = new TextFragment();
             text2 = new TextSegment("Страна экспорта: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_export_country.country_title}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
             
             //charact
             text = new TextFragment();
             text2 = new TextSegment("Характиристики товара товара: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_product.characteristics}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
-            
             
             //quan
             text = new TextFragment();
             text2 = new TextSegment("Заявленное количество товара: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_product.quantity}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            page.Paragraphs.Add(new TextFragment("      "));
             
             //mass
             text = new TextFragment();
             text2 = new TextSegment("Заявленная масса товара: ");
-            text2.TextState.FontSize = 16;
+            text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_product.mass}");
             text1.TextState.Underline = true;
-            text1.TextState.FontSize = 14;
+            text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
@@ -265,11 +262,9 @@ namespace CustomPost2023.Controllers.Staff
             // TextFragment signature = new TextFragment("Подпись: ____________________");
             // signature.Position = new Position(100, 100); // расположение подписи
             // page.Paragraphs.Add(signature);
+            
 
-            // Сохранение документа в файл
             pdfDocument.Save($"D:\\Акт №{app.app_app.id}.pdf");
-
-            Console.WriteLine("PDF-документ успешно создан.");
         }
         [HttpPost]
         public IActionResult DoneResult(int id, string conclusion, double cusTime, double cusPrise, string radioGroup)
