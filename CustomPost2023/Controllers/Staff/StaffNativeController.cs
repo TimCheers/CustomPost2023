@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
 
+using Aspose.Pdf;
+using Aspose.Pdf.Text;
+
 namespace CustomPost2023.Controllers.Staff
 {
     public class StaffNativeController : Controller
@@ -98,12 +101,71 @@ namespace CustomPost2023.Controllers.Staff
 
             return View(resultViewModel);
         }
+
+        public void CreatePDF(ApplicationViewModel app)
+        {
+            // Инициализация документа
+            Document pdfDocument = new Document();
+
+            // Добавление страницы к документу
+            Page page = pdfDocument.Pages.Add();
+
+            // // Создание таблицы
+            // Table table = new Table();
+            // table.Border = new BorderInfo(BorderSide.All, 1f); // Задаем границы таблицы
+            // page.Paragraphs.Add(table);
+            //
+            // // Добавление строк и ячеек в таблицу
+            // Row row = table.Rows.Add();
+            // Cell cell = row.Cells.Add("Ячейка 1");
+            // cell.ColSpan = 2; // объединение ячеек
+            // cell.Border = new BorderInfo(BorderSide.All, 1f); // Задаем границы ячейки
+            // row.Cells.Add("Ячейка 2").Border = new BorderInfo(BorderSide.All, 1f);
+
+            // Добавление текстовых фрагментов
+            
+            
+            // Оглавление
+            TextFragment text = new TextFragment($"Акт досмотра {app.app_app.id}");
+            text.Position = new Position(250, 800);
+            text.TextState.FontSize = 18;
+            text.TextState.FontStyle = FontStyles.Bold;
+            page.Paragraphs.Add(text);
+            
+            
+            // ID
+            TextFragment text1 = new TextFragment($"ID товара:");
+            text1.Position = new Position(70, 750);
+            text1.TextState.FontSize = 14;
+            text1.TextState.FontStyle = FontStyles.Bold;
+            page.Paragraphs.Add(text1);
+            TextFragment text11 = new TextFragment($"{app.app_product.product_id}");
+            text11.Position = new Position(170, 750);
+            text11.TextState.FontSize = 14;
+            page.Paragraphs.Add(text11);
+
+            TextFragment text2 = new TextFragment($"Наименование товара: {app.app_product.product_title}");
+            text2.Position = new Position(250, 750);
+            text2.TextState.FontSize = 14;
+            page.Paragraphs.Add(text2);
+
+            // Добавление места для подписи
+            TextFragment signature = new TextFragment("Подпись: ____________________");
+            signature.Position = new Position(100, 100); // расположение подписи
+            page.Paragraphs.Add(signature);
+
+            // Сохранение документа в файл
+            pdfDocument.Save("C:\\Users\\TimCheers\\Desktop\\2023\\Пример2.pdf");
+
+            Console.WriteLine("PDF-документ успешно создан.");
+        }
         [HttpPost]
         public IActionResult DoneResult(int id, string conclusion, double cusTime, double cusPrise, string radioGroup)
         {
 
             ApplicationViewModel appModel = DetectApplication(id);
-
+            
+            
             history newHi = appModel.app_history;
             newHi.conclusion = conclusion;
             newHi.customs_clearance_time = cusTime;
@@ -125,7 +187,7 @@ namespace CustomPost2023.Controllers.Staff
             db.application.Update(newApp);
             db.SaveChanges();
 
-
+            CreatePDF(appModel);
             return RedirectToAction("Index");
         }
         [HttpPost]
