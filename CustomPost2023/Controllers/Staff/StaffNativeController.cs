@@ -250,12 +250,41 @@ namespace CustomPost2023.Controllers.Staff
             text2.TextState.FontSize = 14;
             text.Segments.Add(text2);
             
-            text1 = new TextSegment($"{app.app_product.mass}");
+            text1 = new TextSegment($"{app.app_product.mass} кг");
             text1.TextState.Underline = true;
             text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
+            
+            //price
+            text = new TextFragment();
+            text2 = new TextSegment("Цена товара: ");
+            text2.TextState.FontSize = 14;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.price} \u20bd");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 12;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            
+            
+            //discr
+            text = new TextFragment();
+            text2 = new TextSegment("Описание товара: ");
+            text2.TextState.FontSize = 14;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_product.description}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 12;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            
+            
             page.Paragraphs.Add(new TextFragment("      "));
 
             // // Добавление места для подписи
