@@ -284,7 +284,7 @@ namespace CustomPost2023.Controllers.Staff
             
             page.Paragraphs.Add(text);
             
-            
+                
             page.Paragraphs.Add(new TextFragment("      "));
 
             // // Добавление места для подписи
@@ -324,7 +324,7 @@ namespace CustomPost2023.Controllers.Staff
             db.SaveChanges();
 
             CreatePDF(appModel);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {id = appModel.app_staff.id});
         }
         [HttpPost]
         public IActionResult ViewAllTasks(int id)

@@ -1,19 +1,108 @@
-﻿@page
-@model CustomPost2023.ViewModels.UserViewModel;
-
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Список таможенных пунктов";
 }
+<style>
+    /* Add your CSS styles here */
+    .content {
+        margin: 20px;
+    }
 
-<!DOCTYPE html>
+    form {
+        margin-bottom: 20px;
+    }
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+    input[type="text"] {
+        width: 200px;
+        padding: 8px;
+        margin-right: 10px;
+    }
+
+    input[type="submit"],
+    button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<div class="content">
+    <h2>Список таможенных пунктов</h2>
+    <form method="get">
+        <div>
+            <input type="text" placeholder="Введите название" name="nameStr">
+            <input type="text" placeholder="Введите локацию" name="locStr">
+            <input type="text" placeholder="Введите проп. способ." name="thrStr">
+            <input type="text" placeholder="Введите ID" name="vehStr">
+            <input type="submit" value="Фильтр"/>
+        </div>
+    </form>
+    <table class="table">
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">
+                    ID
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.nameSort">
+                    Название
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.massSort">
+                    Локация
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.countSort">
+                    Пропускная способность
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.priceSort">
+                    ID транспорта доставки
+                </a>
+            </th>
+            <th></th>
+
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ap.customs_post_id</td>
+                <td>@item.ap.customs_post_title</td>
+                <td>@item.ap.location</td>
+                <td>@item.ap.throughput</td>
+                <td>@item.pr.vehicle_type_title</td>
+                <td>
+                    <form asp-controller="UserNative" asp-action="ApplicationCreate" asp-route-id="@item.us.user_id">
+                        <input type="submit" value="Просмотр" class="btn approve" style="min-width: 50%; padding-top:5px; align-content:flex-end; background-color: #2ecc71; color: #fff;"/>
+                        <input type="hidden" name="CPost" value="@item.ap.customs_post_id"/>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
 </div>
-</body>
-</html>

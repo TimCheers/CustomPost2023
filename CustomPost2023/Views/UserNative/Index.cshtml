@@ -269,7 +269,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <form asp-controller="UserNative" asp-action="ApplicationCreate" method="post" asp-route-id="@Model.User.user_id">
+                <form asp-controller="UserNative" asp-action="CustomsPostSelection" method="post" asp-route-id="@Model.User.user_id">
                     <input type="submit" value="Создать заявку" class="nav-button"/>
                 </form>
             </li>
@@ -310,11 +310,6 @@
                         <input type="submit" value="Настройки аккаунта" class="nav-button" style="max-width:50%; background-color: lightblue;"/>
                     </form>
                 </div>
-                @* <div class="form-group"> *@
-                @*     <label for="employeePassword"><b>Таможенный пункт:</b></label> *@
-                @*     <label for="employeePassword">@Model.custom_post.customs_post_title</label> *@
-                @*     <label for="employeePassword"><b>Адрес:</b> @Model.custom_post.location</label> *@
-                @* </div> *@
             </div>
             <div class="right-block">
 

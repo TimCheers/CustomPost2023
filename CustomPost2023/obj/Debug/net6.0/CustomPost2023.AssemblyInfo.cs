@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CustomPost2023")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb68387adda8c7543aad26e2db65728b7bf93e2b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+832c7018aac46186cb3b3967a3f53652f154a053")]
 [assembly: System.Reflection.AssemblyProductAttribute("CustomPost2023")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CustomPost2023")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

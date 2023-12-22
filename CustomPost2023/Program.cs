@@ -85,8 +85,9 @@ if (!app.Environment.IsDevelopment())
 }
 app.MapControllerRoute(
     name: "default",
-    //pattern: "{controller=Home}/{action=Index}/{id?}");
-    pattern: "{controller=UserNative}/{action=Index}/{id=80}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //pattern: "{controller=Authorization}/{action=Index}/{id?}");
+    //pattern: "{controller=StaffNative}/{action=Index}/{id=2}");
 app.Run();
 
 public class AuthOptions

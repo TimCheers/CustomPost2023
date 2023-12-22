@@ -1,3 +1,174 @@
-﻿<a asp-controller="Admin" asp-action="Loggs">Админка</a>
-<a asp-controller="StaffNative" asp-action="Index">Персонал</a>
-<a asp-controller="UserNative" asp-action="Index">Пользователь</a>
+﻿@page
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация и Авторизация</title>
+  <!-- Подключение Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      background-color: #f8f9fa;
+      color: #333;
+      margin-top: 60px; /* Учитывает высоту кнопки переключения темы */
+    }
+
+    .container {
+      margin-top: 50px;
+      transition: background-color 0.5s ease; /* Добавлен переход для плавного изменения цвета */
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: auto;
+      transition: background-color 0.5s ease;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    .btn-login {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-register {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    body.dark-theme {
+      background-color: #2c3e50;
+      color: #fff;
+    }
+
+    .container.dark-theme {
+      background-color: #34495e; /* Цвет фона контейнера при темной теме */
+    }
+
+    .form-container.dark-theme {
+      background-color: #34495e;
+      color: #fff;
+    }
+
+    .form-container.dark-theme h2,
+    .form-container.dark-theme label,
+    .form-container.dark-theme p {
+      color: #fff;
+    }
+
+    .form-container.dark-theme input {
+      background-color: #2c3e50;
+      color: #fff;
+    }
+
+    .form-container.dark-theme button {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    .toggle-theme-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border: none;
+      outline: none;
+    }
+
+    .toggle-theme-btn.sun {
+      background-image: url('https://img.icons8.com/ios-filled/50/000000/sun.png');
+    }
+
+    .toggle-theme-btn.moon {
+      background-image: url('https://img.icons8.com/ios-filled/50/000000/crescent-moon.png');
+    }
+    
+  </style>
+</head>
+<body>
+
+<form asp-action="Index" asp-controller="Home">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 form-container" id="loginFormContainer">
+        <!-- Форма для авторизации -->
+        <h2 class="text-center mb-4">Авторизация</h2>
+        <form>
+          <div class="form-group">
+            <label for="loginEmail">Login:</label>
+            <input name="username" class="form-control" id="loginEmail" placeholder="Введите login" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Пароль:</label>
+            <input name="password" type="password" class="form-control" id="loginPassword" placeholder="Введите ваш пароль" required>
+          </div>
+          <button type="submit" class="btn btn-block btn-login">Войти</button>
+        </form>
+        <p class="text-center mt-3">Нет аккаунта? <a href="#" onclick="toggleForm('registerFormContainer')">Зарегистрируйтесь</a></p>
+      </div>
+  
+      <div class="col-md-6 form-container" id="registerFormContainer" style="display: none;">
+        <!-- Форма для регистрации -->
+        <h2 class="text-center mb-4">Регистрация</h2>
+        <form>
+          <div class="form-group">
+            <label for="registerName">Имя:</label>
+            <input type="text" class="form-control" id="registerName" placeholder="Введите ваше имя" required>
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">Login:</label>
+            <input class="form-control" id="registerEmail" placeholder="Введите ваш login" required>
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Пароль:</label>
+            <input type="password" class="form-control" id="registerPassword" placeholder="Введите ваш пароль" required>
+          </div>
+          <button type="submit" class="btn btn-block btn-register">Зарегистрироваться</button>
+        </form>
+        <p class="text-center mt-3">Уже есть аккаунт? <a href="#" onclick="toggleForm('loginFormContainer')">Войдите</a></p>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Кнопка переключения темы -->
+<button class="toggle-theme-btn sun" onclick="toggleTheme()"></button>
+
+<!-- Подключение Bootstrap JS (необходимо для работы компонентов Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+  function toggleForm(formId) {
+    document.getElementById('loginFormContainer').style.display = 'none';
+    document.getElementById('registerFormContainer').style.display = 'none';
+    document.getElementById(formId).style.display = 'block';
+  }
+
+  const body = document.body;
+  function toggleTheme() {
+    body.classList.toggle('dark-theme');
+    const toggleThemeBtn = document.querySelector('.toggle-theme-btn');
+    toggleThemeBtn.classList.toggle('sun');
+    toggleThemeBtn.classList.toggle('moon');
+  }
+</script>
+
+</body>
+</html>

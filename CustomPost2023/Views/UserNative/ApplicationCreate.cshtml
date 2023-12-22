@@ -1,9 +1,10 @@
-﻿@page
-@{
-    Layout = null;
-}
-@using CustomPost2023.ViewModels
+﻿@using Newtonsoft.Json
+
+
 @model CustomPost2023.ViewModels.UserViewModel
+@{
+    bool isCountryCorrect = false;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,106 +44,75 @@
 </head>
 <body>
 
-    <div class="container">
-        <form>
+<div class="container">
+    <form asp-action="ApplicationCreateDone" asp-controller="UserNative">
+        <div asp-validation-summary="All">
             <h2 class="mt-4 mb-4">Заявка на оформление таможенной декларации</h2>
-
-            <!-- Информация о грузе -->
+            <h3>Информация о грузе</h3>
+            <div class="form-group">
+                <label asp-for="new_application.app_product.product_title" for="quantity">Наименование товара: </label>
+                <input asp-for="new_application.app_product.product_title" class="form-control" type="text" required>
+            </div>
             <div class="form-group">
                 <label asp-for="new_application.app_product.description" for="cargoDescription">Информация о грузе (Описание):</label>
-                <textarea asp-for="new_application.app_product.description" class="form-control" id="cargoDescription" name="cargoDescription" rows="4" required></textarea>
+                <textarea asp-for="new_application.app_product.description" class="form-control" rows="4" required></textarea>
             </div>
-
+            <div>
+                <label for="cargoDescription">Тип груза:</label>
+                <select asp-for="new_application.app_product.fk_type_product_id">
+                    @foreach (var item in @Model.ProductTypes)
+                    {
+                        <option value="@item.type_product_id">@item.type_product_title</option>
+                    }
+                </select>
+            </div>
             <div class="form-group">
                 <label asp-for="new_application.app_product.quantity" for="quantity">Количество товаров:</label>
-                <input asp-for="new_application.app_product.quantity" type="number" class="form-control" id="quantity" name="quantity" required>
+                <input asp-for="new_application.app_product.quantity" class="form-control" type="number" required>
             </div>
 
             <div class="form-group">
                 <label for="cost">Стоимость товаров:</label>
-                <input asp-for="new_application.app_product.price" type="text" class="form-control" id="cost" name="cost" required>
+                <input asp-for="new_application.app_product.price" type="number" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label for="weight">Вес груза:</label>
-                <input asp-for="new_application.app_product.mass" type="text" class="form-control" id="weight" name="weight" required>
+                <input asp-for="new_application.app_product.mass" type="number" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label for="dimensions">Характеристики груза:</label>
-                <input asp-for="new_application.app_product.characteristics" type="text" class="form-control" id="dimensions" name="dimensions" required>
+                <textarea asp-for="new_application.app_product.characteristics" rows="4" class="form-control" required></textarea>
             </div>
 
             <!-- Данные о отправителе и получателе -->
-            <h3>Данные о отправителе и получателе</h3>
-
+            <h3>Данные о отправителе</h3>
             <div class="form-group">
                 <label for="senderName">Полное наименование отправителя:</label>
-                <input value="@Model.User.user_name" disabled="disabled" type="text" class="form-control" id="senderName" name="senderName" required>
+                <input value="@Model.User.user_name" disabled type="text" class="form-control" required>
+                <input type="hidden" asp-for="@Model.User.user_id"/>
+                <input type="hidden" asp-for="@Model.new_application.app_custom_post.customs_post_id"/>
             </div>
-
             <div class="form-group">
-                <label for="senderAddress">Адрес отправителя:</label>
-                <textarea class="form-control" id="senderAddress" name="senderAddress" rows="4" required></textarea>
+                <label for="senderName">Login отправителя:</label>
+                <input value="@Model.User.login" disabled type="text" class="form-control" required>
             </div>
-
+            <h3>Дополнительные данные</h3>
             <div class="form-group">
-                <label for="senderContact">Контактная информация отправителя:</label>
-                <input type="text" class="form-control" id="senderContact" name="senderContact" required>
+                <label for="senderName">Дата растаможки: </label>
+                <input asp-for="new_application.app_history.custom_date" type="date" class="form-control" format="yyyy-MM-dd" required/>
             </div>
-
-            <!-- Данные о транспортном средстве -->
-            <h3>Данные о транспортном средстве</h3>
-
             <div class="form-group">
-                <label for="vehicleNumber">Номер регистрации транспортного средства:</label>
-                <input type="text" class="form-control" id="vehicleNumber" name="vehicleNumber" required>
+                <label for="senderName">Страна экспорта</label>
+                <input asp-for="new_application.app_export_country.country_title" type="text" class="form-control" required/>
             </div>
-
-            <div class="form-group">
-                <label for="vehicleMake">Марка транспортного средства:</label>
-                <input type="text" class="form-control" id="vehicleMake" name="vehicleMake" required>
-            </div>
-
-            <div class="form-group">
-                <label for="vehicleModel">Модель транспортного средства:</label>
-                <input type="text" class="form-control" id="vehicleModel" name="vehicleModel" required>
-            </div>
-
-            <!-- Документы -->
-            <h3>Документы</h3>
-
-            <div class="form-group">
-                <label for="ownershipDocuments">Документы, подтверждающие право собственности:</label>
-                <textarea class="form-control" id="ownershipDocuments" name="ownershipDocuments" rows="4" required></textarea>
-            </div>
-
-            <!-- Информация о таможенной стоимости -->
-            <h3>Информация о таможенной стоимости</h3>
-
-            <div class="form-group">
-                <label for="customsValue">Таможенная стоимость товаров:</label>
-                <input type="text" class="form-control" id="customsValue" name="customsValue" required>
-            </div>
-
-            <div class="form-group">
-                <label for="customsDuties">Таможенные пошлины и налоги:</label>
-                <textarea class="form-control" id="customsDuties" name="customsDuties" rows="4" required></textarea>
-            </div>
-
-            <!-- Дополнительные сведения -->
-            <h3>Дополнительные сведения</h3>
-
-            <div class="form-group">
-                <label for="additionalInfo">Дополнительные сведения:</label>
-                <textarea class="form-control" id="additionalInfo" name="additionalInfo" rows="4" required></textarea>
-            </div>
-
             <button type="submit" class="btn btn-primary">Отправить заявку</button>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
