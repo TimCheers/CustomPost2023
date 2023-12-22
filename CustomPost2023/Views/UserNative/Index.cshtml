@@ -1,5 +1,325 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewBag.Title = "Личный кабинет работника таможни";
+    //Layout = "/Views/Shared/_StaffLayout.cshtml";
 }
+@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.UserViewModel
+@{
+    var now = DateTime.Now;
+    var year = now.Year;
+    var month = now.Month;
+    var firstDayOfMonth = new DateTime(year, month, 1);
+    var lastDayOfMonth = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+    var daysInMonth = lastDayOfMonth.Day;
+    var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek;
+    bool task = false;
+    string taskForDate = "";
+    var dayCount = 1;
+}
+
+<style>
+    .profile-container {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .profile-photo {
+        max-width: 80px;
+        max-height: 60px;
+        border-radius: 50%;
+    }
+
+    .btn-change-photo {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin-top: 10px;
+    }
+
+    table {
+        width: 120%; /* Пример: увеличьте или уменьшите значение по вашему усмотрению */
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #00a0df; /* Голубой цвет шапки */
+        color: #fff;
+    }
+
+    th {
+        padding: 10px;
+        text-align: center;
+    }
+
+    th, td {
+        width: 14.28%; /* Равномерное распределение по 7 дням в неделе */
+        border: 1px solid #ddd;
+        padding: 10px;
+        word-wrap: break-word;
+    }
+
+    .day {
+        margin-bottom: 5px;
+    }
+
+    .appl_btn, /* Стили для кнопок */
+    a.appl_link { /* Стили для ссылок */
+        font-size: small;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: fuchsia; /* Цвет текста ссылок */
+        text-decoration: none; /* Убираем подчеркивание ссылок */
+    }
+
+    .task-list {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px;
+        z-index: 1;
+        width: 200px; /* Set a fixed width for the dropdown */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .task-list a {
+            display: block;
+            padding: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+            .task-list a:hover {
+                background-color: #f0f0f0;
+            }
+
+            .task-list a.no-task {
+                color: #999;
+            }
+
+    td:hover .task-list {
+        display: block;
+    }
+
+    .submitLink {
+        background-color: transparent;
+        border: none;
+        color: blueviolet;
+        cursor: pointer;
+    }
+
+    submitLink:focus {
+        color: cornflowerblue;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 20px;
+        text-align: center;
+    }
+
+    .form-container {
+        display: flex;
+        max-width: 90%;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .left-block, .right-block {
+        width: 48%;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    .right-block {
+        margin-left: 2%;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        height: 100px;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn {
+        padding: 10px;
+        width: 48%;
+        border: none;
+        cursor: pointer;
+    }
+
+
+    .approve {
+        background-color: #4caf50;
+        color: #fff;
+    }
+
+    .reject {
+        background-color: #f44336;
+        color: #fff;
+    }
+
+    .navbar {
+        background-color: #3498db; /* Цвет фона навбара */
+        color: #fff; /* Цвет текста навбара */
+        padding: 15px; /* Внутренний отступ */
+        border-radius: 5px; /* Скругление углов */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+        margin-bottom: 3%;
+    }
+
+    /* Стиль для бренда (левая часть навбара) */
+    .navbar-brand {
+        font-size: 24px; /* Размер шрифта бренда */
+        font-weight: bold; /* Жирный шрифт */
+        padding-left: 25px;
+    }
+
+    /* Стиль для навигационных элементов */
+    .navbar-nav .nav-item {
+        margin-right: 15px; /* Отступ между элементами навбара */
+    }
+
+    /* Стиль для кнопок */
+    .nav-button-cur {
+        background-color: blueviolet;
+        color: #fff; /* Цвет текста кнопок */
+        padding: 8px 15px; /* Внутренний отступ кнопок */
+        border: none; /* Убираем границу кнопок */
+        border-radius: 3px; /* Скругление углов кнопок */
+        cursor: pointer; /* Курсор при наведении на кнопки */
+    }
+
+    .nav-button {
+        background-color: #2ecc71; /* Цвет фона кнопок */
+        color: #fff; /* Цвет текста кнопок */
+        padding: 8px 15px; /* Внутренний отступ кнопок */
+        border: none; /* Убираем границу кнопок */
+        border-radius: 3px; /* Скругление углов кнопок */
+        cursor: pointer; /* Курсор при наведении на кнопки */
+    }
+
+        /* Стиль для кнопок при наведении */
+        .nav-button:hover {
+            background-color: #27ae60; /* Измененный цвет фона при наведении */
+        }
+
+    footer {
+        background-color: #f8f9fa;
+        padding: 20px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .form-container {
+        display: flex;
+        max-width: 99%;
+        min-height: 250px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-block, .right-block {
+        width: 44%;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: left;
+        display: block;
+    }
+
+    .right-block {
+        margin-left: 2%;
+    }
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+    <a class="navbar-brand" href="#">@Model.User.login</a>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <form asp-controller="UserNative" asp-action="ApplicationCreate" method="post" asp-route-id="@Model.User.user_id">
+                    <input type="submit" value="Создать заявку" class="nav-button"/>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@Model.User.user_id">
+                    <input type="submit" value="Личный кабинет" class="nav-button-cur"/>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form asp-controller="Home" asp-action="Index" method="post" asp-route-id="@Model.User.user_id">
+                    <input type="submit" value="Выход" class="nav-button"/>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row" style="padding-bottom:10px;">
+        <div class="form-container">
+            <div class="left-block">
+                <div class="form-group">
+                    <label for="employeeName">
+                        <b>Имя: </b> @Model.User.user_name
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="employeePosition">
+                        <b>Логин: </b> @Model.User.login
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="employeeEmail">
+                        <b>Количество текущих заявок:</b> @Model.applications.Count
+                    </label>
+                </div>
+                <div class="form-group">
+                    <form asp-controller="StaffNative" asp-action="ViewAllTasks" method="post" asp-route-id="@Model.User.user_id">
+                        <input type="submit" value="Настройки аккаунта" class="nav-button" style="max-width:50%; background-color: lightblue;"/>
+                    </form>
+                </div>
+                @* <div class="form-group"> *@
+                @*     <label for="employeePassword"><b>Таможенный пункт:</b></label> *@
+                @*     <label for="employeePassword">@Model.custom_post.customs_post_title</label> *@
+                @*     <label for="employeePassword"><b>Адрес:</b> @Model.custom_post.location</label> *@
+                @* </div> *@
+            </div>
+            <div class="right-block">
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
