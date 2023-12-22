@@ -7,6 +7,18 @@
 }
 <div class="content">
     <h2>Список заявок</h2>
+    <form method="get">
+            <div>
+                <input type="text" placeholder="Введите название" name="prodStr">
+                <input type="text" placeholder="Введите ТП" name="locStr">
+                <input type="text" placeholder="Введите сотрудника" name="staffStr">
+                <input type="text" placeholder="Введите статус" name="statusStr">
+                <input type="text" placeholder="Введите импортера" name="impStr">
+                <input type="text" placeholder="Введите страну" name="expStr">
+                
+                <input type="submit" value="Фильтр" />
+            </div>
+    </form>
     <p><a asp-action="Create">Добавить заявку</a></p>
     <table class="table">
         <tr>

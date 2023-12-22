@@ -36,7 +36,7 @@ namespace CustomPost2023.Controllers.Admin
         {
             db = context;
         }
-        public async Task<IActionResult> Index(string name, string custom_post, SortState sortOrder = SortState.IdAsc)
+        public async Task<IActionResult> Index(string name, string ageStr, string expStr, string tpStr, string posStr, string phoneStr, SortState sortOrder = SortState.IdAsc)
         {
             var n = from st in db.Set<staff>()
                     join cp in db.Set<custom_post>() on st.custom_post_id equals cp.customs_post_id
@@ -52,10 +52,27 @@ namespace CustomPost2023.Controllers.Admin
             {
                 n = n.Where(p => p.st.name.Contains(name));
             }
-            if (!string.IsNullOrEmpty(custom_post))
+            if (!string.IsNullOrEmpty(ageStr))
             {
-                n = n.Where(p => p.cp.customs_post_title.Contains(custom_post));
+                n = n.Where(p => p.st.age.Equals(int.Parse(ageStr)));
             }
+            if (!string.IsNullOrEmpty(expStr))
+            {
+                n = n.Where(p => p.st.work_experience.Equals(int.Parse(expStr)));
+            }
+            if (!string.IsNullOrEmpty(tpStr))
+            {
+                n = n.Where(p => p.cp.customs_post_title.Contains(tpStr));
+            }
+            if (!string.IsNullOrEmpty(posStr))
+            {
+                n = n.Where(p => p.st.job_title.Contains(posStr));
+            }
+            if (!string.IsNullOrEmpty(phoneStr))
+            {
+                n = n.Where(p => p.st.phone_number.Equals(int.Parse(phoneStr)));
+            }
+            
             switch (sortOrder)
             {
                 case SortState.IdAsc: return View(await n.OrderBy(p => p.st.id).ToListAsync());

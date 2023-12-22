@@ -1,27 +1,40 @@
 ﻿@using CustomPost2023.Data.Models
-@model IEnumerable<CustomPost2023.Data.Models.custom_post>
 @{
     ViewBag.Title = "Список таможенных пунктов";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="content">
     <h2>Список таможенных пунктов</h2>
+    <form method="get">
+            <div>
+                <label>Название: </label>
+                <input type="text" placeholder="Введите название" name="nameStr">
+                <label>Локация: </label>
+                <input type="text" placeholder="Введите локацию" name="locStr">
+                <label>Проп. способность: </label>
+                <input type="text" placeholder="Введите проп. способ." name="thrStr">
+                <label>ID транспорта: </label>
+                <input type="text" placeholder="Введите ID" name="vehStr">
+                
+                <input type="submit" value="Фильтр" />
+            </div>
+    </form>
     <p><a asp-action="Create">Добавить таможенный пункт</a></p>
     <table class="table">
         <tr><th>ID</th><th>Название</th><th>Локация</th><th>Пропускная способность</th><th>ID транспорта доставки</th><th></th><th></th></tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.customs_post_id</td>
-                <td>@item.customs_post_title</td>
-                <td>@item.location</td>
-                <td>@item.throughput</td>
-                <td>@item.fk_vehicle_id</td>
+                <td>@item.st.customs_post_id</td>
+                <td>@item.st.customs_post_title</td>
+                <td>@item.st.location</td>
+                <td>@item.st.throughput</td>
+                <td>@item.st.fk_vehicle_id</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="CustomPost" asp-route-id="@item.customs_post_id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="CustomPost" asp-route-id="@item.st.customs_post_id">Изменить</a>
                 </td>
                 <td>
-                    <form asp-controller="CustomPost" asp-action="Delete" method="post" asp-route-id="@item.customs_post_id">
+                    <form asp-controller="CustomPost" asp-action="Delete" method="post" asp-route-id="@item.st.customs_post_id">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>

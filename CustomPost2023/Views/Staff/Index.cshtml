@@ -10,10 +10,13 @@
     <p><a asp-action="Create">Добавить пользователя</a></p>
     <form method="get">
         <div>
-            <label>Имя: </label>
             <input type="text" placeholder="Введите имя" name="name">
-            <label>Название ТП: </label>
-            <input type="text" placeholder="Введите название таможенного пункта" name="custom_post">
+            <input type="text" placeholder="Введите возраст" name="ageStr">
+            <input type="text" placeholder="Введите опыт" name="expStr">
+            <input type="text" placeholder="Введите название" name="tpStr">
+            <input type="text" placeholder="Введите должность" name="posStr">
+            <input type="text" placeholder="Введите номер" name="phoneStr">
+            
             <input type="submit" value="Фильтр" />
         </div>
     </form>
