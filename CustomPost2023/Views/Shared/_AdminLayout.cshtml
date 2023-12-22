@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" media="screen">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="sidebar">
+        <h5 class="backTe">Инструменты</h5>
+        <a asp-controller="Home" asp-action="Index">Главная</a>
+        <a asp-controller="Admin" asp-action="Loggs">Логги</a>
+        <h5 class="backTe">Таблицы</h5>
+        <a asp-controller="User" asp-action="Index">Пользователи</a>
+        <a asp-controller="Product" asp-action="Index">Продукты</a>
+        <a asp-controller="Export_country" asp-action="Index">Страны</a>
+        <a asp-controller="Status" asp-action="Index">Статусы</a>
+        <a asp-controller="Staff" asp-action="Index">Персонал</a>
+        <a asp-controller="CustomPost" asp-action="Index">Таможенные пункты</a>
+        <a asp-controller="ProductType" asp-action="Index">Типы продуктов</a>
+        <a asp-controller="VehicleType" asp-action="Index">Типы транспорта</a>
+        <a asp-controller="Application" asp-action="Index">Заявки</a>
+        <a asp-controller="History" asp-action="Index">История</a>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

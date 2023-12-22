@@ -1,0 +1,256 @@
+﻿@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.ApplicationViewModel
+@{
+    ViewBag.Title = "Заявка " + Model.app_app.id + " " + Model.app_product.product_title;
+    // Layout = "/Views/Shared/_TaskLayout.cshtml";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .form-container {
+            display: flex;
+            max-width: 90%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-block, .right-block {
+            width: 48%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: left;
+            display: block;
+        }
+
+        .right-block {
+            margin-left: 2%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px;
+            width: 48%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .approve {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .reject {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-weight: normal; /* Уменьшаем жирность шрифта */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .navbar {
+            background-color: #3498db; /* Цвет фона навбара */
+            color: #fff; /* Цвет текста навбара */
+            padding: 15px; /* Внутренний отступ */
+            border-radius: 5px; /* Скругление углов */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+            margin-bottom: 3%;
+        }
+
+        /* Стиль для бренда (левая часть навбара) */
+        .navbar-brand {
+            font-size: 24px; /* Размер шрифта бренда */
+            font-weight: bold; /* Жирный шрифт */
+            padding-left: 25px;
+        }
+
+        /* Стиль для навигационных элементов */
+        .navbar-nav .nav-item {
+            margin-right: 15px; /* Отступ между элементами навбара */
+        }
+
+        /* Стиль для кнопок */
+        .nav-button-cur {
+            background-color: blueviolet;
+            color: #fff; /* Цвет текста кнопок */
+            padding: 8px 15px; /* Внутренний отступ кнопок */
+            border: none; /* Убираем границу кнопок */
+            border-radius: 3px; /* Скругление углов кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопки */
+        }
+
+        .nav-button {
+            background-color: #2ecc71; /* Цвет фона кнопок */
+            color: #fff; /* Цвет текста кнопок */
+            padding: 8px 15px; /* Внутренний отступ кнопок */
+            border: none; /* Убираем границу кнопок */
+            border-radius: 3px; /* Скругление углов кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопки */
+        }
+
+            /* Стиль для кнопок при наведении */
+            .nav-button:hover {
+                background-color: #27ae60; /* Измененный цвет фона при наведении */
+            }
+
+        .myP {
+            color: blue;
+        }
+
+        .profile-photo {
+            max-width: 80px;
+            max-height: 60px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+        <a class="navbar-brand" href="#">@Model.app_staff.name</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="ViewAllTasks" method="post" asp-route-id="@Model.app_staff.id">
+                        <input type="submit" value="Все заявки" class="nav-button" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@Model.app_staff.id">
+                        <input type="submit" value="Личный кабинет" class="nav-button" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form asp-controller="Home" asp-action="Index" method="post" asp-route-id="@Model.app_staff.id">
+                        <input type="submit" value="Выход" class="nav-button" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h2 class="mainh2">Составление акта досмотра</h2>
+    <div class="form-container">
+        <div class="left-block">
+            <h2>Информация о товаре</h2>
+            <label>Код товара: </label> <p class="myP">@Model.app_product.product_id</p>
+            <label>Наименование товара: </label><p class="myP">@Model.app_product.product_title</p>
+            <label>Тип товара: </label><p class="myP">@Model.app_prod_type.type_product_title</p>
+            <label>Описание товара: </label><p class="myP">@Model.app_product.description</p>
+            <label>Экспортер: </label><p class="myP">@Model.app_user.user_name</p>
+            <label>Страна экспорта: </label><p class="myP">@Model.app_export_country.country_title</p>
+            <label>Вид транспорта доставки: </label><p class="myP">@Model.app_vehicle_type.vehicle_type_title</p>
+            <label>Таможенный пункт проверки: </label><p class="myP">@Model.app_custom_post.customs_post_title</p>
+            <label>Заявленная масса товара: </label><p class="myP">@Model.app_product.mass кг</p>
+            <label>Цена: </label><p class="myP">@Model.app_product.price ₽</p>
+            <label>Характиристики товара товара: </label><p class="myP">@Model.app_product.characteristics</p>
+            <label>Заявленное количество товара: </label><p class="myP">@Model.app_product.quantity</p>
+        </div>
+        <div class="right-block">
+            <h2>Лист осмотра</h2>
+            <form asp-controller="StaffNative" asp-action="ViewResult" method="post" asp-route-id="@Model.app_app.id">
+                <label>Объем таможенного просмотра:</label>
+                <select name="oto">
+                    <option value="10%">10%</option>
+                    <option value="50%">50%</option>
+                    <option value="100%">100%</option>
+                </select>
+                <label>Степень таможенного осмотра:</label>
+                <select name="STO">
+                    <option value="weighing">полное</option>
+                    <option value="recalculation">выборочное</option>
+                </select>
+                <label>Пересчет грузовых мест:</label>
+                <select name="PGM">
+                    <option value="weighing">Выборочное вкрытие</option>
+                    <option value="recalculation">Полное вскрытие</option>
+                </select>
+                <label>Пересчет количества предметов в грузовых местах:</label>
+                <select name="PKPvGM">
+                    <option value="weighing">Выборочно</option>
+                    <option value="recalculation">Во всех</option>
+                </select>
+                <label>Измерение и определение характиристик товара:</label>
+                <select name="IOHT">
+                    <option value="weighing">Полное</option>
+                    <option value="recalculation">Частичное</option>
+                </select>
+                @{
+                    if (Model.app_status.id == 3)
+                    {
+                        <label>Заключение:</label>
+                        <textarea name="conclusion" id="myTextarea" oninput="checkTextarea()"></textarea>
+                        <div class="btn-container">
+                            <input type="submit" value="Далее" class="btn approve" style="min-width: 10%;" id="myButton" disabled />
+                        </div>
+                    }
+                    else
+                    {
+                        <h2 style="color:brown;">Заявка закрыта</h2>
+                    }
+                }
+            </form>
+        </div>
+    </div>
+</body>
+<footer class="mt-5">
+    <div class="container text-center">
+        <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
+        <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+    </div>
+</footer>
+<script>
+    function checkTextarea() {
+        var textareaValue = $('#myTextarea').val();
+        var button = $('#myButton');
+
+        if (textareaValue.trim() !== '') {
+            button.prop('disabled', false);
+        } else {
+            button.prop('disabled', true);
+        }
+    }
+</script>

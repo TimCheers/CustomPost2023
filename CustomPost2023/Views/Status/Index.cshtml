@@ -1,0 +1,28 @@
+﻿@using CustomPost2023.Data.Models
+@model IEnumerable<CustomPost2023.Data.Models.status>
+@{
+    ViewBag.Title = "Список статусов";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Список статусов</h2>
+    <p><a asp-action="Create">Добавить статус</a></p>
+    <table class="table">
+        <tr><th>ID</th><th>Название</th><th></th><th></th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.status_title</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Status" asp-route-id="@item.id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-controller="Status" asp-action="Delete" method="post" asp-route-id="@item.id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

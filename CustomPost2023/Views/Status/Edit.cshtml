@@ -1,0 +1,20 @@
+﻿@model CustomPost2023.Data.Models.status
+@{
+    ViewBag.Title = "Изменение статуса";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Редактирование статуса</h2>
+    <form asp-action="Edit" asp-controller="Status">
+        <div asp-validation-summary="All">
+            <p>
+                <label asp-for="status_title">Имя</label><br />
+                <input type="text" asp-for="status_title" />
+            </p>
+            <p>
+                <input type="submit" value="Сохранить" />
+            </p>
+            <input type="hidden" asp-for="id" />
+        </div>
+    </form>
+</div>

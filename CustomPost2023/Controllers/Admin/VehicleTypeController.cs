@@ -1,83 +1,72 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class VehicleTypeController : Controller
     {
-        // GET: VehicleTypeController
+        ApplicationContext db;
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
+        public VehicleTypeController(ApplicationContext context)
+        {
+            db = context;
+        }
         public ActionResult Index()
         {
-            return View();
+            var model = db.vehicle_type;
+            return View(model);
         }
-
-        // GET: VehicleTypeController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: VehicleTypeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: VehicleTypeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(vehicle_type vt)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.vehicle_type.Add(vt);
+            logg.SendLogg(db, 1, "vehicle_type", "whole record", "NULL", $"{vt.vehicle_type_id}|{vt.vehicle_type_title}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: VehicleTypeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: VehicleTypeController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                vehicle_type? vt = await db.vehicle_type.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
+                if (vt != null)
+                {
+                    db.vehicle_type.Remove(vt);
+                    logg.SendLogg(db, 2, "vehicle_type", "whole record", $"{vt.vehicle_type_id}|{vt.vehicle_type_title}", "NULL");
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: VehicleTypeController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                vehicle_type? vt = await db.vehicle_type.FirstOrDefaultAsync(p => p.vehicle_type_id == id);
+                if (vt != null)
+                {
+                    meanBefForLogg = $"{vt.vehicle_type_id}|{vt.vehicle_type_title}";
+                    return View(vt);
+                }
+            }
+            return NotFound();
         }
-
-        // POST: VehicleTypeController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(vehicle_type vt)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.vehicle_type.Update(vt);
+            logg.SendLogg(db, 3, "vehicle_type", "whole record", meanBefForLogg, $"{vt.vehicle_type_id}|{vt.vehicle_type_title}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

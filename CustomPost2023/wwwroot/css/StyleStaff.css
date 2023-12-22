@@ -1,0 +1,146 @@
+﻿.profile-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.profile-photo {
+    max-width: 80px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.btn-change-photo {
+    font-size: 12px;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+table {
+    width: 120%; /* Пример: увеличьте или уменьшите значение по вашему усмотрению */
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #00a0df; /* Голубой цвет шапки */
+    color: #fff;
+}
+
+th {
+    padding: 10px;
+    text-align: center;
+}
+
+th, td {
+    width: 14.28%; /* Равномерное распределение по 7 дням в неделе */
+    border: 1px solid #ddd;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.day {
+    margin-bottom: 5px;
+}
+
+.appl_btn, /* Стили для кнопок */
+a.appl_link { /* Стили для ссылок */
+    font-size: small;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: fuchsia; /* Цвет текста ссылок */
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+}
+
+.task-list {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1;
+}
+
+td:hover .task-list {
+    display: block;
+}
+
+.submitLink {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    color: blue;
+    cursor: pointer;
+}
+
+submitLink:focus {
+    outline: none;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-block, .right-block {
+    width: 48%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.right-block {
+    margin-left: 2%;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 10px;
+    width: 48%;
+    border: none;
+    cursor: pointer;
+}
+
+.approve {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.reject {
+    background-color: #f44336;
+    color: #fff;
+}

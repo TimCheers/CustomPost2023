@@ -1,83 +1,72 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class CustomPostController : Controller
     {
-        // GET: CustomsPostsController
+        ApplicationContext db;
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
+        public CustomPostController(ApplicationContext context)
+        {
+            db = context;
+        }
         public ActionResult Index()
         {
-            return View();
+            var model = db.custom_post;
+            return View(model);
         }
-
-        // GET: CustomsPostsController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: CustomsPostsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CustomsPostsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(custom_post cp)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.custom_post.Add(cp);
+            logg.SendLogg(db, 1, "custom_post", "whole record", "NULL", $"{cp.customs_post_id}|{cp.customs_post_title}|{cp.location}|{cp.throughput}|{cp.fk_vehicle_id}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: CustomsPostsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CustomsPostsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                custom_post? cp = await db.custom_post.FirstOrDefaultAsync(p => p.customs_post_id == id);
+                if (cp != null)
+                {
+                    logg.SendLogg(db, 2, "custom_post", "whole record", $"{cp.customs_post_id}|{cp.customs_post_title}|{cp.location}|{cp.throughput}|{cp.fk_vehicle_id}", "NULL");
+                    db.custom_post.Remove(cp);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: CustomsPostsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                custom_post? cp = await db.custom_post.FirstOrDefaultAsync(p => p.customs_post_id == id);
+                if (cp != null)
+                {
+                    meanBefForLogg = $"{cp.customs_post_id}|{cp.customs_post_title}|{cp.location}|{cp.throughput}|{cp.fk_vehicle_id}";
+                    return View(cp);
+                }
+            }
+            return NotFound();
         }
-
-        // POST: CustomsPostsController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(custom_post cp)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.custom_post.Update(cp);
+            logg.SendLogg(db, 3, "custom_post", "whole record", meanBefForLogg, $"{cp.customs_post_id}|{cp.customs_post_title}|{cp.location}|{cp.throughput}|{cp.fk_vehicle_id}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

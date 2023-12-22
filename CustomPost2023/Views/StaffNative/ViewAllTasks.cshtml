@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "Текущие заявки";
+}
+@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.StaffViewModel
+<style>
+    body {
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        font-weight: normal; /* Уменьшаем жирность шрифта */
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    footer {
+        background-color: #f8f9fa;
+        padding: 20px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .navbar {
+        background-color: #3498db; /* Цвет фона навбара */
+        color: #fff; /* Цвет текста навбара */
+        padding: 15px; /* Внутренний отступ */
+        border-radius: 5px; /* Скругление углов */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+        margin-bottom: 3%;
+    }
+
+    /* Стиль для бренда (левая часть навбара) */
+    .navbar-brand {
+        font-size: 24px; /* Размер шрифта бренда */
+        font-weight: bold; /* Жирный шрифт */
+        padding-left: 25px;
+    }
+
+    /* Стиль для навигационных элементов */
+    .navbar-nav .nav-item {
+        margin-right: 15px; /* Отступ между элементами навбара */
+    }
+
+    /* Стиль для кнопок */
+    .nav-button-cur {
+        background-color: blueviolet;
+        color: #fff; /* Цвет текста кнопок */
+        padding: 8px 15px; /* Внутренний отступ кнопок */
+        border: none; /* Убираем границу кнопок */
+        border-radius: 3px; /* Скругление углов кнопок */
+        cursor: pointer; /* Курсор при наведении на кнопки */
+    }
+
+    .nav-button {
+        background-color: #2ecc71; /* Цвет фона кнопок */
+        color: #fff; /* Цвет текста кнопок */
+        padding: 8px 15px; /* Внутренний отступ кнопок */
+        border: none; /* Убираем границу кнопок */
+        border-radius: 3px; /* Скругление углов кнопок */
+        cursor: pointer; /* Курсор при наведении на кнопки */
+    }
+
+        /* Стиль для кнопок при наведении */
+        .nav-button:hover {
+            background-color: #27ae60; /* Измененный цвет фона при наведении */
+        }
+
+    .myP {
+        color: blue;
+        color:palevioletred
+    }
+
+    .profile-photo {
+        max-width: 80px;
+        max-height: 60px;
+        border-radius: 50%;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+        <a class="navbar-brand" href="#">@Model.staff.name</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="ViewAllTasks" method="post" asp-route-id="@Model.staff.id">
+                        <input type="submit" value="Все заявки" class="nav-button-cur" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@Model.staff.id">
+                        <input type="submit" value="Личный кабинет" class="nav-button" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form asp-controller="Home" asp-action="Index" method="post" asp-route-id="@Model.staff.id">
+                        <input type="submit" value="Выход" class="nav-button" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h2 class="mt-4">Список заявок</h2>
+        <table class="table table-bordered table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Вид груза</th>
+                    <th>Наименование груза</th>
+                    <th>Масса груза</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    List<DateOnly> unDates = new List<DateOnly>();
+                    foreach (ApplicationViewModel item in Model.applications)
+                    {
+                        if (!unDates.Contains(item.app_history.custom_date))
+                        {
+                            unDates.Add(item.app_history.custom_date);
+                        }
+                    }
+                    for (int i = 0; i < unDates.Count; i++)
+                    {
+                        bool is_reapite = false;
+                        List<ApplicationViewModel> models = Model.applications.Where(p => p.app_history.custom_date.Equals(unDates[i])).ToList();
+                        @foreach (ApplicationViewModel item in models)
+                        {
+                            <tr>
+                                @if (!is_reapite)
+                                {
+                                    <td rowspan="@Model.applications.Count(p=>p.app_history.custom_date.Equals(unDates[i]))">@unDates[i]</td>
+                                    is_reapite = true;
+                                }
+                                @{
+                                    string style = "";
+                                    if (item.app_status.id == 5)
+                                    {
+                                        style = "background-color: #2ecc71;";
+                                    }
+                                    if (item.app_status.id == 4)
+                                    {
+                                        style = "background-color:palevioletred;";
+                                    }
+                                }                               
+                                <th>@item.app_prod_type.type_product_title</th>
+                                <th>@item.app_product.product_title</th>
+                                <th>@item.app_product.mass</th>
+                                <th style="@style">@item.app_status.status_title</th>
+                                <th>
+                                    <form asp-controller="StaffNative" asp-action="ViewTask" asp-route-id="@item.app_app.id">
+                                        <input type="submit" value="Просмотр" class="btn approve" style="min-width: 50%; padding-top:5px; align-content:flex-end; background-color: #2ecc71; color: #fff;" />
+                                    </form>
+                                </th>
+                            </tr>
+                        }
+                        is_reapite = false;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <footer class="mt-5">
+        <div class="container text-center">
+            <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
+            <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+        </div>
+    </footer>
+</body>

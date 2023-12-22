@@ -1,0 +1,21 @@
+﻿@model CustomPost2023.Data.Models.product_type
+@{
+    ViewBag.Title = "Создание типа продукта";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Добавление типа продукта</h2>
+    <form asp-action="Create" asp-controller="ProductType">
+        <p>
+            <label asp-for="type_product_title">Название</label><br />
+            <input type="text" asp-for="type_product_title" />
+        </p>
+        <p>
+            <label asp-for="customs_clearance_coefficient">Коэфициент</label><br />
+            <input type="number" asp-for="customs_clearance_coefficient" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    </form>
+</div>

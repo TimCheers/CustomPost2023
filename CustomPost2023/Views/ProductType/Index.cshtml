@@ -1,0 +1,29 @@
+﻿@using CustomPost2023.Data.Models
+@model IEnumerable<CustomPost2023.Data.Models.product_type>
+@{
+    ViewBag.Title = "Список типов продуктов";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Список типов продуктов</h2>
+    <p><a asp-action="Create">Добавить тип продуктов</a></p>
+    <table class="table">
+        <tr><th>ID</th><th>Название</th><th>Кожфициент</th><th></th><th></th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.type_product_id</td>
+                <td>@item.type_product_title</td>
+                <td>@item.customs_clearance_coefficient</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="ProductType" asp-route-id="@item.type_product_id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-controller="ProductType" asp-action="Delete" method="post" asp-route-id="@item.type_product_id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,41 @@
+﻿@model CustomPost2023.Data.Models.product
+@{
+    ViewBag.Title = "Создание продукта";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Добавление продукта</h2>
+    <form asp-action="Create" asp-controller="Product">
+        <p>
+            <label asp-for="product_title">Название</label><br />
+            <input type="text" asp-for="product_title" />
+        </p>
+        <p>
+            <label asp-for="mass">Масса</label><br />
+            <input type="number" asp-for="mass" />
+        </p>
+        <p>
+            <label asp-for="fk_type_product_id">Количество</label><br />
+            <input type="number" asp-for="quantity" />
+        </p>
+        <p>
+            <label asp-for="fk_type_product_id">Описание</label><br />
+            <input type="text" asp-for="description" />
+        </p>
+        <p>
+            <label asp-for="fk_type_product_id">Характеристики</label><br />
+            <input type="text" asp-for="characteristics" />
+        </p>
+        <p>
+            <label asp-for="fk_type_product_id">Цена</label><br />
+            <input type="number" asp-for="price" />
+        </p>
+        <p>
+            <label asp-for="fk_type_product_id">ID типа</label><br />
+            <input type="number" asp-for="fk_type_product_id" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    </form>
+</div>

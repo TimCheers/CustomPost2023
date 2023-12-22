@@ -1,0 +1,44 @@
+﻿@model CustomPost2023.Data.Models.product
+@{
+    ViewBag.Title = "Редактирование продукта";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Редактирование продукта</h2>
+    <form asp-action="Edit" asp-controller="Product">
+        <div asp-validation-summary="All">
+            <p>
+                <label asp-for="product_title">Название</label><br />
+                <input type="text" asp-for="product_title" />
+            </p>
+            <p>
+                <label asp-for="mass">Масса</label><br />
+                <input type="number" asp-for="mass" />
+            </p>
+            <p>
+                <label asp-for="fk_type_product_id">Количество</label><br />
+                <input type="number" asp-for="quantity" />
+            </p>
+            <p>
+                <label asp-for="fk_type_product_id">Описание</label><br />
+                <textarea asp-for="description" rows="5" cols="60"></textarea>
+            </p>
+            <p>
+                <label asp-for="fk_type_product_id">Характеристики</label><br />
+                <input type="text" asp-for="characteristics" />
+            </p>
+            <p>
+                <label asp-for="fk_type_product_id">Цена</label><br />
+                <input type="number" asp-for="price" />
+            </p>
+            <p>
+                <label asp-for="fk_type_product_id">ID типа</label><br />
+                <input type="number" asp-for="fk_type_product_id" />
+            </p>
+            <p>
+                <input type="submit" value="Отправить" />
+            </p>
+            <input type="hidden" asp-for="product_id" />
+        </div>
+    </form>
+</div>

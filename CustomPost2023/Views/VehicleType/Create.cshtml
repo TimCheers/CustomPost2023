@@ -1,0 +1,17 @@
+﻿@model CustomPost2023.Data.Models.vehicle_type
+@{
+    ViewBag.Title = "Создание типа транспорта доставки";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Добавление типа транспорта доставки</h2>
+    <form asp-action="Create" asp-controller="VehicleType">
+        <p>
+            <label asp-for="vehicle_type_title">Название</label><br />
+            <input type="text" asp-for="vehicle_type_title" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    </form>
+</div>

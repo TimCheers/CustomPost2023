@@ -1,0 +1,17 @@
+﻿@model CustomPost2023.Data.Models.export_countries
+@{
+    ViewBag.Title = "Создание страны";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <h2>Добавление страны</h2>
+    <form asp-action="Create" asp-controller="Export_country">
+        <p>
+            <label asp-for="country_title">Название страны</label><br />
+            <input type="text" asp-for="country_title" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    </form>
+</div>

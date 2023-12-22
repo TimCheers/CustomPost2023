@@ -1,0 +1,251 @@
+﻿@using CustomPost2023.ViewModels
+@model CustomPost2023.ViewModels.ResultViewModel
+@{
+    ViewBag.Title = "Заявка " + Model.applicationViewModel.app_app.id + " " + Model.applicationViewModel.app_product.product_title;
+    // Layout = "/Views/Shared/_TaskLayout.cshtml";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .form-container {
+            display: flex;
+            max-width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container2 {
+            display: flex;
+            max-width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .left-block, .right-block {
+            width: 40%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: left;
+            display: block;
+        }
+
+        .right-block {
+            margin-left: 2%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px;
+            width: 48%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .approve {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .reject {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-weight: normal; /* Уменьшаем жирность шрифта */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .navbar {
+            background-color: #3498db; /* Цвет фона навбара */
+            color: #fff; /* Цвет текста навбара */
+            padding: 15px; /* Внутренний отступ */
+            border-radius: 5px; /* Скругление углов */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+            margin-bottom: 3%;
+        }
+
+        /* Стиль для бренда (левая часть навбара) */
+        .navbar-brand {
+            font-size: 24px; /* Размер шрифта бренда */
+            font-weight: bold; /* Жирный шрифт */
+            padding-left: 25px;
+        }
+
+        /* Стиль для навигационных элементов */
+        .navbar-nav .nav-item {
+            margin-right: 15px; /* Отступ между элементами навбара */
+        }
+
+        /* Стиль для кнопок */
+        .nav-button-cur {
+            background-color: blueviolet;
+            color: #fff; /* Цвет текста кнопок */
+            padding: 8px 15px; /* Внутренний отступ кнопок */
+            border: none; /* Убираем границу кнопок */
+            border-radius: 3px; /* Скругление углов кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопки */
+        }
+
+        .nav-button {
+            background-color: #2ecc71; /* Цвет фона кнопок */
+            color: #fff; /* Цвет текста кнопок */
+            padding: 8px 15px; /* Внутренний отступ кнопок */
+            border: none; /* Убираем границу кнопок */
+            border-radius: 3px; /* Скругление углов кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопки */
+        }
+
+            /* Стиль для кнопок при наведении */
+            .nav-button:hover {
+                background-color: #27ae60; /* Измененный цвет фона при наведении */
+            }
+
+        .profile-photo {
+            max-width: 80px;
+            max-height: 60px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="~/img/2.jpg" alt="Profile Photo" class="profile-photo">
+        <a class="navbar-brand" href="#">@Model.applicationViewModel.app_staff.name</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="ViewAllTasks" method="post" asp-route-id="@Model.applicationViewModel.app_staff.id">
+                        <input type="submit" value="Все заявки" class="nav-button" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form asp-controller="StaffNative" asp-action="Index" method="post" asp-route-id="@Model.applicationViewModel.app_staff.id">
+                        <input type="submit" value="Личный кабинет" class="nav-button" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form asp-controller="Home" asp-action="Index" method="post" asp-route-id="@Model.applicationViewModel.app_staff.id">
+                        <input type="submit" value="Выход" class="nav-button" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h2 class="mainh2">Подтверждение акта досмотра</h2>
+    <form asp-controller="StaffNative" asp-action="DoneResult" method="post" asp-route-id="@Model.applicationViewModel.app_app.id">
+        <div class="form-container">
+            <div class="left-block">
+                <label for="productCode"><p style="font-weight:bold">Код товара:</p> @Model.applicationViewModel.app_product.product_id</label>
+                <label for="productName"><p style="font-weight:bold">Тип товара: </p>@Model.applicationViewModel.app_prod_type.type_product_title</label>
+                <label for="exporter"><p style="font-weight:bold">Экспортер: </p>@Model.applicationViewModel.app_user.user_name</label>
+                <label for="transportType"><p style="font-weight:bold">Вид транспорта доставки:</p> @Model.applicationViewModel.app_vehicle_type.vehicle_type_title</label>
+                <label for="declaredWeight"><p style="font-weight:bold">Характиристики товара товара:</p> @Model.applicationViewModel.app_product.characteristics</label>
+                <label for="declaredWeight"><p style="font-weight:bold">Заявленное количество товара:</p> @Model.applicationViewModel.app_product.mass</label>
+                <label for="productName"><p style="font-weight:bold">Наименование товара:</p> @Model.applicationViewModel.app_product.product_title</label>
+                <label for="exportCountry"><p style="font-weight:bold">Страна экспорта:</p> @Model.applicationViewModel.app_export_country.country_title</label>
+                <label for="exportCountry"><p style="font-weight:bold">Цена</p> @Model.applicationViewModel.app_product.price</label>
+            </div>
+            <div class="right-block">
+                <label for="customsPoint"><p style="font-weight:bold">Таможенный пункт проверки:</p> @Model.applicationViewModel.app_custom_post.customs_post_title</label>
+                <label for="declaredWeight"><p style="font-weight:bold">Заявленная масса товара:</p> @Model.applicationViewModel.app_product.mass кг</label>
+                <label for="productDescription"><p style="font-weight:bold">Описание товара:</p> @Model.applicationViewModel.app_product.description</label>
+            </div>
+        </div>
+        <div class="form-container2">
+            <label name="conclusion"><p style="font-weight:bold">Заключение:</p> @Model.conclusion</label>
+            <input type="text" name="conclusion" value="@Model.conclusion" hidden />
+        </div>
+        <div class="form-container2">
+            <div class="left-block">
+                <label>Расчетное время досмотра: @Model.appPar.ConvertToTime(Model.appPar.hours)</label>
+                <input type="text" name="cusTime" value="@Model.appPar.hours" hidden/>
+            </div>
+            <div class="right-block">
+                <label name="cusPrise">Расчетная стоимость: @Model.appPar.getCost(Model.applicationViewModel.app_prod_type.type_product_id, Model.applicationViewModel.app_product.price) ₽</label>
+                <input type="text" name="cusPrise" value="@Model.appPar.cost" hidden />
+            </div>
+        </div>
+        <div class="form-container2">
+            <div class="left-block">
+                <label for="productCode"><p style="text-decoration:underline">@Model.applicationViewModel.app_staff.name</p></label>
+            </div>
+            <div class="right-block">
+                <label for="productCode">Подпись:_________</label>
+            </div>
+            <div class="right-block">
+                <label for="productCode">@DateTime.UtcNow.Date.ToString("dd/MM/yyyy")</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="radioGroup" id="radioOption1" value="1">
+                <label class="form-check-label" name="radioGroup" id="radioOption1">Одобрить</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="radioGroup" id="radioOption2" value="0">
+                <label class="form-check-label" name="radioGroup" id="radioOption2" >Отказать</label>
+            </div>
+        </div>
+
+        <input type="submit" id="myButton" disabled value="Подтвердить" class="btn approve" style="min-width: 50%; padding-top:5px; align-content:flex-end;" />
+    </form>
+</body>
+<footer class="mt-5">
+    <div class="container text-center">
+        <p>&copy; 2023 Ваше название компании. Все права защищены.</p>
+        <p>Адрес: г. Ваш город, улица Ваша улица, телефон: +7 (XXX) XXX-XX-XX</p>
+    </div>
+</footer>
+<script>
+    $('input[type=radio][name=radioGroup]').change(function () {
+        if ($('input[type=radio][name=radioGroup]:checked').length > 0) {
+            $('#myButton').prop('disabled', false);
+        } else {
+            $('#myButton').prop('disabled', true);
+        }
+    });
+</script>

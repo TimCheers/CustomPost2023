@@ -1,83 +1,73 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CustomPost2023.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class ProductTypeController : Controller
     {
-        // GET: ProductTypeController
+        ApplicationContext db;
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
+        public ProductTypeController(ApplicationContext context)
+        {
+            db = context;
+        }
         public ActionResult Index()
         {
-            return View();
+            var model = db.product_type;
+            return View(model);
         }
-
-        // GET: ProductTypeController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: ProductTypeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductTypeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(product_type pt)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.product_type.Add(pt);
+            logg.SendLogg(db, 1, "product_type", "whole record", "NULL", $"{pt.type_product_id}|{pt.type_product_title}|{pt.customs_clearance_coefficient}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: ProductTypeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductTypeController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                product_type? pt = await db.product_type.FirstOrDefaultAsync(p => p.type_product_id == id);
+                if (pt != null)
+                {
+                    db.product_type.Remove(pt);
+                    logg.SendLogg(db, 2, "product_type", "whole record", $"{pt.type_product_id}|{pt.type_product_title}|{pt.customs_clearance_coefficient}", "NULL");
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: ProductTypeController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                product_type? pt = await db.product_type.FirstOrDefaultAsync(p => p.type_product_id == id);
+                if (pt != null) 
+                {
+                    meanBefForLogg = $"{pt.type_product_id}|{pt.type_product_title}|{pt.customs_clearance_coefficient}";
+                    return View(pt); 
+                }
+            }
+            return NotFound();
         }
-
-        // POST: ProductTypeController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(product_type pt)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.product_type.Update(pt);
+            logg.SendLogg(db, 3, "product_type", "whole record", meanBefForLogg, $"{pt.type_product_id}|{pt.type_product_title}|{pt.customs_clearance_coefficient}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

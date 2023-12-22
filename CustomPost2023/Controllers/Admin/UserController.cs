@@ -1,83 +1,73 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using CustomPost2023.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using CustomPost2023.Controllers.Home;
+using Serilog;
+using Serilog.Events;
 
 namespace CustomPost2023.Controllers.Admin
 {
     public class UserController : Controller
     {
-        // GET: UserController
-        public ActionResult Index()
+        ApplicationContext db;
+        private loggs logg = new loggs();
+        public static string meanBefForLogg;
+        public UserController(ApplicationContext context)
+        {
+            db = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            return View(await db.user.ToListAsync());
+        }
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(user us)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.user.Add(us);
+            logg.SendLogg(db, 1, "user", "whole record", "NULL", $"{us.user_name}|{us.login}|{us.password}|{us.role}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int? id)
         {
-            try
+            if (id != null)
             {
-                return RedirectToAction(nameof(Index));
+                user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
+                if (us != null)
+                {
+                    logg.SendLogg(db, 2, "user", "whole record", $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}", "NULL");
+                    db.user.Remove(us);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                user? us = await db.user.FirstOrDefaultAsync(p => p.user_id == id);
+                if (us != null)
+                {
+                    meanBefForLogg = $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}";
+                    return View(us);
+                }
+            }
+            return NotFound();
         }
-
-        // POST: UserController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(user us)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            db.user.Update(us);
+            logg.SendLogg(db, 3, "user", "whole record", meanBefForLogg, $"{us.user_id}|{us.user_name}|{us.login}|{us.password}|{us.role}");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
