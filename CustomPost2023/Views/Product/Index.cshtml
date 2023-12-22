@@ -23,7 +23,44 @@
     </form>
     <p><a asp-action="Create">Добавить товар</a></p>
     <table class="table">
-        <tr><th>ID</th><th>Название</th><th>Масса</th><th>Количество</th><th>Описание</th><th>Характеристики</th><th>Цена</th><th>ID типа</th><th></th><th></th></tr>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">
+                    ID
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.nameSort">
+                    Название
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.massSort">
+                    Масса
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.countSort">
+                    Количество
+                </a>
+            </th>
+            <th>
+                Описание
+            </th>
+            <th>Характеристики</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.priceSort">
+                    Цена
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.typeSort">
+                    ID типа
+                </a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
         @foreach (var item in Model)
         {
             <tr>

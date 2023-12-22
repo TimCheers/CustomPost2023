@@ -21,7 +21,35 @@
     </form>
     <p><a asp-action="Create">Добавить таможенный пункт</a></p>
     <table class="table">
-        <tr><th>ID</th><th>Название</th><th>Локация</th><th>Пропускная способность</th><th>ID транспорта доставки</th><th></th><th></th></tr>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">
+                    ID
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.nameSort">
+                    Название
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.massSort">
+                    Локация
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.countSort">
+                    Пропускная способность
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.priceSort">
+                    ID транспорта доставки
+                </a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
         @foreach (var item in Model)
         {
             <tr>

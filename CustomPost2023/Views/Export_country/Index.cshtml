@@ -14,7 +14,20 @@
     </form>
     <p><a asp-action="Create">Добавить страну</a></p>
     <table class="table">
-        <tr><th>ID</th><th>Название страны</th><th></th><th></th></tr>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IDSort">
+                    ID
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.countrySort">
+                    Название страны
+                </a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
         @foreach (var item in Model)
         {
             <tr>

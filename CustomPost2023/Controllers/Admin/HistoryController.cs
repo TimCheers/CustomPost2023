@@ -8,20 +8,47 @@ namespace CustomPost2023.Controllers.Admin
     public class HistoryController : Controller
     {
         ApplicationContext db;
+        
+        public enum SortState
+        {
+            IdAsc,
+            IdDesc,
+            dateAsc,
+            dateDesc,
+            appIdAsc,
+            appIdDesc,
+        }
         public HistoryController(ApplicationContext context)
         {
             db = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string countryStr, SortState sortOrder = SortState.IdAsc)
         {
-            var n = from hi in db.Set<history>()
-                    join ap in db.Set<application>() on hi.application_id equals ap.id
-                    select new { hi, ap };
+            IQueryable<history>? myLogg = db.history;
+            var n = from st in db.Set<history>()
+                select new { st };
+            ViewData["IdSort"] = sortOrder == SortState.IdAsc ? SortState.IdDesc : SortState.IdAsc;
+            ViewData["dateSort"] = sortOrder == SortState.dateAsc ? SortState.dateDesc : SortState.dateAsc;
+            ViewData["appIdSort"] = sortOrder == SortState.appIdAsc ? SortState.appIdDesc : SortState.appIdAsc;
+            
+            try
+            {
+                switch (sortOrder)
+                {
+                    case SortState.IdAsc: return View(await n.OrderBy(s => s.st.id).ToListAsync());
+                    case SortState.IdDesc: return View(await n.OrderByDescending(s => s.st.id).ToListAsync());
+                    case SortState.dateAsc: return View(await n.OrderBy(s => s.st.custom_date).ToListAsync());
+                    case SortState.dateDesc: return View(await n.OrderByDescending(s => s.st.custom_date).ToListAsync());
+                    case SortState.appIdAsc: return View(await n.OrderBy(s => s.st.application_id).ToListAsync());
+                    case SortState.appIdDesc: return View(await n.OrderByDescending(s => s.st.application_id).ToListAsync());
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
             return View(await n.ToListAsync());
-        }
-        public IActionResult Create()
-        {
-            return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(history hi)

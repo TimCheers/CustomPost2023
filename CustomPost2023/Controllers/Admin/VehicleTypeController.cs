@@ -10,18 +10,42 @@ namespace CustomPost2023.Controllers.Admin
         ApplicationContext db;
         private loggs logg = new loggs();
         public static string meanBefForLogg;
+        
+        public enum SortState
+        {
+            IdAsc,
+            IdDesc,
+            nameAsc,
+            nameDesc,
+        }
         public VehicleTypeController(ApplicationContext context)
         {
             db = context;
         }
-        public ActionResult Index()
+        public async Task<IActionResult> Index(string countryStr, SortState sortOrder = SortState.IdAsc)
         {
-            var model = db.vehicle_type;
-            return View(model);
-        }
-        public IActionResult Create()
-        {
-            return View();
+            IQueryable<vehicle_type>? myLogg = db.vehicle_type;
+            var n = from st in db.Set<vehicle_type>()
+                select new { st };
+            ViewData["IdSort"] = sortOrder == SortState.IdAsc ? SortState.IdDesc : SortState.IdAsc;
+            ViewData["nameSort"] = sortOrder == SortState.nameAsc ? SortState.nameDesc : SortState.nameAsc;
+            
+            try
+            {
+                switch (sortOrder)
+                {
+                    case SortState.IdAsc: return View(await n.OrderBy(s => s.st.vehicle_type_id).ToListAsync());
+                    case SortState.IdDesc: return View(await n.OrderByDescending(s => s.st.vehicle_type_id).ToListAsync());
+                    case SortState.nameAsc: return View(await n.OrderBy(s => s.st.vehicle_type_title).ToListAsync());
+                    case SortState.nameDesc: return View(await n.OrderByDescending(s => s.st.vehicle_type_title).ToListAsync());
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
+            return View(await n.ToListAsync());
         }
         [HttpPost]
         public async Task<IActionResult> Create(vehicle_type vt)
