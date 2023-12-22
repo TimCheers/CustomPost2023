@@ -105,7 +105,6 @@ namespace CustomPost2023.Controllers.Staff
 
         public void CreatePDF(ApplicationViewModel app)
         {
-
             Document pdfDocument = new Document();
             Page page = pdfDocument.Pages.Add();
             
@@ -139,7 +138,7 @@ namespace CustomPost2023.Controllers.Staff
             {
                 SubsequentLinesIndent = 40
             };
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //id
             text = new TextFragment();
             text2 = new TextSegment("Код товара: ");
@@ -152,7 +151,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //title
             text = new TextFragment();
             text2 = new TextSegment("Наименование товара: ");
@@ -165,7 +164,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //typeprod
             text = new TextFragment();
             text2 = new TextSegment("Тип товара: ");
@@ -178,7 +177,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //typevehicle
             text = new TextFragment();
             text2 = new TextSegment("Вид транспорта доставки: ");
@@ -191,7 +190,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //user
             text = new TextFragment();
             text2 = new TextSegment("Экспортер: ");
@@ -204,7 +203,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //country
             text = new TextFragment();
             text2 = new TextSegment("Страна экспорта: ");
@@ -217,7 +216,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //charact
             text = new TextFragment();
             text2 = new TextSegment("Характиристики товара товара: ");
@@ -230,7 +229,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //quan
             text = new TextFragment();
             text2 = new TextSegment("Заявленное количество товара: ");
@@ -243,7 +242,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //mass
             text = new TextFragment();
             text2 = new TextSegment("Заявленная масса товара: ");
@@ -256,7 +255,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             //price
             text = new TextFragment();
             text2 = new TextSegment("Цена товара: ");
@@ -269,7 +268,7 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text1);
             
             page.Paragraphs.Add(text);
-            
+            page.Paragraphs.Add(new TextFragment("      "));
             
             //discr
             text = new TextFragment();
@@ -278,6 +277,21 @@ namespace CustomPost2023.Controllers.Staff
             text.Segments.Add(text2);
             
             text1 = new TextSegment($"{app.app_product.description}");
+            text1.TextState.Underline = false;
+            text1.TextState.FontSize = 12;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //my code
+            //COST
+            text = new TextFragment();
+            text2 = new TextSegment("Цена растаможки товара: ");
+            text2.TextState.FontSize = 14;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_history.customs_clearance_cost} рублей");
             text1.TextState.Underline = true;
             text1.TextState.FontSize = 12;
             text.Segments.Add(text1);
@@ -286,11 +300,46 @@ namespace CustomPost2023.Controllers.Staff
             
             
             page.Paragraphs.Add(new TextFragment("      "));
+            
+            //USER NAME
+            text = new TextFragment();
+            text2 = new TextSegment("Сотрудник: ");
+            text2.TextState.FontSize = 14;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_staff.name}");
+            text1.TextState.Underline = true;
+            text1.TextState.FontSize = 12;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            
+            
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            //CONCLUSION
+            text = new TextFragment();
+            text2 = new TextSegment("Заключение: ");
+            text2.TextState.FontSize = 14;
+            text.Segments.Add(text2);
+            
+            text1 = new TextSegment($"{app.app_history.conclusion}");
+            text1.TextState.Underline = false;
+            text1.TextState.FontSize = 12;
+            text.Segments.Add(text1);
+            
+            page.Paragraphs.Add(text);
+            
+            
+            page.Paragraphs.Add(new TextFragment("      "));
+            
+            
+            
 
-            // // Добавление места для подписи
-            // TextFragment signature = new TextFragment("Подпись: ____________________");
-            // signature.Position = new Position(100, 100); // расположение подписи
-            // page.Paragraphs.Add(signature);
+            //Добавление места для подписи
+            TextFragment signature = new TextFragment("Дата: ___.___.______         Подпись: ____________________");
+            signature.Position = new Position(235, 100); // расположение подписи
+            page.Paragraphs.Add(signature);
             
 
             pdfDocument.Save($"D:\\Акт №{app.app_app.id}.pdf");
