@@ -3,25 +3,68 @@
     ViewBag.Title = "Список товаров";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    /* Add your CSS styles here */
+    .content {
+        margin: 20px;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        width: 200px;
+        padding: 8px;
+        margin-right: 10px;
+    }
+
+    input[type="submit"],
+    a.button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    a.button:hover {
+        background-color: #45a049;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
 <div class="content">
     <h2>Список товаров</h2>
     <form method="get">
-            <div>
-                <label>Название: </label>
-                <input type="text" placeholder="Введите название" name="prodStr">
-                <label>Масса: </label>
-                <input type="text" placeholder="Введите массу" name="massStr">
-                <label>Количество: </label>
-                <input type="text" placeholder="Введите количество" name="countStr">
-                <label>Цена: </label>
-                <input type="text" placeholder="Введите цену" name="priceStr">
-                <label>Тип товара: </label>
-                <input type="text" placeholder="Введите тип товара" name="typeStr">
-                
-                <input type="submit" value="Фильтр" />
-            </div>
+        <div>
+            <input type="text" placeholder="Введите название" name="prodStr">
+            <input type="text" placeholder="Введите массу" name="massStr">
+            <input type="text" placeholder="Введите количество" name="countStr">
+            <input type="text" placeholder="Введите цену" name="priceStr">
+            <input type="text" placeholder="Введите тип товара" name="typeStr">
+            
+            <input type="submit" value="Фильтр" />
+        </div>
     </form>
-    <p><a asp-action="Create">Добавить товар</a></p>
+    <p><a asp-action="Create" class="button">Добавить товар</a></p>
     <table class="table">
         <tr>
             <th>
@@ -73,11 +116,11 @@
                 <td>@item.st.price</td>
                 <td>@item.st.fk_type_product_id</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.st.product_id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.st.product_id" class="button">Изменить</a>
                 </td>
                 <td>
                     <form asp-controller="Product" asp-action="Delete" method="post" asp-route-id="@item.st.product_id">
-                        <input type="submit" value="Удалить" />
+                        <input type="submit" value="Удалить" class="button" />
                     </form>
                 </td>
             </tr>

@@ -3,23 +3,67 @@
     ViewBag.Title = "Список таможенных пунктов";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    /* Add your CSS styles here */
+    .content {
+        margin: 20px;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        width: 200px;
+        padding: 8px;
+        margin-right: 10px;
+    }
+
+    input[type="submit"],
+    button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
 <div class="content">
     <h2>Список таможенных пунктов</h2>
     <form method="get">
-            <div>
-                <label>Название: </label>
-                <input type="text" placeholder="Введите название" name="nameStr">
-                <label>Локация: </label>
-                <input type="text" placeholder="Введите локацию" name="locStr">
-                <label>Проп. способность: </label>
-                <input type="text" placeholder="Введите проп. способ." name="thrStr">
-                <label>ID транспорта: </label>
-                <input type="text" placeholder="Введите ID" name="vehStr">
-                
-                <input type="submit" value="Фильтр" />
-            </div>
+        <div>
+            <input type="text" placeholder="Введите название" name="nameStr">
+            <input type="text" placeholder="Введите локацию" name="locStr">
+            <input type="text" placeholder="Введите проп. способ." name="thrStr">
+            <input type="text" placeholder="Введите ID" name="vehStr">
+            
+            <input type="submit" value="Фильтр" />
+        </div>
     </form>
-    <p><a asp-action="Create">Добавить таможенный пункт</a></p>
+    <p>
+        <button type="button" onclick="location.href='@Url.Action("Create")'">Добавить таможенный пункт</button>
+    </p>
     <table class="table">
         <tr>
             <th>

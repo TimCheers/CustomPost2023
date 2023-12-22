@@ -4,9 +4,46 @@
     ViewBag.Title = "Список статусов";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    /* Add your CSS styles here */
+    .content {
+        margin: 20px;
+    }
+
+    a.button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    a.button:hover {
+        background-color: #45a049;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
 <div class="content">
     <h2>Список статусов</h2>
-    <p><a asp-action="Create">Добавить статус</a></p>
+    <p><a asp-action="Create" class="button">Добавить статус</a></p>
     <table class="table">
         <tr>
             <th>
@@ -28,11 +65,11 @@
                 <td>@item.st.id</td>
                 <td>@item.st.status_title</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Status" asp-route-id="@item.st.id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Status" asp-route-id="@item.st.id" class="button">Изменить</a>
                 </td>
                 <td>
                     <form asp-controller="Status" asp-action="Delete" method="post" asp-route-id="@item.st.id">
-                        <input type="submit" value="Удалить" />
+                        <input type="submit" value="Удалить" class="button" />
                     </form>
                 </td>
             </tr>

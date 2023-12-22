@@ -1,10 +1,46 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using CustomPost2023.Data.Models
-@* @model IEnumerable<CustomPost2023.Data.Models.staff> *@
 @{
     ViewBag.Title = "История";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    /* Add your CSS styles here */
+    .content {
+        margin: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    a.button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    a.button:hover {
+        background-color: #45a049;
+    }
+</style>
 <div class="content">
     <h2>История</h2>
     <table class="table">
@@ -34,11 +70,11 @@
                 <td>@item.st.custom_date</td>
                 <td>@item.st.application_id</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="History" asp-route-id="@item.st.id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="History" asp-route-id="@item.st.id" class="button">Изменить</a>
                 </td>
                 <td>
                     <form asp-controller="History" asp-action="Delete" method="post" asp-route-id="@item.st.id">
-                        <input type="submit" value="Удалить" />
+                        <input type="submit" value="Удалить" class="button" />
                     </form>
                 </td>
             </tr>
