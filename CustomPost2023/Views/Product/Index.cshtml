@@ -1,30 +1,45 @@
 ﻿@using CustomPost2023.Data.Models
-@model IEnumerable<CustomPost2023.Data.Models.product>
 @{
     ViewBag.Title = "Список товаров";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="content">
     <h2>Список товаров</h2>
+    <form method="get">
+            <div>
+                <label>Название: </label>
+                <input type="text" placeholder="Введите название" name="prodStr">
+                <label>Масса: </label>
+                <input type="text" placeholder="Введите массу" name="massStr">
+                <label>Количество: </label>
+                <input type="text" placeholder="Введите количество" name="countStr">
+                <label>Цена: </label>
+                <input type="text" placeholder="Введите цену" name="priceStr">
+                <label>Тип товара: </label>
+                <input type="text" placeholder="Введите тип товара" name="typeStr">
+                
+                <input type="submit" value="Фильтр" />
+            </div>
+    </form>
     <p><a asp-action="Create">Добавить товар</a></p>
     <table class="table">
         <tr><th>ID</th><th>Название</th><th>Масса</th><th>Количество</th><th>Описание</th><th>Характеристики</th><th>Цена</th><th>ID типа</th><th></th><th></th></tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.product_id</td>
-                <td>@item.product_title</td>
-                <td>@item.mass</td>
-                <td>@item.quantity</td>
-                <td>@item.description</td>
-                <td>@item.characteristics</td>
-                <td>@item.price</td>
-                <td>@item.fk_type_product_id</td>
+                <td>@item.st.product_id</td>
+                <td>@item.st.product_title</td>
+                <td>@item.st.mass</td>
+                <td>@item.st.quantity</td>
+                <td>@item.st.description</td>
+                <td>@item.st.characteristics</td>
+                <td>@item.st.price</td>
+                <td>@item.st.fk_type_product_id</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.product_id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.st.product_id">Изменить</a>
                 </td>
                 <td>
-                    <form asp-controller="Product" asp-action="Delete" method="post" asp-route-id="@item.product_id">
+                    <form asp-controller="Product" asp-action="Delete" method="post" asp-route-id="@item.st.product_id">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>

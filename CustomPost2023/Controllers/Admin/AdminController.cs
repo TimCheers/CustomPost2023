@@ -24,8 +24,6 @@ namespace CustomPost2023.Controllers.Admin
             tableDesc,
             attributeAsc,
             attributeDesc,
-            meaning_beforeAsc,
-            meaning_beforeDesc,
         }
         public AdminController(ApplicationContext context)
         {

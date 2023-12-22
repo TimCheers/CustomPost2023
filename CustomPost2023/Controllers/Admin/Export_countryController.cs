@@ -11,18 +11,53 @@ namespace CustomPost2023.Controllers.Admin
         ApplicationContext db;
         private loggs logg = new loggs();
         public static string meanBefForLogg;
+        
+        public enum SortState
+        {
+            IdAsc,
+            IdDesc,
+            countryAsc,
+            countryDesc,
+        }
+        
         public Export_countryController(ApplicationContext context)
         {
             db = context;
         }
-        public ActionResult Index()
+        
+        public async Task<IActionResult> index(string countryStr, SortState sortOrder = SortState.IdAsc)
         {
-            var model = db.export_countries;
-            return View(model);
-        }
-        public IActionResult Create()
-        {
-            return View();
+            IQueryable<export_countries>? myLogg = db.export_countries;
+            var n = from st in db.Set<export_countries>()
+                    select new { st };
+            ViewData["IdSort"] = sortOrder == SortState.IdAsc ? SortState.IdDesc : SortState.IdAsc;
+            ViewData["countrySort"] = sortOrder == SortState.countryAsc ? SortState.countryDesc : SortState.countryAsc;
+
+            if (!string.IsNullOrEmpty(countryStr))
+            {
+                n = n.Where(p => p.st.country_title.Contains(countryStr));
+            }
+            //if (datetimeStr != DateTime.MinValue.Date)
+            //{
+            //    n = n.Where(p => p.st.datetime.Date.Equals(datetimeStr.Date));
+            //}
+            Console.WriteLine($"Передача: {countryStr}\n Текущая: {n}");
+            try
+            {
+                switch (sortOrder)
+                {
+                    case SortState.IdAsc: return View(await n.OrderBy(s => s.st.id).ToListAsync());
+                    case SortState.IdDesc: return View(await n.OrderByDescending(s => s.st.id).ToListAsync());
+                    case SortState.countryAsc: return View(await n.OrderBy(s => s.st.country_title).ToListAsync());
+                    case SortState.countryDesc: return View(await n.OrderByDescending(s => s.st.country_title).ToListAsync());
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return View(await n.ToListAsync());
         }
         [HttpPost]
         public async Task<IActionResult> Create(export_countries ec)

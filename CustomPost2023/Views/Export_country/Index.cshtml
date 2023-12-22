@@ -1,24 +1,30 @@
 ﻿@using CustomPost2023.Data.Models
-@model IEnumerable<CustomPost2023.Data.Models.export_countries>
 @{
     ViewBag.Title = "Список стран";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="content">
     <h2>Список стран</h2>
+    <form method="get">
+        <div>
+            <label>Страна: </label>
+            <input type="text" placeholder="Введите страну" name="countryStr">
+            <input type="submit" value="Фильтр" />
+        </div>
+    </form>
     <p><a asp-action="Create">Добавить страну</a></p>
     <table class="table">
         <tr><th>ID</th><th>Название страны</th><th></th><th></th></tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.id</td>
-                <td>@item.country_title</td>
+                <td>@item.st.id</td>
+                <td>@item.st.country_title</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Export_country" asp-route-id="@item.id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="Export_country" asp-route-id="@item.st.id">Изменить</a>
                 </td>
                 <td>
-                    <form asp-controller="Export_country" asp-action="Delete" method="post" asp-route-id="@item.id">
+                    <form asp-controller="Export_country" asp-action="Delete" method="post" asp-route-id="@item.st.id">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>
